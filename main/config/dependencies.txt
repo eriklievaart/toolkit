@@ -1,0 +1,5 @@
+
+[test]
+assertj-core org.assertj 3.10.0
+junit junit 4.7
+
