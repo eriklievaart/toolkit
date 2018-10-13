@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.CopyOption;
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.StandardCopyOption;
@@ -110,6 +111,11 @@ public class FileTool {
 			File destination = fileToDir ? new File(to, from.getName()) : to;
 			destination.getParentFile().mkdirs();
 			Files.move(from.toPath(), destination.toPath(), NIO_OPTIONS);
+
+		} catch (DirectoryNotEmptyException e) {
+			// weird special case in NIO, where a move is not allowed to happen across drives
+			copyFile(from, to);
+			delete(from);
 
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
