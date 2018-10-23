@@ -24,12 +24,14 @@ public class MemoryFile extends AbstractVirtualFile {
 	private byte[] contents;
 	private String path;
 	private FileType type;
+	private long modified;
 
 	public MemoryFile(String path, MemoryFileSystem resolver) {
 		Check.notNull(path, resolver);
 		this.path = path;
 		this.resolver = resolver;
 		this.type = path.equals(FS_ROOT) ? FileType.DIRECTORY : FileType.UNKNOWN;
+		this.modified = System.currentTimeMillis();
 	}
 
 	@Override
@@ -43,6 +45,7 @@ public class MemoryFile extends AbstractVirtualFile {
 			@Override
 			public void close() throws IOException {
 				contents = toByteArray();
+				modified = System.currentTimeMillis();
 			}
 		};
 	}
@@ -58,12 +61,14 @@ public class MemoryFile extends AbstractVirtualFile {
 		onlyForFiles();
 		createFile();
 		super.writeString(data);
+		modified = System.currentTimeMillis();
 	}
 
 	@Override
 	public boolean createFile() {
 		Check.isTrue(type == FileType.UNKNOWN || type == FileType.FILE, "Already a directory $", path);
 		type = FileType.FILE;
+		modified = System.currentTimeMillis();
 		return true;
 	}
 
@@ -136,6 +141,7 @@ public class MemoryFile extends AbstractVirtualFile {
 	public boolean mkdir() {
 		onlyForDirectories();
 		type = FileType.DIRECTORY;
+		modified = System.currentTimeMillis();
 		return true; // noop
 	}
 
@@ -162,6 +168,11 @@ public class MemoryFile extends AbstractVirtualFile {
 
 	private enum FileType {
 		UNKNOWN, FILE, DIRECTORY;
+	}
+
+	@Override
+	public long lastModified() {
+		return modified;
 	}
 
 }

@@ -50,6 +50,8 @@ public interface VirtualFile {
 
 	public long length();
 
+	public long lastModified();
+
 	public List<? extends VirtualFile> getChildren();
 
 	public default List<VirtualFile> getChildren(VirtualFileType type) {

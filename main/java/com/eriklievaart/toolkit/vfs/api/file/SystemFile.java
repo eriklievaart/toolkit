@@ -49,6 +49,11 @@ public class SystemFile extends AbstractVirtualFile {
 	}
 
 	@Override
+	public long lastModified() {
+		return file.lastModified();
+	}
+
+	@Override
 	public boolean isDirectory() {
 		return file.isDirectory();
 	}
