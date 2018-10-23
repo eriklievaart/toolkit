@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +16,18 @@ import java.util.stream.Collectors;
 import com.eriklievaart.toolkit.io.api.FileTool;
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
+import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 
 public class SystemFile extends AbstractVirtualFile {
 
 	private File file;
+	private boolean link;
 
 	public SystemFile(File file) {
 		Check.notNull(file);
 		try {
 			this.file = file.getCanonicalFile();
+			this.link = Files.isSymbolicLink(file.toPath());
 
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
@@ -62,6 +66,9 @@ public class SystemFile extends AbstractVirtualFile {
 	@Override
 	public List<VirtualFile> getChildren() {
 		onlyForDirectories();
+		if (link) {
+			return NewCollection.list();
+		}
 		File[] files = file.listFiles();
 		RuntimeIOException.on(files == null, "Access denied!");
 		return Arrays.stream(files).map(SystemFile::new).collect(Collectors.toList());
