@@ -17,11 +17,19 @@ public class PropertiesIO {
 	private static LogTemplate log = new LogTemplate(PropertiesIO.class);
 
 	public static void storeStrings(Map<String, String> props, File file) {
+		store(convertToStrings(props), file);
+	}
+
+	public static void storeStrings(Map<String, String> props, OutputStream os) {
+		store(convertToStrings(props), os);
+	}
+
+	private static Properties convertToStrings(Map<String, String> props) {
 		Properties properties = new Properties();
 		for (Entry<String, String> entry : props.entrySet()) {
 			properties.put(entry.getKey(), entry.getValue());
 		}
-		store(properties, file);
+		return properties;
 	}
 
 	public static void store(Properties props, File file) {

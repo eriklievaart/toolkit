@@ -36,11 +36,14 @@ public class MemoryFile extends AbstractVirtualFile {
 
 	@Override
 	public InputStream getInputStream() {
+		onlyForFiles();
 		return new ByteArrayInputStream(contents);
 	}
 
 	@Override
 	public OutputStream getOutputStream() {
+		onlyForFiles();
+		type = FileType.FILE;
 		return new ByteArrayOutputStream() {
 			@Override
 			public void close() throws IOException {

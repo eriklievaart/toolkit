@@ -12,6 +12,7 @@ import java.util.Formatter;
 
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.io.api.StreamTool;
+import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.str.Str;
 
 public class Sha1 {
@@ -23,18 +24,23 @@ public class Sha1 {
 		}
 	}
 
+	public static String hash(String data) {
+		Check.notNull(data);
+		return hash(StreamTool.toInputStream(data));
+	}
+
 	public static String hash(final File file) {
 		if (file == null || !file.isFile()) {
 			throw new RuntimeIOException("$ is not a file", file);
 		}
 		try (InputStream is = new FileInputStream(file)) {
-			return sha1(is);
+			return hash(is);
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
 		}
 	}
 
-	private static String sha1(InputStream is) {
+	public static String hash(InputStream is) {
 		try (BufferedInputStream bis = new BufferedInputStream(is)) {
 			final MessageDigest messageDigest = getDigest();
 			final byte[] buffer = new byte[1024];
