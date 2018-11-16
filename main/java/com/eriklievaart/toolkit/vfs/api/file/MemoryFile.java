@@ -150,7 +150,7 @@ public class MemoryFile extends AbstractVirtualFile {
 
 	@Override
 	public Optional<MemoryFile> getParentFile() {
-		MemoryFile resolve = resolver.resolve(UrlTool.removeSlash(UrlTool.getParent(path)));
+		MemoryFile resolve = resolver.resolve(UrlTool.removeTrailingSlash(UrlTool.getParent(path)));
 		return resolve == null ? Optional.empty() : Optional.of(resolve);
 	}
 

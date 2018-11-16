@@ -38,10 +38,6 @@ public interface VirtualFile {
 
 	public String getPath();
 
-	public String getBaseName();
-
-	public String getExtension();
-
 	public Iterable<VirtualFile> scan(String... extensions);
 
 	public String getRelativePathOf(VirtualFile child);

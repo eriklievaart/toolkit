@@ -16,7 +16,7 @@ public class VirtualFileUrl {
 
 	public VirtualFileUrl(String url) {
 		CheckStr.notBlank(url);
-		CheckStr.notContainsIgnoreCase(url, "..");
+		CheckStr.notContainsIgnoreCase(url, "/../");
 		CheckStr.notBlank(UrlTool.getPath(url));
 		UrlTool.getProtocol(url).orElseThrow(() -> new RuntimeIOException("Cannot determine protocol of %", url));
 		this.url = url.trim().replaceAll("\\\\", "/");
@@ -48,8 +48,12 @@ public class VirtualFileUrl {
 		return UrlTool.escape(UrlTool.getName(url));
 	}
 
+	public String getBaseName() {
+		return UrlTool.getBaseName(url);
+	}
+
 	public String getBaseNameEscaped() {
-		return UrlTool.escape(UrlTool.getBaseName(url));
+		return UrlTool.escape(getBaseName());
 	}
 
 	public String getExtension() {

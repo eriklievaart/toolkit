@@ -124,28 +124,48 @@ public class UrlToolU {
 	}
 
 	@Test
-	public void removeSlashRoot() {
-		Check.isEqual(UrlTool.removeSlash("/"), "/");
+	public void removeLeadingSlashesNull() {
+		Check.isEqual(UrlTool.removeLeadingSlashes(null), null);
 	}
 
 	@Test
-	public void removeSlashNull() {
-		Check.isNull(UrlTool.removeSlash(null));
+	public void removeLeadingSlashesRoot() {
+		Check.isEqual(UrlTool.removeLeadingSlashes("/"), "");
 	}
 
 	@Test
-	public void removeSlashRootPrefix() {
-		Check.isEqual(UrlTool.removeSlash("file:///"), "file:///");
+	public void removeLeadingSlashes() {
+		Check.isEqual(UrlTool.removeLeadingSlashes("///tmp"), "tmp");
 	}
 
 	@Test
-	public void removeSlashIgnore() {
-		Check.isEqual(UrlTool.removeSlash("file:///tmp"), "file:///tmp");
+	public void removeLeadingSlashesNone() {
+		Check.isEqual(UrlTool.removeLeadingSlashes("foo/bar"), "foo/bar");
 	}
 
 	@Test
-	public void removeSlashDir() {
-		Check.isEqual(UrlTool.removeSlash("file:///tmp/"), "file:///tmp");
+	public void removeTrailingSlashRoot() {
+		Check.isEqual(UrlTool.removeTrailingSlash("/"), "/");
+	}
+
+	@Test
+	public void removeTrailingSlashNull() {
+		Check.isNull(UrlTool.removeTrailingSlash(null));
+	}
+
+	@Test
+	public void removeTrailingSlashRootPrefix() {
+		Check.isEqual(UrlTool.removeTrailingSlash("file:///"), "file:///");
+	}
+
+	@Test
+	public void removeTrailingSlashIgnore() {
+		Check.isEqual(UrlTool.removeTrailingSlash("file:///tmp"), "file:///tmp");
+	}
+
+	@Test
+	public void removeTrailingSlashDir() {
+		Check.isEqual(UrlTool.removeTrailingSlash("file:///tmp/"), "file:///tmp");
 	}
 
 	@Test

@@ -29,12 +29,10 @@ public abstract class AbstractVirtualFile implements VirtualFile, VirtualFileCon
 		return UrlTool.getName(getPath());
 	}
 
-	@Override
 	public String getExtension() {
 		return UrlTool.getExtension(getPath());
 	}
 
-	@Override
 	public String getBaseName() {
 		return UrlTool.getBaseName(getPath());
 	}
@@ -116,15 +114,6 @@ public abstract class AbstractVirtualFile implements VirtualFile, VirtualFileCon
 	@Override
 	public String toString() {
 		return ToString.simple(this, "$[$]", getPath());
-	}
-
-	protected static VirtualFile findNamedChild(final VirtualFile[] files, final String name) {
-		for (VirtualFile file : files) {
-			if (file.getBaseName().equals(name)) {
-				return file;
-			}
-		}
-		throw new IllegalStateException(Str.sub("Child with name % not found in %", name, files));
 	}
 
 }

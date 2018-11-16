@@ -100,8 +100,15 @@ public class UrlTool {
 	/**
 	 * Remove the last trailing slash of an URL if there is one. Example: file:///tmp/ => file:///tmp
 	 */
-	public static String removeSlash(final String url) {
+	public static String removeTrailingSlash(final String url) {
 		return url == null ? null : PatternTool.getGroup1("^((?:([a-zA-Z]++:)?/{1,3})?.*?)[\\/]?$", url);
+	}
+
+	/**
+	 * Remove all slashes at the start of a String
+	 */
+	public static String removeLeadingSlashes(final String url) {
+		return url == null ? null : url.replaceFirst("^[/\\\\]++", "");
 	}
 
 	/**
@@ -166,7 +173,7 @@ public class UrlTool {
 	}
 
 	public static String getRelativePath(String parentRaw, String child) {
-		String parent = removeSlash(parentRaw);
+		String parent = removeTrailingSlash(parentRaw);
 		if (Str.isBlank(getHead(parent))) {
 			return child;
 		}

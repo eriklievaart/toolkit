@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-import com.eriklievaart.toolkit.vfs.api.VirtualFileScanner;
 import com.eriklievaart.toolkit.vfs.api.file.MemoryFile;
 import com.eriklievaart.toolkit.vfs.api.file.MemoryFileSystem;
 
@@ -36,7 +35,7 @@ public class VirtualFileScannerU {
 		text.createFile();
 
 		VirtualFileScanner scanner = new VirtualFileScanner(parent);
-		scanner.addFileFilter((file) -> file.getExtension().equals("txt"));
+		scanner.addFileFilter((file) -> file.getUrl().getExtension().equals("txt"));
 
 		Assertions.assertThat(scanner.iterator()).containsExactly(text);
 	}

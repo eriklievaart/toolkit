@@ -37,7 +37,7 @@ public class VirtualFileScanner implements Iterable<VirtualFile> {
 			Check.notBlank(ext);
 			set.add(ext.toUpperCase().trim());
 		}
-		filterFiles.add(file -> set.contains(file.getExtension().toUpperCase()));
+		filterFiles.add(file -> set.contains(file.getUrl().getExtension().toUpperCase()));
 		return this;
 	}
 
