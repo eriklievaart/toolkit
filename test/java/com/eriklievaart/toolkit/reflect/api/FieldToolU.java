@@ -1,13 +1,15 @@
 package com.eriklievaart.toolkit.reflect.api;
 
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.reflect.api.FieldTool;
-import com.eriklievaart.toolkit.reflect.api.ReflectException;
 
+@SuppressWarnings("unused")
 public class FieldToolU {
 
 	public static final Integer CONSTANT = 15;
@@ -29,5 +31,25 @@ public class FieldToolU {
 		Check.isTrue(constants.containsKey("string"), "Constant 'string' not found");
 		Check.isTrue(constants.containsKey("integer"), "Constant 'integer' not found");
 		Check.isTrue(constants.size() == 2, "Constants size expected size 2, but was " + constants);
+	}
+
+	@Test
+	public void getGenericLiteral() {
+		class Dummy {
+			private List<Integer> extract;
+		}
+		Field field = FieldTool.getField(Dummy.class, "extract");
+		Class<?> literal = FieldTool.getGenericLiteral(field);
+		Check.isEqual(literal.getSimpleName(), "Integer");
+	}
+
+	@Test
+	public void getGenericLiterals() {
+		class Dummy {
+			private Map<String, Integer> extract;
+		}
+		Field field = FieldTool.getField(Dummy.class, "extract");
+		List<Class<?>> literals = FieldTool.getGenericLiterals(field);
+		Assertions.assertThat(literals).containsExactly(String.class, Integer.class);
 	}
 }

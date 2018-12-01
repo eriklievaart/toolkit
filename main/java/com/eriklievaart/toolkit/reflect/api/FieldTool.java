@@ -1,7 +1,9 @@
 package com.eriklievaart.toolkit.reflect.api;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -130,5 +132,17 @@ public class FieldTool {
 			}
 		}
 		return into == null ? Optional.empty() : Optional.of(into);
+	}
+
+	public static Class<?> getGenericLiteral(Field field) {
+		return GenericsTool.getLiteral(GenericsTool.getGenericType(field.getGenericType()));
+	}
+
+	public static List<Class<?>> getGenericLiterals(Field field) {
+		List<Class<?>> result = NewCollection.list();
+		for (Type type : GenericsTool.getGenericTypes(field.getGenericType())) {
+			result.add(GenericsTool.getLiteral(type));
+		}
+		return result;
 	}
 }

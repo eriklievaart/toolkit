@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /**
  * Utility class for working with generics in reflection.
- * 
+ *
  * @author Erik Lievaart
  */
 public class GenericsTool {
@@ -31,7 +31,7 @@ public class GenericsTool {
 	}
 
 	/**
-	 * Returns generics for a type. For instance, a List&lt;String&gt; would return an array containing the String type.
+	 * Returns generic types. For instance, a List&lt;String&gt; would return an array containing the String type.
 	 */
 	public static Type[] getGenericTypes(final Type type) {
 		ReflectException.unless(type instanceof ParameterizedType, "% is not a ParameterizedType", type);
@@ -40,9 +40,9 @@ public class GenericsTool {
 
 	/**
 	 * Returns a single generic for a type. For instance, a List&lt;String&gt; would return the String type.
-	 * 
+	 *
 	 * @throws ReflectException
-	 *             when the Type has more than one generic parameter.
+	 *             when the Type has more than one generic parameter (or none).
 	 */
 	public static Type getGenericType(final Type type) {
 		Type[] types = getGenericTypes(type);

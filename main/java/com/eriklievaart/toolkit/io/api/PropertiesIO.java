@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 import com.eriklievaart.toolkit.logging.api.LogTemplate;
 
@@ -17,14 +18,17 @@ public class PropertiesIO {
 	private static LogTemplate log = new LogTemplate(PropertiesIO.class);
 
 	public static void storeStrings(Map<String, String> props, File file) {
+		Check.notNull(props, file);
 		store(convertToStrings(props), file);
 	}
 
 	public static void storeStrings(Map<String, String> props, OutputStream os) {
+		Check.notNull(props, os);
 		store(convertToStrings(props), os);
 	}
 
 	private static Properties convertToStrings(Map<String, String> props) {
+		Check.notNull(props);
 		Properties properties = new Properties();
 		for (Entry<String, String> entry : props.entrySet()) {
 			properties.put(entry.getKey(), entry.getValue());
@@ -34,6 +38,7 @@ public class PropertiesIO {
 
 	public static void store(Properties props, File file) {
 		log.debug("Storing property file $", file);
+		Check.notNull(props, file);
 		file.getParentFile().mkdirs();
 		try {
 			store(props, new FileOutputStream(file));
@@ -43,6 +48,7 @@ public class PropertiesIO {
 	}
 
 	public static void store(Properties props, OutputStream os) {
+		Check.notNull(props, os);
 		try {
 			props.store(os, null);
 
@@ -54,14 +60,17 @@ public class PropertiesIO {
 	}
 
 	public static Map<String, String> loadStrings(File file) {
+		CheckFile.exists(file);
 		return toMap(load(file));
 	}
 
 	public static Map<String, String> loadStrings(InputStream is) {
+		Check.notNull(is);
 		return toMap(load(is));
 	}
 
 	private static Map<String, String> toMap(Properties properties) {
+		Check.notNull(properties);
 		Map<String, String> map = NewCollection.mapNotNull();
 		for (Entry<Object, Object> entry : properties.entrySet()) {
 			map.put(entry.getKey().toString(), entry.getValue().toString());
@@ -70,16 +79,18 @@ public class PropertiesIO {
 	}
 
 	public static Properties load(File file) {
+		CheckFile.exists(file);
 		try {
 			return load(new FileInputStream(file));
 		} catch (IOException e) {
-			throw new RuntimeIOException(e);
+			throw new RuntimeIOException("Unable to load properties from file $", e, file);
 		}
 	}
 
 	public static Properties load(InputStream is) {
-		Properties props = new Properties();
+		Check.notNull(is);
 
+		Properties props = new Properties();
 		try {
 			props.load(is);
 
