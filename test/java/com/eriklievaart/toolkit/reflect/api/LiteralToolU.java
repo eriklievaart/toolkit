@@ -67,5 +67,4 @@ public class LiteralToolU {
 	public void isAbstractNo() {
 		Check.isFalse(LiteralTool.isAbstract(Thread.class));
 	}
-
 }

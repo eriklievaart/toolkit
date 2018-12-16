@@ -23,5 +23,4 @@ public class AlwaysValidate implements Validator {
 	@Override
 	public void check(final String string) {
 	}
-
 }

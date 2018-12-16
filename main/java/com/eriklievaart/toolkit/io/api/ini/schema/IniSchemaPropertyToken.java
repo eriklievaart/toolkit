@@ -43,5 +43,4 @@ public class IniSchemaPropertyToken {
 	public String toString() {
 		return ToString.simple(this, "$[$]", type);
 	}
-
 }

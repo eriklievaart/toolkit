@@ -48,5 +48,4 @@ public class RegexValidator implements Validator {
 	public void check(final String value) throws ConversionException {
 		ConversionException.unless(isValid(value), message, value, regex);
 	}
-
 }

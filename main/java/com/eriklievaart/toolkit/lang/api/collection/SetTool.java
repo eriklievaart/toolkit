@@ -69,5 +69,4 @@ public class SetTool {
 		result.removeAll(removeSet);
 		return result;
 	}
-
 }

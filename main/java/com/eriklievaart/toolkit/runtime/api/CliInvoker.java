@@ -76,5 +76,4 @@ public class CliInvoker {
 	private static void dumpInCurrentThread(final InputStream input, final CliOutput output) {
 		new StreamRunnable(input, output).run();
 	}
-
 }

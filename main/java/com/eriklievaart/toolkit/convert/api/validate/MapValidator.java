@@ -10,5 +10,4 @@ public class MapValidator extends RegexValidator {
 	public MapValidator() {
 		super("[^#=]++=[^#=]++(?:\\#[^#=]++=[^#=]++)*+", "Not a valid value: %. Does every key have a value?");
 	}
-
 }

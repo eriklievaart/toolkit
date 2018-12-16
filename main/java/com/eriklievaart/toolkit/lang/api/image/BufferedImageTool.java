@@ -23,5 +23,4 @@ public class BufferedImageTool {
 		image.getGraphics().drawImage(source, b.getX(), b.getY(), b.getWidth(), b.getHeight(), null);
 		return image;
 	}
-
 }

@@ -49,5 +49,4 @@ public class VirtualFileScanner implements Iterable<VirtualFile> {
 
 		return new VirtualFileIterator(rootClone, dirFilterClone, fileFilterClone);
 	}
-
 }

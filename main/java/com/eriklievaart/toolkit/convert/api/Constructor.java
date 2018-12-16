@@ -34,5 +34,4 @@ public interface Constructor<T> {
 	 * Create a converter for this constructor, which validates the input using the specified validator.
 	 */
 	public Converter<T> createConverter(final Validator validator);
-
 }

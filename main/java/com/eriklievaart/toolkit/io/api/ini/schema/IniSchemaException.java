@@ -7,5 +7,4 @@ public class IniSchemaException extends RuntimeException {
 	public IniSchemaException(String message, Object... args) {
 		super(Str.sub(message, args));
 	}
-
 }

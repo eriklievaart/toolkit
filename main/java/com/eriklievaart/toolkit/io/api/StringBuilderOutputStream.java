@@ -23,5 +23,4 @@ public class StringBuilderOutputStream extends OutputStream {
 	public String getResult() {
 		return builder.toString();
 	}
-
 }

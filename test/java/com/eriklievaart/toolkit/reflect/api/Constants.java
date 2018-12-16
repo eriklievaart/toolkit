@@ -7,5 +7,4 @@ public class Constants {
 	public static String errString = "err";
 	public final String errString2 = "err";
 	static final Integer errInteger = 18;
-
 }

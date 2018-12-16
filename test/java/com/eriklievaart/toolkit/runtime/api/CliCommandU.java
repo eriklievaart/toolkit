@@ -61,5 +61,4 @@ public class CliCommandU {
 	public void splitCommandAndArgumentsBackspace() {
 		Check.isEqual(CliCommand.splitCommandLine("echo \\b"), new String[] { "echo", "\\" });
 	}
-
 }

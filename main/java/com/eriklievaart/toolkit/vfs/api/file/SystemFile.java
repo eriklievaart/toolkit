@@ -166,5 +166,4 @@ public class SystemFile extends AbstractVirtualFile {
 	public String getProtocol() {
 		return "file";
 	}
-
 }

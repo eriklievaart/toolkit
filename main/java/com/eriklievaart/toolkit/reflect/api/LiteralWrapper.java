@@ -135,5 +135,4 @@ class LiteralWrapper {
 	public String toString() {
 		return getClass().getSimpleName() + "{" + getQualifiedName() + "}";
 	}
-
 }

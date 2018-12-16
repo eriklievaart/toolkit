@@ -26,7 +26,5 @@ public class AnnotatedFieldU {
 
 		Prototype command = field.getAnnotation(Prototype.class);
 		Check.notNull(command);
-
 	}
-
 }

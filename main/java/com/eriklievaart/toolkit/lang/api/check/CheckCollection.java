@@ -17,10 +17,12 @@ public class CheckCollection {
 	}
 
 	public static void isEmpty(final Collection<?> match, final String format, final Object... args) {
+		Check.notNull(match);
 		Check.isTrue(match.isEmpty(), format, args);
 	}
 
 	public static void isEmpty(Map<?, ?> map) {
+		Check.notNull(map);
 		Check.isTrue(map.isEmpty(), "Map not empty $", map);
 	}
 
@@ -114,5 +116,4 @@ public class CheckCollection {
 			throw new AssertionException(Str.sub("Actual has more elements than expected: %", actual.next()));
 		}
 	}
-
 }

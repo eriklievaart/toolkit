@@ -17,5 +17,4 @@ public @interface RaceCondition {
 	 * The reason this class is not ThreadSafe.
 	 */
 	String value();
-
 }

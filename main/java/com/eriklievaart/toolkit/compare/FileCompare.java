@@ -60,5 +60,4 @@ public class FileCompare {
 	private static InputStream buffer(InputStream original1) {
 		return original1 instanceof BufferedInputStream ? original1 : new BufferedInputStream(original1);
 	}
-
 }

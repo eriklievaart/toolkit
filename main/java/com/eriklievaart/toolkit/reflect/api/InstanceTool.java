@@ -86,5 +86,4 @@ public class InstanceTool {
 	public static void injectField(Object target, Field field, Object value) {
 		InstanceTool.wrap(target).injectField(field.getName(), value);
 	}
-
 }

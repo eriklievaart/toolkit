@@ -8,5 +8,4 @@ import java.util.logging.LogRecord;
 public interface Formatter {
 
 	public String format(LogRecord record);
-
 }

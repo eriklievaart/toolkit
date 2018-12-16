@@ -90,5 +90,4 @@ public class Modifiers {
 	public boolean containsNone(Modifiers other) {
 		return (mod | other.mod) == 0;
 	}
-
 }

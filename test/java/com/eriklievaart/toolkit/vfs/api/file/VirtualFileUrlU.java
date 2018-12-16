@@ -49,5 +49,4 @@ public class VirtualFileUrlU {
 		VirtualFileUrl file = new VirtualFileUrl("file://tmp/file");
 		Check.isFalse(tmp.isParentOf(file));
 	}
-
 }

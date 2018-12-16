@@ -36,5 +36,4 @@ public class ReflectionRepresentation {
 	public String toString() {
 		return ToString.simple(this, "$[$#$]", literalName, memberName);
 	}
-
 }

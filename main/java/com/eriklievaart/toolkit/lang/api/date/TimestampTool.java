@@ -15,5 +15,4 @@ public class TimestampTool {
 
 	public static final long YEAR_355 = 355 * ONE_DAY;
 	public static final long YEAR_356 = 356 * ONE_DAY;
-
 }

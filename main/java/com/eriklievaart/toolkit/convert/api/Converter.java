@@ -100,5 +100,4 @@ public class Converter<T> {
 		}
 		return serializer.toString(instance);
 	}
-
 }

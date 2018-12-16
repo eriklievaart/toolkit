@@ -15,5 +15,4 @@ public class DefaultExceptionHandler implements ExceptionHandler {
 		log.trace("Full stack trace for Throwable in event.", e);
 		JOptionPane.showMessageDialog(null, cause.getMessage());
 	}
-
 }

@@ -51,5 +51,4 @@ public class CliStreams {
 	public void thrown(Exception e) {
 		err.println(e.getMessage());
 	}
-
 }

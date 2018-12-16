@@ -42,5 +42,4 @@ public class ProxyMethodWrapper extends AbstractMethodWrapper {
 	public Class<?> getSingleArgumentType() {
 		return method.getParameterTypes()[0];
 	}
-
 }

@@ -174,5 +174,4 @@ public class GenericsToolU {
 		Type type = LiteralTool.wrap(Local.class).getField("list").getGenericType();
 		Check.isTrue(GenericsTool.isBaseType(type, List.class));
 	}
-
 }

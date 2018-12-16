@@ -17,5 +17,4 @@ public class ExistingDirectoryValidator implements Validator {
 	public void check(String value) throws ConversionException {
 		ConversionException.on(!isValid(value), "% is not a directory", value);
 	}
-
 }

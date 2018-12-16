@@ -11,5 +11,4 @@ public class ToStringU {
 	public void simple() {
 		CheckStr.isEqual(ToString.simple(this, "${%}", "Full Moon wo Sagashite"), "ToStringU{`Full Moon wo Sagashite`}");
 	}
-
 }

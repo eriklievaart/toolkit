@@ -32,5 +32,4 @@ public class PropertyToolU {
 		Check.isEqual(thread.getName(), "Goblin Kite");
 		Check.isEqual(thread.getPriority(), 8);
 	}
-
 }

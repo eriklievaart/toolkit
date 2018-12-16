@@ -7,5 +7,4 @@ public class Sha1Exception extends IOException {
 	public Sha1Exception(String message) {
 		super(message);
 	}
-
 }

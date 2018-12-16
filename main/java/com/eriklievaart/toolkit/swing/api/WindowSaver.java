@@ -108,10 +108,12 @@ public class WindowSaver implements AWTEventListener {
 
 	private static Properties loadProperties() {
 		try {
-			return PropertiesIO.load(CONFIG_FILE.get());
-		} catch (RuntimeIOException ioe) {
-			return new Properties();
+			if (CONFIG_FILE.get().isFile()) {
+				return PropertiesIO.load(CONFIG_FILE.get());
+			}
+		} catch (RuntimeIOException ignore) {
 		}
+		return new Properties();
 	}
 
 	private static int getInt(final Properties props, final String name, final int def) {

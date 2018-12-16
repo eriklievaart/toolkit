@@ -30,5 +30,4 @@ public class ErrorCollectorHandler implements ErrorHandler {
 	public List<SaxParseExceptionWrapper> getExceptions() {
 		return Collections.unmodifiableList(collect);
 	}
-
 }

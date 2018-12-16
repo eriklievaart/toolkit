@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
@@ -16,13 +17,39 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
  */
 public class MultiMap<K, V> {
 
-	private final Map<K, List<V>> delegate = NewCollection.concurrentMap();
+	private final Map<K, List<V>> delegate;
+
+	/**
+	 * Create a MultiMap with a default delegate concurrent Map.
+	 */
+	public MultiMap() {
+		delegate = NewCollection.concurrentMap();
+	}
+
+	/**
+	 * Create a MultiMap with the supplied delegate Map.
+	 */
+	public MultiMap(Map<K, List<V>> delegate) {
+		this.delegate = delegate;
+	}
 
 	/**
 	 * Add a value to a key, the key is added if necessary.
 	 */
 	public void add(final K key, final V value) {
 		List<V> values = get(key);
+		values.add(value);
+		delegate.put(key, values);
+	}
+
+	/**
+	 * Add a unique value (no duplicates) to a key, the key is added if necessary. Relies on the value's equals method.
+	 */
+	public void addUniqueValue(final K key, final V value) {
+		List<V> values = get(key);
+		if (values.contains(value)) {
+			return;
+		}
 		values.add(value);
 		delegate.put(key, values);
 	}
@@ -42,7 +69,7 @@ public class MultiMap<K, V> {
 	 * Returns all the values for a specified key, or an empty List if the key is not present.
 	 */
 	public List<V> get(final K key) {
-		return delegate.get(key) == null ? new ArrayList<V>() : delegate.get(key);
+		return delegate.get(key) == null ? new ArrayList<>() : delegate.get(key);
 	}
 
 	/**
@@ -85,6 +112,10 @@ public class MultiMap<K, V> {
 		return values;
 	}
 
+	public void forEach(BiConsumer<K, List<V>> action) {
+		delegate.forEach(action);
+	}
+
 	/**
 	 * Add all of the values of another {@link MultiMap} to this one, keys will be overwritten if present.
 	 */
@@ -95,11 +126,6 @@ public class MultiMap<K, V> {
 		this.delegate.putAll(that.delegate);
 	}
 
-	@Override
-	public String toString() {
-		return delegate.toString();
-	}
-
 	/**
 	 * Count the keys in this MultiMap.
 	 */
@@ -107,4 +133,23 @@ public class MultiMap<K, V> {
 		return delegate.size();
 	}
 
+	public boolean remove(K key, V value) {
+		if (!delegate.containsKey(key)) {
+			return false;
+		}
+		boolean result = delegate.get(key).remove(value);
+		if (delegate.get(key).isEmpty()) {
+			delegate.remove(key);
+		}
+		return result;
+	}
+
+	public List<V> remove(K key) {
+		return delegate.remove(key);
+	}
+
+	@Override
+	public String toString() {
+		return delegate.toString();
+	}
 }

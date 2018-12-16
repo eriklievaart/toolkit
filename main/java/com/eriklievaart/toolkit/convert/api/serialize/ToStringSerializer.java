@@ -11,5 +11,4 @@ public class ToStringSerializer implements Serializer<Object> {
 		Check.notNull(instance);
 		return instance.toString();
 	}
-
 }

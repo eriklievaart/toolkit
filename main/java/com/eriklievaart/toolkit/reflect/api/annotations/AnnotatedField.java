@@ -49,5 +49,4 @@ public class AnnotatedField<A extends Annotation> extends AnnotatedMember<Field,
 	public <O extends Annotation> O getAnnotation(Class<O> other) {
 		return getMember().getAnnotation(other);
 	}
-
 }

@@ -115,5 +115,4 @@ public abstract class AbstractVirtualFile implements VirtualFile, VirtualFileCon
 	public String toString() {
 		return ToString.simple(this, "$[$]", getPath());
 	}
-
 }

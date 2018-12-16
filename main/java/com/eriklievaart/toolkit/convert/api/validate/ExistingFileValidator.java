@@ -17,5 +17,4 @@ public class ExistingFileValidator implements Validator {
 	public void check(String value) throws ConversionException {
 		ConversionException.on(!isValid(value), "% is not a file", value);
 	}
-
 }

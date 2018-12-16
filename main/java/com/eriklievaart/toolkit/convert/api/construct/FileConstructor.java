@@ -18,5 +18,4 @@ public class FileConstructor extends AbstractConstructor<File> {
 	public Converter<File> createConverter() {
 		return new Converter<>(this, new AlwaysValidate(), new FileSerializer());
 	}
-
 }

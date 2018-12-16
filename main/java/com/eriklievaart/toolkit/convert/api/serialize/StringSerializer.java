@@ -11,5 +11,4 @@ public class StringSerializer implements Serializer<String> {
 		Check.notNull(instance);
 		return instance;
 	}
-
 }

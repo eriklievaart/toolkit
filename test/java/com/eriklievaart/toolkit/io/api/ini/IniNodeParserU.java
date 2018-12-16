@@ -87,5 +87,4 @@ public class IniNodeParserU {
 		Check.isEqual(child.getIdentifier(), "cid");
 		Check.isEqual(child.getProperty("c"), "d");
 	}
-
 }

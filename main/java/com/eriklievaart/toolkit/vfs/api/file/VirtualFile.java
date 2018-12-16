@@ -115,5 +115,4 @@ public interface VirtualFile {
 	}
 
 	public void delete();
-
 }

@@ -92,5 +92,4 @@ public class SaxReflectionReader {
 		xr.setContentHandler(handler);
 		return xr;
 	}
-
 }

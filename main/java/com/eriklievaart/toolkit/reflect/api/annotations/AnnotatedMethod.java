@@ -33,5 +33,4 @@ public class AnnotatedMethod<A extends Annotation> extends AnnotatedMember<Metho
 	public <O extends Annotation> O getAnnotation(Class<O> other) {
 		return getMember().getAnnotation(other);
 	}
-
 }

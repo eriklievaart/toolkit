@@ -55,5 +55,4 @@ public class SimpleDateFormatWrapperU {
 		Date date = new GregorianCalendar(1982, Calendar.MARCH, 21).getTime();
 		Check.isEqual(wrapper.toString(date), "21-03-1982");
 	}
-
 }

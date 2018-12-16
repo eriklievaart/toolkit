@@ -83,5 +83,4 @@ public class MethodTool {
 	public static Method getMethod(final String clazz, final String method) {
 		return LiteralTool.wrap(clazz).getMethod(method);
 	}
-
 }

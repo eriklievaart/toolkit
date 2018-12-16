@@ -98,5 +98,4 @@ public class PropertyWrapper implements Comparable<PropertyWrapper> {
 	public String toString() {
 		return "PropertyWrapper[" + descriptor.getName() + "]";
 	}
-
 }

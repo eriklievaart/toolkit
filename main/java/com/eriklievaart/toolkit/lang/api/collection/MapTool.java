@@ -78,5 +78,4 @@ public class MapTool {
 		map.put(key2, value2);
 		return map;
 	}
-
 }

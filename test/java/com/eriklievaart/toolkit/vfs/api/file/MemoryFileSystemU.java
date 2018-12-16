@@ -32,5 +32,4 @@ public class MemoryFileSystemU {
 		Check.isTrue(a == resolver.resolve("mem:/tmp/a"));
 		Check.isTrue(a.getParentFile().get() == b.getParentFile().get());
 	}
-
 }

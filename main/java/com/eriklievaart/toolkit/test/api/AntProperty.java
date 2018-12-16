@@ -45,5 +45,4 @@ public class AntProperty {
 	public boolean isSet() {
 		return Str.notBlank(property);
 	}
-
 }

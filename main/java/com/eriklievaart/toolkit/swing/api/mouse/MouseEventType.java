@@ -19,5 +19,4 @@ public enum MouseEventType {
 	public int getId() {
 		return type;
 	}
-
 }

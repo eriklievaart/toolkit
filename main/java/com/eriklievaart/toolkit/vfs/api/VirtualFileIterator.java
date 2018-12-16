@@ -63,5 +63,4 @@ public class VirtualFileIterator implements Iterator<VirtualFile> {
 		}
 		return true;
 	}
-
 }

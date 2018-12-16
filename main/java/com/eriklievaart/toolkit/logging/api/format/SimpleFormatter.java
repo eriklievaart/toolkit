@@ -20,5 +20,4 @@ public class SimpleFormatter implements Formatter {
 		}
 		return builder.toString();
 	}
-
 }

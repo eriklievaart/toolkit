@@ -177,5 +177,4 @@ public class MemoryFile extends AbstractVirtualFile {
 	public long lastModified() {
 		return modified;
 	}
-
 }

@@ -2,6 +2,7 @@ package com.eriklievaart.toolkit.lang.api.str;
 
 import java.util.Arrays;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
@@ -72,6 +73,16 @@ public class StrU {
 	public void quote() {
 		Check.isEqual(Str.quote(null), "<null>");
 		Check.isEqual(Str.quote("test"), "`test`");
+	}
+
+	@Test
+	public void sort() {
+		Assertions.assertThat(Str.sort("c", "a", "B", null)).containsExactly(null, "B", "a", "c");
+	}
+
+	@Test
+	public void sortIgnoreCase() {
+		Assertions.assertThat(Str.sortIgnoreCase("c", "a", "B", null)).containsExactly(null, "a", "B", "c");
 	}
 
 	@Test

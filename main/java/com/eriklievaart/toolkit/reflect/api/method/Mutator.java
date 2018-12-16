@@ -19,5 +19,4 @@ public class Mutator extends AbstractMethodWrapper {
 	public void invoke(final Object value) {
 		invoke(new Object[] { value });
 	}
-
 }

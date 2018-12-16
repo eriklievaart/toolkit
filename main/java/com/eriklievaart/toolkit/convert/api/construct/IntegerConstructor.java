@@ -20,5 +20,4 @@ public class IntegerConstructor extends AbstractConstructor<Integer> {
 	public Converter<Integer> createConverter() {
 		return new Converter(this, new RegexValidator("\\d++"), new ToStringSerializer());
 	}
-
 }

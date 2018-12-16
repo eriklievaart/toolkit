@@ -42,5 +42,4 @@ public class ListToolU {
 		List<String> test = Arrays.asList("1", "3", "5");
 		Check.isNull(ListTool.lookup(test, "6"));
 	}
-
 }

@@ -52,5 +52,4 @@ public class ObjectMapperU {
 	public void toMapNoProperties() {
 		ObjectMapper.toMap(new Point());
 	}
-
 }

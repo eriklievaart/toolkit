@@ -71,5 +71,4 @@ public class ResourceTool {
 	private static Class<?> getLiteral() {
 		return ResourceTool.class;
 	}
-
 }

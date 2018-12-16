@@ -114,5 +114,4 @@ public class JListSelectionU {
 		Check.isTrue(selection.selectedAtMost(2));
 		Check.isTrue(selection.selectedAtMost(3));
 	}
-
 }

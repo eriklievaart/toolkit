@@ -67,5 +67,4 @@ public class CliCommand {
 	public String toString() {
 		return cmdarray.toString();
 	}
-
 }

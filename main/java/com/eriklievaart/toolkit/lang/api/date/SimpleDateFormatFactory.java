@@ -25,5 +25,4 @@ public class SimpleDateFormatFactory {
 	public static SimpleDateFormatWrapper getWrapperNL() {
 		return getWrapper(getFormatNL());
 	}
-
 }

@@ -111,5 +111,4 @@ public class LazyMap<K, V> implements Map<K, V> {
 	public Collection<V> values() {
 		return map.values();
 	}
-
 }

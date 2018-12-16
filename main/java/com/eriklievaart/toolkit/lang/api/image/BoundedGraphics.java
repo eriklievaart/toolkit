@@ -98,5 +98,4 @@ public class BoundedGraphics {
 		assert x + width <= bounds.getWidth() : x + width + " > " + bounds.getWidth();
 		assert y + height <= bounds.getHeight() : y + height + " > " + bounds.getHeight();
 	}
-
 }

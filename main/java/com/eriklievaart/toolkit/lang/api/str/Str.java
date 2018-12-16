@@ -1,10 +1,13 @@
 package com.eriklievaart.toolkit.lang.api.str;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import com.eriklievaart.toolkit.lang.api.NullSafeComparator;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.FromCollection;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
@@ -120,5 +123,25 @@ public class Str {
 
 	public static String joinLines(Collection<String> lines) {
 		return String.join("\n", lines);
+	}
+
+	public static List<String> sort(String... strings) {
+		return sort(Arrays.asList(strings));
+	}
+
+	public static List<String> sort(Collection<String> c) {
+		List<String> result = new ArrayList<>(c);
+		Collections.sort(result, new NullSafeComparator<>((a, b) -> a.compareTo(b)));
+		return result;
+	}
+
+	public static List<String> sortIgnoreCase(String... strings) {
+		return sortIgnoreCase(Arrays.asList(strings));
+	}
+
+	public static List<String> sortIgnoreCase(Collection<String> c) {
+		List<String> result = new ArrayList<>(c);
+		Collections.sort(result, new NullSafeComparator<>((a, b) -> a.toUpperCase().compareTo(b.toUpperCase())));
+		return result;
 	}
 }

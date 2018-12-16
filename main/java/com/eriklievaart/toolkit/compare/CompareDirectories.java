@@ -55,5 +55,4 @@ public class CompareDirectories {
 		Check.isTrue(file.isDirectory(), "% is not a directory", path);
 		return file;
 	}
-
 }

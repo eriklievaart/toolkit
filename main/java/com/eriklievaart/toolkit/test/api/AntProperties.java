@@ -18,6 +18,10 @@ public class AntProperties {
 		return new AntProperty("source.main.java.dir");
 	}
 
+	public static AntProperty getResourceDir() {
+		return new AntProperty("source.main.resource.dir");
+	}
+
 	public static AntProperty getZipDir() {
 		return new AntProperty("source.main.zip.dir");
 	}
@@ -31,7 +35,7 @@ public class AntProperties {
 	}
 
 	public static AntProperty getJavaClassesDir() {
-		return new AntProperty("build.classes.dir");
+		return new AntProperty("build.main.classes.dir");
 	}
 
 	public static AntProperty getTestJavaClassesDir() {
@@ -46,5 +50,4 @@ public class AntProperties {
 		String property = System.getProperty("application.test.mode");
 		return property == null ? false : property.equalsIgnoreCase("true");
 	}
-
 }

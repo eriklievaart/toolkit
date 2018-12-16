@@ -21,5 +21,4 @@ public class FormattedException extends RuntimeException {
 	public Throwable getRootCause() {
 		return ThrowableTool.getRootCause(this);
 	}
-
 }

@@ -109,5 +109,4 @@ public class CharIteratorU {
 		iter.next();
 		Check.isTrue(iter.hasPrevious());
 	}
-
 }

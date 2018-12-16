@@ -322,5 +322,4 @@ public class UrlToolU {
 	public void getPathRelative() {
 		Check.isEqual(UrlTool.getPath("path/to/something"), "path/to/something");
 	}
-
 }

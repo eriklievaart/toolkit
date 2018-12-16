@@ -23,5 +23,4 @@ public class VirtualFileComparator implements Comparator<VirtualFile> {
 		}
 		return delegate.compare(o1.getName(), o2.getName());
 	}
-
 }

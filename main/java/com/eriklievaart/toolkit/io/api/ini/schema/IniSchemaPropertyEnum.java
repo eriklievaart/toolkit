@@ -43,5 +43,4 @@ public enum IniSchemaPropertyEnum {
 	};
 
 	public abstract void verifyProperty(IniNode contentNode, IniSchemaPropertyToken token) throws IniSchemaException;
-
 }

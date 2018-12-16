@@ -63,6 +63,7 @@ public class UrlTool {
 	 * Get the extension part of a URL. Example file:///tmp/file.ext => ext
 	 */
 	public static String getExtension(final String url) {
+		Check.notNull(url);
 		String file = getName(url);
 		if (file.lastIndexOf('.') == 0) {
 			return "";
@@ -199,5 +200,4 @@ public class UrlTool {
 		String protocol = url.replaceFirst(":.*+", "").trim();
 		return protocol.matches("[a-z]++") ? Optional.of(protocol) : Optional.empty();
 	}
-
 }

@@ -67,5 +67,4 @@ class SaxReflectionHandler extends DefaultHandler {
 	public Object getResult() {
 		return result;
 	}
-
 }

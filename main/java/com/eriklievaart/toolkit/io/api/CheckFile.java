@@ -2,64 +2,56 @@ package com.eriklievaart.toolkit.io.api;
 
 import java.io.File;
 import java.util.Arrays;
-
-import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
+import java.util.List;
 
 public class CheckFile {
 
 	public static void isFile(File file) {
-		Check.notNull(file);
-		Check.isTrue(file.isFile(), "Not a file! $", file);
+		RuntimeIOException.on(file == null || !file.isFile(), "Not a file! $", file);
 	}
 
 	public static void isFile(File file, String msg) {
-		Check.notNull(file, msg);
-		Check.isTrue(file.isFile(), msg);
+		RuntimeIOException.on(file == null || !file.isFile(), msg);
 	}
 
 	public static void isFile(File file, String msg, Object... args) {
-		Check.notNull(file, "Argument is <null> so is not a file");
-		Check.isTrue(file.isFile(), msg, args);
+		RuntimeIOException.on(file == null || !file.isFile(), msg, args);
 	}
 
 	public static void isDirectory(File file) {
-		Check.notNull(file);
-		Check.isTrue(file.isDirectory(), "Not a directory! $", file);
+		RuntimeIOException.on(file == null || !file.isDirectory(), "Not a directory! $", file);
 	}
 
 	public static void isDirectory(File file, String msg) {
-		Check.notNull(file, msg);
-		Check.isTrue(file.isDirectory(), msg);
+		RuntimeIOException.on(file == null || !file.isDirectory(), msg);
 	}
 
 	public static void isDirectory(File file, String msg, Object... args) {
-		Check.notNull(file, "Argument is <null> so is not a directory");
-		Check.isTrue(file.isDirectory(), msg, args);
+		RuntimeIOException.on(file == null || !file.isDirectory(), msg, args);
 	}
 
 	public static void exists(File file) {
-		Check.notNull(file);
-		Check.isTrue(file.exists(), "File does not exist! $", file);
+		RuntimeIOException.on(file == null || !file.exists(), "File does not exist! $", file);
 	}
 
 	public static void notExists(File file) {
-		Check.notNull(file);
-		Check.isFalse(file.exists(), "File exists! $", file);
+		RuntimeIOException.on(file == null, "File is <null>");
+		RuntimeIOException.on(file.exists(), "File does exists! $", file);
 	}
 
 	public static void containsData(File file, String data) {
 		isFile(file);
-		Check.isEqual(FileTool.toString(file), data);
+		RuntimeIOException.unless(FileTool.toString(file).equals(data), "data was %", data);
 	}
 
 	public static void isEmptyDirectory(File file) {
 		isDirectory(file);
-		CheckCollection.isEmpty(Arrays.asList(file.list()));
+		List<String> children = Arrays.asList(file.list());
+		RuntimeIOException.unless(children.isEmpty(), "dirctory not empty: $", children);
 	}
 
 	public static void isDirectoryWithChildren(File file) {
 		isDirectory(file);
-		Check.isFalse(file.list().length == 0, "No children! %", file);
+		RuntimeIOException.on(file.list().length == 0, "No children! $", file);
 	}
 }

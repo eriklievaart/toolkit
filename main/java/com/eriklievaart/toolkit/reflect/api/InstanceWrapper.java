@@ -91,5 +91,4 @@ public class InstanceWrapper {
 			throw new ReflectException("Unable to read field: " + Str.sub(name), e);
 		}
 	}
-
 }

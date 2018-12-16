@@ -182,5 +182,4 @@ public class IniNode {
 		}
 		return ToString.simple(this, "$[$]", name);
 	}
-
 }

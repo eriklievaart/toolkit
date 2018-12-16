@@ -62,5 +62,4 @@ public class RuntimeIOException extends RuntimeException {
 			throw new RuntimeIOException(format, args);
 		}
 	}
-
 }

@@ -56,5 +56,4 @@ public class StringBuilderWrapperU {
 		sbw.clear();
 		CheckStr.isEmpty(sbw.toString());
 	}
-
 }

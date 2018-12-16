@@ -17,5 +17,4 @@ public class IniNodeValidationResult {
 	public String getErrorMessage() {
 		return message;
 	}
-
 }

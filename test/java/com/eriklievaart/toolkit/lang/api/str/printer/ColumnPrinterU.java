@@ -42,6 +42,5 @@ public class ColumnPrinterU {
 		printer.setVerticalGap(0);
 		printer.setAlignRight();
 		CheckStr.isEqual(printer.toString(), " 1 2\n1112\n");
-
 	}
 }

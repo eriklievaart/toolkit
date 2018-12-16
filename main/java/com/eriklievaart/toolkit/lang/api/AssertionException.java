@@ -24,5 +24,4 @@ public class AssertionException extends RuntimeException {
 			throw new AssertionException(Str.sub(format, args));
 		}
 	}
-
 }

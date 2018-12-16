@@ -14,5 +14,4 @@ public class MapToolU {
 		Map<String, String> map = MapTool.of("key", "value");
 		Check.isEqual(map.get("key"), "value");
 	}
-
 }

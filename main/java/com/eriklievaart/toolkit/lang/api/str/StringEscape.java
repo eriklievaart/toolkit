@@ -150,5 +150,4 @@ public class StringEscape {
 		}
 		return input.length() > 0 && input.charAt(input.length() - 1) == escape;
 	}
-
 }

@@ -73,5 +73,4 @@ public class JListSelection<E> {
 	public boolean selectedAtMost(int count) {
 		return getSelectionCount() <= count;
 	}
-
 }

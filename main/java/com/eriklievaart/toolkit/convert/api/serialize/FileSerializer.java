@@ -14,5 +14,4 @@ public class FileSerializer implements Serializer<File> {
 	public String toString(File instance) throws ConversionException {
 		return instance.getAbsolutePath();
 	}
-
 }

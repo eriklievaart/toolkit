@@ -145,5 +145,4 @@ public class WildcardToolU {
 	public void singleCharacterAnyMatchesEmpty() {
 		Check.isFalse(WildcardTool.singleCharacterMatches('?', new CharIterator("")));
 	}
-
 }

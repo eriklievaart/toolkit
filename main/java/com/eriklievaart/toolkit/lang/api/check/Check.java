@@ -115,5 +115,4 @@ public class Check {
 			Check.isEqual(Array.get(actual, i), Array.get(expected, i));
 		}
 	}
-
 }

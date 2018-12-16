@@ -99,5 +99,4 @@ abstract class AbstractMethodWrapper {
 	public String toString() {
 		return "AbstractMethodWrapper[" + method.getDeclaringClass().getName() + "#" + method.getName() + "]";
 	}
-
 }

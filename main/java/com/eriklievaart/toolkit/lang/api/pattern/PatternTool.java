@@ -145,5 +145,4 @@ public class PatternTool {
 	public static String replaceAll(final String regex, final String replace, final String input) {
 		return matcher(regex, input).replaceAll(replace);
 	}
-
 }

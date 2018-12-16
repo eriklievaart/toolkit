@@ -21,5 +21,4 @@ public class Accessor extends AbstractMethodWrapper {
 	public Object invoke() {
 		return invoke(NO_ARGUMENTS);
 	}
-
 }

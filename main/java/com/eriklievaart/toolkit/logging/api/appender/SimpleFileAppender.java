@@ -16,6 +16,7 @@ public class SimpleFileAppender extends AbstractAppender {
 
 	public SimpleFileAppender(File file) {
 		this.file = file;
+		file.getParentFile().mkdirs();
 	}
 
 	@Override

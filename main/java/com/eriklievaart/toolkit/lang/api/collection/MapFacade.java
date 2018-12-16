@@ -126,5 +126,4 @@ public class MapFacade<K, V> implements Map<K, V> {
 	public boolean isRemovable(Object key) {
 		return maps.iterator().next().containsKey(key);
 	}
-
 }

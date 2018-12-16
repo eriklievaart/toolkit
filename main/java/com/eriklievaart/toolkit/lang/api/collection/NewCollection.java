@@ -155,5 +155,4 @@ public class NewCollection {
 	public static <E> List<E> concurrentList() {
 		return new CopyOnWriteArrayList<E>();
 	}
-
 }

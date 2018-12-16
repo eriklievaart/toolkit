@@ -77,5 +77,4 @@ public class IniSchemaTokenizerU {
 		List<IniSchemaToken> tokens = new IniSchemaTokenizer(input).getTokens();
 		return tokens;
 	}
-
 }

@@ -98,5 +98,4 @@ public class CharIterator {
 	public int length() {
 		return chars.length() - index;
 	}
-
 }

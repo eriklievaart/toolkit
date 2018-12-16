@@ -22,5 +22,4 @@ public class StringConstructor extends AbstractConstructor<String> {
 	public Converter<String> createConverter() {
 		return new Converter(this, new AlwaysValidate(), new StringSerializer());
 	}
-
 }

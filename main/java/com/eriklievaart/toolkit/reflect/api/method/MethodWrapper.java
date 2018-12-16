@@ -23,5 +23,4 @@ public class MethodWrapper extends AbstractMethodWrapper {
 	public Object invoke(final Object... args) {
 		return super.invoke(args);
 	}
-
 }

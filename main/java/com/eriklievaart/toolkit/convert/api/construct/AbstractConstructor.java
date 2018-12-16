@@ -40,5 +40,4 @@ public abstract class AbstractConstructor<T> implements Constructor<T> {
 	public Converter<T> createConverter(final Validator validator) {
 		return new Converter<T>(this, validator);
 	}
-
 }
