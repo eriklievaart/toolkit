@@ -17,6 +17,7 @@ public class LongConstructor extends AbstractConstructor<Long> {
 	}
 
 	@Override
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Converter<Long> createConverter() {
 		return new Converter(this, new RegexValidator("\\d++"), new ToStringSerializer());
 	}

@@ -22,6 +22,11 @@ public class LineFilter {
 		lines = Str.splitLines(data);
 	}
 
+	public LineFilter(List<String> data) {
+		Check.notNull(data);
+		lines = data.toArray(new String[] {});
+	}
+
 	public LineFilter(File file) throws IOException {
 		this(FileTool.toString(file));
 	}
@@ -105,6 +110,11 @@ public class LineFilter {
 
 	public LineFilter trim() {
 		functions.add(String::trim);
+		return this;
+	}
+
+	public LineFilter map(Function<String, String> function) {
+		functions.add(function);
 		return this;
 	}
 }

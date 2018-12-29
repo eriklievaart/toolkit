@@ -19,6 +19,7 @@ public class BooleanConstructor extends AbstractConstructor<Boolean> {
 	}
 
 	@Override
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Converter<Boolean> createConverter() {
 		return new Converter(this, new RegexValidator("true|false"), new ToStringSerializer());
 	}

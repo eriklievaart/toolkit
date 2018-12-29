@@ -7,7 +7,7 @@ import com.eriklievaart.toolkit.convert.api.validate.AlwaysValidate;
 
 /**
  * Constructor for constructing String's. Simply returns the value passed.
- * 
+ *
  * @author Erik Lievaart
  */
 public class StringConstructor extends AbstractConstructor<String> {
@@ -19,6 +19,7 @@ public class StringConstructor extends AbstractConstructor<String> {
 	}
 
 	@Override
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Converter<String> createConverter() {
 		return new Converter(this, new AlwaysValidate(), new StringSerializer());
 	}

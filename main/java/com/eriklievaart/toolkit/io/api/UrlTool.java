@@ -92,6 +92,16 @@ public class UrlTool {
 	}
 
 	/**
+	 * Get the domain of an URL if there is one. Returns null otherwise.
+	 */
+	public static String getDomain(String url) {
+		if (url.contains(":")) {
+			return url.replaceFirst("[^:]++:/++", "").replaceFirst("/.++", "");
+		}
+		return url.startsWith("/") ? null : url.replaceFirst("/.++", "");
+	}
+
+	/**
 	 * Get the parent of a URL. Example file:///tmp/file.ext => file:///tmp
 	 */
 	public static String getParent(final String url) {

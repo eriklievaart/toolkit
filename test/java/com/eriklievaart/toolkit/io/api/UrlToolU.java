@@ -269,6 +269,26 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void getDomain() {
+		Check.isEqual(UrlTool.getDomain("https://example.com/ignore"), "example.com");
+	}
+
+	@Test
+	public void getDomainNoProtocol() {
+		Check.isEqual(UrlTool.getDomain("example.com/ignore"), "example.com");
+	}
+
+	@Test
+	public void getDomainMissing() {
+		Check.isNull(UrlTool.getDomain("/missing"));
+	}
+
+	@Test
+	public void getDomainMissingShort() {
+		Check.isNull(UrlTool.getDomain("/"));
+	}
+
+	@Test
 	public void getRelativePath() {
 		Check.isEqual(UrlTool.getRelativePath("/path", "/path/to/something"), "to/something");
 	}

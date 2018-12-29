@@ -5,8 +5,6 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-import com.eriklievaart.toolkit.io.api.LineFilter;
-
 public class LineFilterU {
 
 	@Test
@@ -73,6 +71,12 @@ public class LineFilterU {
 	public void trim() {
 		List<String> lines = new LineFilter("   a    ").trim().list();
 		Assertions.assertThat(lines).containsExactly("a");
+	}
+
+	@Test
+	public void map() {
+		List<String> lines = new LineFilter("cd").map(e -> "ab" + e).list();
+		Assertions.assertThat(lines).containsExactly("abcd");
 	}
 
 	@Test
