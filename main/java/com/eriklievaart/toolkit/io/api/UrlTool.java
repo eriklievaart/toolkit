@@ -98,7 +98,7 @@ public class UrlTool {
 		if (url.contains(":")) {
 			return url.replaceFirst("[^:]++:/++", "").replaceFirst("/.++", "");
 		}
-		return url.startsWith("/") ? null : url.replaceFirst("/.++", "");
+		return url.startsWith(SLASH) ? null : url.replaceFirst("/.++", "");
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class UrlTool {
 
 	public static String getTail(String url) {
 		String slashed = url.replace('\\', '/');
-		return slashed.substring(1).contains("/") ? getPath(slashed).replaceFirst("^/?[^/]++/?", "") : null;
+		return slashed.substring(1).contains(SLASH) ? getPath(slashed).replaceFirst("^/?[^/]++/?", "") : null;
 	}
 
 	public static Optional<String> getProtocol(String url) {

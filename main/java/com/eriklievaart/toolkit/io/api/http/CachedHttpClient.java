@@ -38,5 +38,4 @@ public class CachedHttpClient implements HttpClient {
 	public InputStream getInputStream(String url) {
 		return fetch.apply(url);
 	}
-
 }
