@@ -1,6 +1,5 @@
 package com.eriklievaart.toolkit.logging.api;
 
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -21,18 +20,16 @@ public class LoggerU {
 
 	@Test
 	public void logObject() {
-		LogRecord record = new LogRecord(Level.WARNING, "expecting123");
-		String logged = logRecord(record);
+		String logged = logRecord(new LogRecord(Level.WARNING, "expecting123"));
 		CheckStr.contains(logged, "WARN");
 		CheckStr.contains(logged, "expecting123");
 	}
 
 	@Test
 	public void logLoggerName() {
-		LogRecord record = new LogRecord(Level.INFO, "my message");
 		Logger logger = new Logger("test.logger");
 
-		String result = logRecord(logger, record);
+		String result = logRecord(logger, new LogRecord(Level.INFO, "my message"));
 
 		CheckStr.contains(result, "INFO");
 		CheckStr.contains(result, "test.logger");
@@ -75,7 +72,7 @@ public class LoggerU {
 	@Test
 	public void logAppenderOverride() throws Exception {
 		BufferAppender appender = new BufferAppender();
-		LogConfig.setAppenders("override", Arrays.asList(appender));
+		LogConfig.setAppenders("override", appender);
 
 		LogTemplate override = new LogTemplate("override");
 		override.info("buffered");
@@ -85,7 +82,7 @@ public class LoggerU {
 	@Test
 	public void logAppenderOverrideParentUnaffected() throws Exception {
 		BufferAppender appender = new BufferAppender();
-		LogConfig.setAppenders("parent.child", Arrays.asList(appender));
+		LogConfig.setAppenders("parent.child", appender);
 
 		LogTemplate parent = new LogTemplate("parent");
 		parent.info("should not be buffered");
@@ -95,7 +92,7 @@ public class LoggerU {
 	@Test
 	public void logAppenderOverrideChildAffected() throws Exception {
 		BufferAppender appender = new BufferAppender();
-		LogConfig.setAppenders("parent", Arrays.asList(appender));
+		LogConfig.setAppenders("parent", appender);
 
 		LogTemplate child = new LogTemplate("parent.child");
 		child.info("child should inherit");

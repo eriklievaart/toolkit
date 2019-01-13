@@ -7,7 +7,7 @@ import com.eriklievaart.toolkit.logging.api.Formatter;
 
 public class LambdaFormatter implements Formatter {
 
-	private Function<LogRecord, String> function;
+	private final Function<LogRecord, String> function;
 
 	public LambdaFormatter(Function<LogRecord, String> function) {
 		this.function = function;

@@ -71,6 +71,18 @@ public class MemoryFileU {
 	}
 
 	@Test
+	public void setLastModified() {
+		MemoryFileSystem fs = new MemoryFileSystem();
+
+		MemoryFile file = fs.resolve("root/from");
+		file.writeString("original");
+		Check.isTrue(System.currentTimeMillis() - file.lastModified() < 100);
+
+		file.setLastModified(200);
+		Check.isEqual(file.lastModified(), 200l);
+	}
+
+	@Test
 	public void copySingleFileToFile() {
 		MemoryFileSystem fs = new MemoryFileSystem();
 		MemoryFile fileA = fs.resolve("root/middle-a/file-a");

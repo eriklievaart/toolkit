@@ -54,6 +54,11 @@ public class SystemFile extends AbstractVirtualFile {
 	}
 
 	@Override
+	public void setLastModified(long stamp) {
+		file.setLastModified(stamp);
+	}
+
+	@Override
 	public boolean isDirectory() {
 		return file.isDirectory();
 	}
@@ -75,7 +80,7 @@ public class SystemFile extends AbstractVirtualFile {
 			return NewCollection.list();
 		}
 		File[] files = file.listFiles();
-		RuntimeIOException.on(files == null, "Access denied!");
+		RuntimeIOException.on(files == null, "Access denied! $", file);
 		return Arrays.stream(files).map(SystemFile::new).collect(Collectors.toList());
 	}
 

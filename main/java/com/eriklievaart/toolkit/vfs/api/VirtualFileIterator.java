@@ -43,7 +43,7 @@ public class VirtualFileIterator implements Iterator<VirtualFile> {
 			VirtualFile file = stack.pop();
 
 			if (file.isDirectory() && passesFilters(file, filterDirs)) {
-				for (VirtualFile child : file.getChildren()) {
+				for (VirtualFile child : file.getChildrenAdvanced().noError().get()) {
 					stack.push(child);
 				}
 

@@ -8,13 +8,10 @@ import java.util.GregorianCalendar;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.lang.api.date.SimpleDateFormatFactory;
-import com.eriklievaart.toolkit.lang.api.date.SimpleDateFormatWrapper;
-import com.eriklievaart.toolkit.lang.api.date.TimestampTool;
 
 public class SimpleDateFormatWrapperU {
 
-	private SimpleDateFormatWrapper wrapper = new SimpleDateFormatWrapper(SimpleDateFormatFactory.getFormatNL());
+	private SimpleDateFormatWrapper wrapper = new SimpleDateFormatWrapper(SimpleDateFormatFactory.getDateFormatNL());
 
 	@Test
 	public void toDate() throws ParseException {

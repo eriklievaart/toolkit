@@ -24,6 +24,7 @@ public class SimpleFileAppender extends AbstractAppender {
 		try (FileWriter writer = new FileWriter(file, APPEND)) {
 			writer.write(format(record));
 			writer.write("\n");
+			writer.flush();
 
 		} catch (IOException e) {
 			e.printStackTrace();

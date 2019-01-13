@@ -146,7 +146,16 @@ public class SystemFileU extends SandboxTest {
 		SystemFile file = new SystemFile(new File("/"));
 		Check.isFalse(file.getParentFile().isPresent());
 	}
-	//*/
+
+	@Test
+	public void setLastModified() {
+		SystemFile file = systemFile("banana.txt");
+		file.writeString("original");
+		Check.isTrue(System.currentTimeMillis() - file.lastModified() < 1000);
+
+		file.setLastModified(123456000l);
+		Check.isEqual(file.lastModified(), 123456000l);
+	}
 
 	@Test
 	public void copyToMemory() {

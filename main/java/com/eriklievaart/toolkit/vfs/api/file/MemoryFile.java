@@ -177,4 +177,9 @@ public class MemoryFile extends AbstractVirtualFile {
 	public long lastModified() {
 		return modified;
 	}
+
+	@Override
+	public void setLastModified(long stamp) {
+		modified = stamp;
+	}
 }

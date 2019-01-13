@@ -1,14 +1,11 @@
 package com.eriklievaart.toolkit.vfs.api.file;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.io.api.UrlTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
-import com.eriklievaart.toolkit.vfs.api.VirtualFileComparator;
 
 public interface VirtualFile {
 
@@ -48,37 +45,12 @@ public interface VirtualFile {
 
 	public long lastModified();
 
+	public void setLastModified(long stamp);
+
 	public List<? extends VirtualFile> getChildren();
 
-	public default List<VirtualFile> getChildren(VirtualFileType type) {
-		List<VirtualFile> result = NewCollection.list();
-
-		for (VirtualFile child : getChildren()) {
-
-			boolean add = false;
-			add = add || type == VirtualFileType.ALL;
-			add = add || type == VirtualFileType.FILE && child.isFile();
-			add = add || type == VirtualFileType.DIRECTORY && child.isDirectory();
-
-			if (add) {
-				result.add(child);
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * Return the children of a {@link VirtualFile} in order.
-	 *
-	 * @param file
-	 *            parent which' children to retrieve.
-	 * @return the children in order.
-	 * @see VirtualFileComparator
-	 */
-	public default List<? extends VirtualFile> getChildrenAlphabeticallyDirectoriesFirst() {
-		List<? extends VirtualFile> children = getChildren();
-		Collections.sort(children, new VirtualFileComparator());
-		return children;
+	public default VirtualFileChildren getChildrenAdvanced() {
+		return new VirtualFileChildren(this);
 	}
 
 	/**

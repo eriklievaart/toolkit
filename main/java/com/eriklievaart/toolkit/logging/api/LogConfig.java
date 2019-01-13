@@ -54,11 +54,15 @@ public class LogConfig {
 
 	public static List<Appender> getAppenders(String logger) {
 		List<Appender> result = appenders.get(logger);
-		return result == null ? getAppenders(getParent(logger)) : result;
+		return result != null ? result : getAppenders(getParent(logger));
 	}
 
 	static String getParent(String logger) {
 		return logger.contains(".") ? logger.replaceFirst(".[^.]*$", "") : "";
+	}
+
+	public static void setAppenders(String logger, Appender... list) {
+		setAppenders(logger, Arrays.asList(list));
 	}
 
 	public static void setAppenders(String logger, List<Appender> list) {
