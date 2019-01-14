@@ -4,7 +4,7 @@ import com.eriklievaart.toolkit.lang.api.concurrent.ThreadSafe;
 
 /**
  * Constructors create Objects from raw String values.
- * 
+ *
  * @author Erik Lievaart
  * @param <T>
  *            Generic type to construct.
@@ -14,7 +14,7 @@ public interface Constructor<T> {
 
 	/**
 	 * Construct an instance from the specified String value.
-	 * 
+	 *
 	 * @throws ConversionException
 	 *             on conversion failure
 	 */

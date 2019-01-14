@@ -4,7 +4,7 @@ import com.eriklievaart.toolkit.lang.api.str.CharIterator;
 
 /**
  * Performs basic wildcard matching on '?' (single character) and '*' (zero or more characters).
- * 
+ *
  * @author Erik Lievaart
  */
 public class WildcardTool {

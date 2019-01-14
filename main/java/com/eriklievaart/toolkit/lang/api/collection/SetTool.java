@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 /**
  * Utility class for working with Sets.
- * 
+ *
  * @author Erik Lievaart
  */
 public class SetTool {

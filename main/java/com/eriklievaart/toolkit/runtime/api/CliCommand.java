@@ -12,7 +12,7 @@ import com.eriklievaart.toolkit.lang.api.str.StringEscape;
 
 /**
  * A command that can be invoked on the native shell.
- * 
+ *
  * @author Erik Lievaart
  */
 @Immutable

@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 /**
  * Calls a Method through reflection.
- * 
+ *
  * @author Erik Lievaart
  */
 public class MethodWrapper extends AbstractMethodWrapper {

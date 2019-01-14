@@ -13,7 +13,7 @@ import com.eriklievaart.toolkit.lang.api.concurrent.RaceCondition;
 
 /**
  * Utility class for reading and writing Serializable data.
- * 
+ *
  * @author Erik Lievaart
  */
 @RaceCondition("This class is Immutable, but the underlying filesystem is not.")

@@ -9,7 +9,7 @@ import com.eriklievaart.toolkit.reflect.api.LiteralTool;
 /**
  * MethodWrapper that can be used to call Method's with proxy Objects. Methods passed to the constructor of this class
  * are required to take a single interface as argument, otherwise Exceptions will occur.
- * 
+ *
  * @author Erik Lievaart
  */
 public class ProxyMethodWrapper extends AbstractMethodWrapper {

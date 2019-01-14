@@ -17,9 +17,9 @@ import com.eriklievaart.toolkit.lang.api.concurrent.RaceCondition;
  * {@link SaxReflectionReader} instance is created a prefix is passed to the constructor. This prefix is used to
  * identify processing instructions for the {@link SaxReflectionReader}. Valid processing instructions are made using
  * the prefix in combination with one of the suffixes "element" or "close".
- * 
+ *
  * Here is a very basic example:
- * 
+ *
  * <pre>
  * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
  * &lt;?prefix.element panel=javax.swing.JPanel?&gt;
@@ -29,7 +29,7 @@ import com.eriklievaart.toolkit.lang.api.concurrent.RaceCondition;
  *     &lt;button text="label" horizontalTextPosition="4" /&gt;
  * &lt;/panel&gt;
  * </pre>
- * 
+ *
  * This example creates a panel of type javax.swing.JPanel and adds to it a child of type javax.swing.JButton. The
  * button has "label" as text and the horizontalTextPosition attribute is set to "4".
  * <p/>
@@ -45,7 +45,7 @@ import com.eriklievaart.toolkit.lang.api.concurrent.RaceCondition;
  * parent element, when a child has been processed. So in the example above
  * "&lt;?prefix.close add(java.awt.Component)?&gt;" specifies that when the button has been created, is will be added to
  * the panel using the add method which takes a component as an argument.
- * 
+ *
  * @author Erik Lievaart
  */
 @RaceCondition("This class is absolutely not Thread safe!")
@@ -56,7 +56,7 @@ public class SaxReflectionReader {
 
 	/**
 	 * Create a SaxReflectionReader.
-	 * 
+	 *
 	 * @param processingPrefix
 	 *            look for processing instructions with the specified prefix.
 	 * @param converters
@@ -69,7 +69,7 @@ public class SaxReflectionReader {
 
 	/**
 	 * Read an XML file found at the specified path.
-	 * 
+	 *
 	 * @see XMLReader#parse(String)
 	 */
 	public <E> E readXmlFile(final String file) throws SAXException, IOException {
@@ -79,7 +79,7 @@ public class SaxReflectionReader {
 
 	/**
 	 * Read an XML file found at the specified path.
-	 * 
+	 *
 	 * @see XMLReader#parse(InputSource)
 	 */
 	public <E> E readXmlFile(final Reader reader) throws IOException, SAXException {

@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * Utility methods for running code in the Swing event Thread.
- * 
+ *
  * @author Erik Lievaart
  */
 public class SwingThread {
@@ -15,7 +15,7 @@ public class SwingThread {
 
 	/**
 	 * Run a runnable in the Swing event Thread.
-	 * 
+	 *
 	 * @see SwingUtilities#invokeLater(Runnable)
 	 */
 	public static void invokeLater(final Runnable runnable) {
@@ -28,7 +28,7 @@ public class SwingThread {
 
 	/**
 	 * Run a runnable in the Swing event Thread.
-	 * 
+	 *
 	 * @see SwingUtilities#invokeAndWait(Runnable)
 	 */
 	public static void invokeAndWait(final Runnable runnable) throws InterruptedException, InvocationTargetException {
@@ -41,7 +41,7 @@ public class SwingThread {
 
 	/**
 	 * Run a runnable in the Swing event Thread and convert any Exceptions to {@link RuntimeException}'s.
-	 * 
+	 *
 	 * @see SwingUtilities#invokeAndWait(Runnable)
 	 */
 	public static void invokeAndWaitUnchecked(final Runnable runnable) {

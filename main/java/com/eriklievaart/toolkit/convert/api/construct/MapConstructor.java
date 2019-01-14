@@ -9,7 +9,7 @@ import com.eriklievaart.toolkit.lang.api.pattern.PatternTool;
 
 /**
  * Constructs Map's from String's. Use '|' to separate entries and '=' to separate key - value pairs.
- * 
+ *
  * @author Erik Lievaart
  */
 @SuppressWarnings("unchecked")

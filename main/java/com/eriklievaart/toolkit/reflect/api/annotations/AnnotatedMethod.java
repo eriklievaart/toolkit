@@ -9,10 +9,10 @@ import com.eriklievaart.toolkit.reflect.api.method.MethodWrapper;
 
 /**
  * Wrapper for a Method that has an Annotation.
- * 
+ *
  * @param <A>
  *            type of the annotation.
- * 
+ *
  * @author Erik Lievaart
  */
 @Immutable

@@ -4,7 +4,7 @@ import com.eriklievaart.toolkit.lang.api.concurrent.ThreadSafe;
 
 /**
  * Validates that input String's pass custom requirements.
- * 
+ *
  * @author Erik Lievaart
  */
 @ThreadSafe

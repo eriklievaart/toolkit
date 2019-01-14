@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 /**
  * MethodWrapper for calling the accessor (getter) of a property through reflection. Invoke to call the get method.
- * 
+ *
  * @author Erik Lievaart
  */
 public class Accessor extends AbstractMethodWrapper {

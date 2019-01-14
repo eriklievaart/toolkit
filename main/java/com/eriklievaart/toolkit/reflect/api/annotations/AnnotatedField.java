@@ -10,10 +10,10 @@ import com.eriklievaart.toolkit.reflect.api.InstanceWrapper;
 
 /**
  * Wrapper for a Field that has an Annotation.
- * 
+ *
  * @param <A>
  *            type of the annotation.
- * 
+ *
  * @author Erik Lievaart
  */
 @Immutable

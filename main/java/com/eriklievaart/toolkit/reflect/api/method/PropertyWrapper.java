@@ -7,7 +7,7 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 
 /**
  * Utility class for working with PropertyDescriptors. Provides easy access to the underlying property.
- * 
+ *
  * @author Erik Lievaart
  */
 public class PropertyWrapper implements Comparable<PropertyWrapper> {

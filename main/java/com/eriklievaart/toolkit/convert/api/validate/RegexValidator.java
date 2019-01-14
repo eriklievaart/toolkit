@@ -7,7 +7,7 @@ import com.eriklievaart.toolkit.lang.api.pattern.PatternTool;
 
 /**
  * Validator that validates an input String using the specified regular expression.
- * 
+ *
  * @author Erik Lievaart
  */
 public class RegexValidator implements Validator {
@@ -17,7 +17,7 @@ public class RegexValidator implements Validator {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param regex
 	 *            Validates the input String.
 	 */
@@ -26,7 +26,7 @@ public class RegexValidator implements Validator {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param regex
 	 *            Validates the input String.
 	 * @param message

@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * Utility class for figuring out where the jar or classes folder of any class is located.
- * 
+ *
  * @author Erik Lievaart
  */
 public class JvmPaths {

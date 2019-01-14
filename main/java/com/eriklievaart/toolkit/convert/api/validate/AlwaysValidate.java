@@ -4,7 +4,7 @@ import com.eriklievaart.toolkit.convert.api.Validator;
 
 /**
  * Validator that always returns true.
- * 
+ *
  * @author Erik Lievaart
  */
 public class AlwaysValidate implements Validator {

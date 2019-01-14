@@ -6,7 +6,7 @@ import com.eriklievaart.toolkit.vfs.api.file.VirtualFile;
 
 /**
  * Comparator for comparing {@link VirtualFile}'s.
- * 
+ *
  * @author Erik Lievaart
  */
 public class VirtualFileComparator implements Comparator<VirtualFile> {

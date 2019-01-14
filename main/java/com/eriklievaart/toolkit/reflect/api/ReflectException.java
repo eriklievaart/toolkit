@@ -5,7 +5,7 @@ import com.eriklievaart.toolkit.lang.api.str.Str;
 
 /**
  * This RuntimeException can be thrown whenever a problem occurs with Java reflection.
- * 
+ *
  * @author Erik Lievaart
  */
 public class ReflectException extends RuntimeException implements Showable {

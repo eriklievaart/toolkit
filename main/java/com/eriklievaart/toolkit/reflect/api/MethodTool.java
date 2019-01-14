@@ -11,7 +11,7 @@ import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 
 /**
  * Utility class for working with Method's through reflection.
- * 
+ *
  * @author Erik Lievaart
  */
 public class MethodTool {
@@ -66,7 +66,7 @@ public class MethodTool {
 
 	/**
 	 * Get the named Method.
-	 * 
+	 *
 	 * @throws ReflectException
 	 *             if the method name is not unique.
 	 */
@@ -76,7 +76,7 @@ public class MethodTool {
 
 	/**
 	 * Get the named Method.
-	 * 
+	 *
 	 * @throws ReflectException
 	 *             if the method name is not unique.
 	 */

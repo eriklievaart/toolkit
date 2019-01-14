@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 /**
  * OutputStream that writes to a StringBuilder. Useful for converting OutputStream's into an in memory String.
- * 
+ *
  * @author Erik Lievaart
  */
 public class StringBuilderOutputStream extends OutputStream {
