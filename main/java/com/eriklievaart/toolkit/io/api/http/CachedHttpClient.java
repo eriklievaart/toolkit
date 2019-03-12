@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import com.eriklievaart.toolkit.io.api.CheckFile;
 import com.eriklievaart.toolkit.io.api.StreamTool;
+import com.eriklievaart.toolkit.lang.api.check.Check;
 
 public class CachedHttpClient implements HttpClient {
 
@@ -26,16 +27,24 @@ public class CachedHttpClient implements HttpClient {
 
 	@Override
 	public String getString(String url) {
+		Check.notBlank(url);
 		return StreamTool.toString(fetch.apply(url));
 	}
 
 	@Override
 	public List<String> getLines(String url) {
+		Check.notBlank(url);
 		return StreamTool.readLines(fetch.apply(url));
 	}
 
 	@Override
 	public InputStream getInputStream(String url) {
+		Check.notBlank(url);
 		return fetch.apply(url);
+	}
+
+	@Override
+	public void setHeader(String name, String value) {
+		delegate.setHeader(name, value);
 	}
 }

@@ -56,7 +56,7 @@ public class UrlTool {
 	 * Get the name part of a URL. Example file:///tmp/file.ext => file.ext
 	 */
 	public static String getName(final String url) {
-		return PatternTool.getGroup1(".*?([^\\/]*+[\\/]?)", url);
+		return PatternTool.getGroup1(".*?([^\\\\/]*+[\\\\/]?)", url);
 	}
 
 	/**
@@ -105,14 +105,15 @@ public class UrlTool {
 	 * Get the parent of a URL. Example file:///tmp/file.ext => file:///tmp
 	 */
 	public static String getParent(final String url) {
-		return PatternTool.getGroup1("(.*?)[^\\/]++[\\/]?", url);
+		return PatternTool.getGroup1("(.*?)[^\\\\/]++[\\\\/]?", url);
 	}
 
 	/**
 	 * Remove the last trailing slash of an URL if there is one. Example: file:///tmp/ => file:///tmp
 	 */
 	public static String removeTrailingSlash(final String url) {
-		return url == null ? null : PatternTool.getGroup1("^((?:([a-zA-Z]++:)?/{1,3})?.*?)[\\/]?$", url);
+		String regex = "^((?:([a-zA-Z]++:)?/{1,3}(?:[a-zA-Z]:[/\\\\])?)?.*?)[\\/]?$";
+		return url == null ? null : PatternTool.getGroup1(regex, unix(url));
 	}
 
 	/**
@@ -166,7 +167,7 @@ public class UrlTool {
 		Check.notNull(url);
 		Check.notNull(child);
 
-		return addSlash(url) + Str.emptyOnNull(PatternTool.getGroup1("/?+(.++)", child));
+		return addSlash(url) + Str.emptyOnNull(PatternTool.getGroup1("[/\\\\]?+(.++)", child));
 	}
 
 	/**
@@ -195,12 +196,12 @@ public class UrlTool {
 	}
 
 	public static String getHead(String url) {
-		return url == null ? null : getPath(url).replaceFirst("^/", "").replaceFirst("[/\\\\].++", "");
+		return url == null ? null : getPath(url).replaceFirst("^[/\\\\]", "").replaceFirst("[/\\\\].++", "");
 	}
 
 	public static String getTail(String url) {
-		String slashed = url.replace('\\', '/');
-		return slashed.substring(1).contains(SLASH) ? getPath(slashed).replaceFirst("^/?[^/]++/?", "") : null;
+		String unix = unix(url);
+		return unix.substring(1).contains(SLASH) ? getPath(unix).replaceFirst("^/?[^/]++/?", "") : null;
 	}
 
 	public static Optional<String> getProtocol(String url) {
@@ -209,5 +210,9 @@ public class UrlTool {
 		}
 		String protocol = url.replaceFirst(":.*+", "").trim();
 		return protocol.matches("[a-z]++") ? Optional.of(protocol) : Optional.empty();
+	}
+
+	private static String unix(String url) {
+		return url == null ? null : url.replace('\\', '/');
 	}
 }

@@ -24,6 +24,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void getNameWindows() {
+		Check.isEqual(UrlTool.getName("file://c:\\tmp\\test.123"), "test.123");
+	}
+
+	@Test
 	public void getExtension() {
 		Check.isEqual(UrlTool.getExtension("file:///tmp/test.123"), "123");
 	}
@@ -84,6 +89,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void getParentWindows() {
+		Check.isEqual(UrlTool.getParent("file://c:\\tmp"), "file://c:\\");
+	}
+
+	@Test
 	public void getParentEmpty() {
 		Check.isEqual(UrlTool.getParent("file:///me//"), null);
 	}
@@ -124,6 +134,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void addSlashIgnoreWindows() {
+		Check.isEqual(UrlTool.addSlash("file:///c:\\tmp\\"), "file:///c:\\tmp\\");
+	}
+
+	@Test
 	public void removeLeadingSlashesNull() {
 		Check.isEqual(UrlTool.removeLeadingSlashes(null), null);
 	}
@@ -144,6 +159,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void removeLeadingSlashesWindows() {
+		Check.isEqual(UrlTool.removeLeadingSlashes("\\tmp"), "tmp");
+	}
+
+	@Test
 	public void removeTrailingSlashRoot() {
 		Check.isEqual(UrlTool.removeTrailingSlash("/"), "/");
 	}
@@ -159,6 +179,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void removeTrailingSlashRootWindows() {
+		Check.isEqual(UrlTool.removeTrailingSlash("file://c:\\"), "file://c:/");
+	}
+
+	@Test
 	public void removeTrailingSlashIgnore() {
 		Check.isEqual(UrlTool.removeTrailingSlash("file:///tmp"), "file:///tmp");
 	}
@@ -166,6 +191,11 @@ public class UrlToolU {
 	@Test
 	public void removeTrailingSlashDir() {
 		Check.isEqual(UrlTool.removeTrailingSlash("file:///tmp/"), "file:///tmp");
+	}
+
+	@Test
+	public void removeTrailingSlashWindowsDir() {
+		Check.isEqual(UrlTool.removeTrailingSlash("c:\\temp\\"), "c:/temp");
 	}
 
 	@Test
@@ -224,6 +254,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void appendWindows() {
+		Check.isEqual(UrlTool.append("file://c:\\temp\\", "\\junk"), "file://c:\\temp\\junk");
+	}
+
+	@Test
 	public void appendMultiple() {
 		Check.isEqual(UrlTool.append("/media/", "/cdrom", "dir"), "/media/cdrom/dir");
 	}
@@ -246,6 +281,16 @@ public class UrlToolU {
 	@Test
 	public void getHeadUrl() {
 		Check.isEqual(UrlTool.getHead("https://path/to/something"), "path");
+	}
+
+	@Test
+	public void getHeadWindowsRoot() {
+		Check.isEqual(UrlTool.getHead("file://c:\\tmp\\file"), "c:");
+	}
+
+	@Test
+	public void getHeadWindows() {
+		Check.isEqual(UrlTool.getHead("\\tmp\\file"), "tmp");
 	}
 
 	@Test
@@ -314,6 +359,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void getRelativePathWindows() {
+		Check.isEqual(UrlTool.getRelativePath("c:/data/cheat/files", "c:\\data\\cheat\\files\\test.txt"), "test.txt");
+	}
+
+	@Test
 	public void getPathSingle() {
 		Check.isEqual(UrlTool.getPath("file:/"), "/");
 	}
@@ -335,7 +385,7 @@ public class UrlToolU {
 
 	@Test
 	public void getPathWindows() {
-		Check.isEqual(UrlTool.getPath("file:///c:/tmp"), "c:/tmp");
+		Check.isEqual(UrlTool.getPath("file://c:/tmp"), "c:/tmp");
 	}
 
 	@Test

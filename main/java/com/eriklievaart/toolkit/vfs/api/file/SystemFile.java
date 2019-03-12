@@ -1,5 +1,7 @@
 package com.eriklievaart.toolkit.vfs.api.file;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -150,7 +152,7 @@ public class SystemFile extends AbstractVirtualFile {
 	@Override
 	public InputStream getInputStream() {
 		try {
-			return new FileInputStream(file);
+			return new BufferedInputStream(new FileInputStream(file));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeIOException(e);
 		}
@@ -160,7 +162,7 @@ public class SystemFile extends AbstractVirtualFile {
 	public OutputStream getOutputStream() {
 		try {
 			file.getParentFile().mkdirs();
-			return new FileOutputStream(file);
+			return new BufferedOutputStream(new FileOutputStream(file));
 
 		} catch (FileNotFoundException e) {
 			throw new RuntimeIOException(e);
