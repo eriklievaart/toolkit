@@ -23,14 +23,21 @@ public class StreamTool {
 	public static void copyStream(InputStream input, OutputStream output) {
 		try {
 			try {
-				byte[] buffer = new byte[1024];
-				int bytesRead;
-				while ((bytesRead = input.read(buffer)) != -1) {
-					output.write(buffer, 0, bytesRead);
-				}
+				copyStreamNoClose(input, output);
 			} finally {
 				close(input);
-				close(output);
+			}
+		} finally {
+			close(output);
+		}
+	}
+
+	public static void copyStreamNoClose(InputStream input, OutputStream output) {
+		try {
+			byte[] buffer = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = input.read(buffer)) != -1) {
+				output.write(buffer, 0, bytesRead);
 			}
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
