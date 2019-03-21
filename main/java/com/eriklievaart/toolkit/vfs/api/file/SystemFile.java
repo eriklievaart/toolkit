@@ -52,6 +52,11 @@ public class SystemFile extends AbstractVirtualFile {
 
 	@Override
 	public long lastModified() {
+		long modified = file.lastModified();
+		if (modified >= 0) {
+			return modified;
+		}
+		file.setLastModified(System.currentTimeMillis());
 		return file.lastModified();
 	}
 
