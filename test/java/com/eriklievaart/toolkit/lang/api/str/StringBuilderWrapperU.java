@@ -2,8 +2,8 @@ package com.eriklievaart.toolkit.lang.api.str;
 
 import org.junit.Test;
 
+import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
-import com.eriklievaart.toolkit.lang.api.str.StringBuilderWrapper;
 
 public class StringBuilderWrapperU {
 
@@ -55,5 +55,21 @@ public class StringBuilderWrapperU {
 		sbw.append('u');
 		sbw.clear();
 		CheckStr.isEmpty(sbw.toString());
+	}
+
+	@Test
+	public void length() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper("12345");
+		Check.isEqual(sbw.length(), 5);
+	}
+
+	@Test
+	public void isEmptyTrue() {
+		Check.isTrue(new StringBuilderWrapper().isEmpty());
+	}
+
+	@Test
+	public void isEmptyFalse() {
+		Check.isFalse(new StringBuilderWrapper("data").isEmpty());
 	}
 }

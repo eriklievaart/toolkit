@@ -1,14 +1,18 @@
 package com.eriklievaart.toolkit.vfs.api;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.ListTool;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
+import com.eriklievaart.toolkit.vfs.api.file.SystemFile;
 import com.eriklievaart.toolkit.vfs.api.file.VirtualFile;
 
 public class VirtualFileScanner implements Iterable<VirtualFile> {
@@ -48,5 +52,17 @@ public class VirtualFileScanner implements Iterable<VirtualFile> {
 		ArrayList<VirtualFileFilter> dirFilterClone = new ArrayList<>(filterDirectories);
 
 		return new VirtualFileIterator(rootClone, dirFilterClone, fileFilterClone);
+	}
+
+	public List<VirtualFile> collectAsVirtualFileList() {
+		return StreamSupport.stream(this.spliterator(), false).collect(Collectors.toList());
+	}
+
+	public List<SystemFile> collectAsSystemFileList() {
+		return StreamSupport.stream(this.spliterator(), false).map(f -> (SystemFile) f).collect(Collectors.toList());
+	}
+
+	public List<File> collectAsFileList() {
+		return collectAsSystemFileList().stream().map(f -> f.unwrap()).collect(Collectors.toList());
 	}
 }

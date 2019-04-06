@@ -67,7 +67,7 @@ public class ListTool {
 	 * Return an unmodifiable List containing the elements in the original Collection.
 	 */
 	public static <E> List<E> unmodifiableCopy(final Collection<E> original) {
-		return Collections.unmodifiableList(new ArrayList<E>(original));
+		return Collections.unmodifiableList(new ArrayList<>(original));
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class ListTool {
 	 * Return a sorted copy of a list. Uses natural ordering.
 	 */
 	public static <E extends Comparable<? super E>> List<E> sortedCopy(final Collection<E> original) {
-		List<E> copy = new ArrayList<E>(original);
+		List<E> copy = new ArrayList<>(original);
 		Collections.sort(copy);
 		return copy;
 	}
@@ -108,7 +108,7 @@ public class ListTool {
 	 * Create a modifiable List from the specified elements.
 	 */
 	public static <E> List<E> of(final E... elements) {
-		return new ArrayList<E>(Arrays.asList(elements));
+		return new ArrayList<>(Arrays.asList(elements));
 	}
 
 	/**

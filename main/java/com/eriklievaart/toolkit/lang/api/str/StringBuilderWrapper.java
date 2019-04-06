@@ -20,29 +20,42 @@ public class StringBuilderWrapper {
 		return builder;
 	}
 
-	public void append(char c) {
+	public StringBuilderWrapper append(char c) {
 		builder.append(c);
+		return this;
 	}
 
-	public void append(Object object) {
+	public StringBuilderWrapper append(Object object) {
 		builder.append(object == null ? "<null>" : object.toString());
+		return this;
 	}
 
-	public void appendLine() {
+	public StringBuilderWrapper appendLine() {
 		builder.append("\n");
+		return this;
 	}
 
-	public void appendLine(Object... args) {
+	public StringBuilderWrapper appendLine(Object... args) {
 		for (int i = 0; i < args.length; i++) {
 			builder.append(args[i]);
 		}
 		appendLine();
+		return this;
 	}
 
-	public void clear() {
+	public StringBuilderWrapper clear() {
 		if (builder.length() > 0) {
 			builder.delete(0, builder.length());
 		}
+		return this;
+	}
+
+	public boolean isEmpty() {
+		return builder.length() == 0;
+	}
+
+	public int length() {
+		return builder.length();
 	}
 
 	@Override
