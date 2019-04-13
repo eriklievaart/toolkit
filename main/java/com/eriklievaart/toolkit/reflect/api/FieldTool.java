@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
@@ -144,5 +145,9 @@ public class FieldTool {
 			result.add(GenericsTool.getLiteral(type));
 		}
 		return result;
+	}
+
+	public static Set<String> getFieldNames(Class<?> literal) {
+		return introspectFields(literal).keySet();
 	}
 }

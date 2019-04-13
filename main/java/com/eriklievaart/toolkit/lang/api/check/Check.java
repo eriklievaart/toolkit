@@ -102,12 +102,57 @@ public class Check {
 			Check.isNull(actual, format, args);
 			return;
 		}
-		if (!expected.getClass().isArray()) {
-			Check.isTrue(Obj.equals(actual, expected), format, args);
+		Check.notNull(actual, "Expected %, but got <null>");
+
+		if (expected instanceof Number && actual instanceof Number) {
+			isEqual((Number) actual, (Number) expected);
+		}
+		if (expected.getClass().isArray()) {
+			Check.isTrue(actual.getClass().isArray(), "Expected %, but result was not an array: %", expected, actual);
+			isArrayEqual(actual, expected);
 			return;
 		}
-		Check.isTrue(actual.getClass().isArray(), "Expected %, but result was not an array: %", expected, actual);
+		Check.isTrue(Obj.equals(actual, expected), format, args);
+	}
 
+	public static void isEqual(Number actual, Number expected) {
+		Check.notNull(actual, expected);
+
+		if (expected instanceof Long || expected instanceof Integer || expected instanceof Byte) {
+			isLongValueEqual(actual, expected);
+			return;
+		}
+
+		if (expected instanceof Float || expected instanceof Double) {
+			isDoubleValueEqual(actual, expected);
+			return;
+		}
+		Check.isTrue(actual.equals(expected), "actual % != expected %", actual, expected);
+	}
+
+	private static void isLongValueEqual(Number actual, Number expected) {
+		Check.isTrue(actual.longValue() == expected.longValue(), "actual $ != expected $", actual, expected);
+
+		Class<?> actualClass = actual.getClass();
+		Class<?> expectedClass = expected.getClass();
+		String actualName = actualClass.getSimpleName();
+		String expectedName = expectedClass.getSimpleName();
+
+		Check.isTrue(actualClass == expectedClass, "Number type actual $ != expected $", actualName, expectedName);
+	}
+
+	private static void isDoubleValueEqual(Number actual, Number expected) {
+		Check.isTrue(actual.doubleValue() == expected.doubleValue(), "actual $ != expected $", actual, expected);
+
+		Class<?> actualClass = actual.getClass();
+		Class<?> expectedClass = expected.getClass();
+		String actualName = actualClass.getSimpleName();
+		String expectedName = expectedClass.getSimpleName();
+
+		Check.isTrue(actualClass == expectedClass, "Number type actual $ != expected $", actualName, expectedName);
+	}
+
+	private static <E> void isArrayEqual(final E actual, final E expected) {
 		int expectedLength = Array.getLength(expected);
 		int actualLength = Array.getLength(actual);
 		Check.isEqual(actualLength, expectedLength, "Expected array length %, but was %", expectedLength, actualLength);

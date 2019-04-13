@@ -14,6 +14,25 @@ public class FieldToolU {
 
 	public static final Integer CONSTANT = 15;
 
+	@Test
+	public void getFieldNames() {
+		class Inner {
+			private String alpha;
+			private String beta;
+		}
+		Assertions.assertThat(FieldTool.getFieldNames(Inner.class)).contains("alpha", "beta");
+	}
+
+	@Test
+	public void getFieldByType() {
+		class Inner {
+			private int alpha;
+			private String beta;
+		}
+		Check.isEqual(FieldTool.getFieldByType(Inner.class, String.class).getName(), "beta");
+		Check.isEqual(FieldTool.getFieldByType(Inner.class, int.class).getName(), "alpha");
+	}
+
 	@Test(expected = ReflectException.class)
 	public void readFieldNegative() {
 		FieldTool.getConstant(getClass(), "MISSING");
