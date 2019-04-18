@@ -102,7 +102,7 @@ public class Check {
 			Check.isNull(actual, format, args);
 			return;
 		}
-		Check.notNull(actual, "Expected %, but got <null>");
+		Check.notNull(actual, "Expected %, but got <null>", expected);
 
 		if (expected instanceof Number && actual instanceof Number) {
 			isEqual((Number) actual, (Number) expected);

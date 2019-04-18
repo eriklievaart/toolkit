@@ -13,16 +13,14 @@ import org.junit.Test;
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.MapTool;
-import com.eriklievaart.toolkit.reflect.api.InstanceTool;
-import com.eriklievaart.toolkit.reflect.api.ReflectException;
 import com.eriklievaart.toolkit.reflect.api.method.MethodWrapper;
 
 public class InstanceToolU {
 
 	@Test
 	public void populateProperty() {
-		JList list = new JList();
-		ListModel model = new DefaultListModel();
+		JList<String> list = new JList<>();
+		ListModel<String> model = new DefaultListModel<>();
 		Check.isFalse(list.getModel() == model);
 
 		InstanceTool.populate(list, MapTool.of("model", model));
@@ -32,14 +30,40 @@ public class InstanceToolU {
 	@Test
 	public void populateField() {
 		Point point = new Point();
-		int x = 5;
-		InstanceTool.populate(point, MapTool.of("x", Integer.valueOf(x)));
-		Check.isEqual(point.x, x);
+		InstanceTool.populate(point, MapTool.of("x", 5));
+		Check.isEqual(point.x, 5);
+	}
+
+	@Test
+	public void populateFieldConvert() {
+		Point point = new Point();
+		InstanceTool.populate(point, MapTool.of("x", 5l));
+		Check.isEqual(point.x, 5);
 	}
 
 	@Test(expected = ReflectException.class)
 	public void populateMissing() {
 		InstanceTool.populate(new Point(), MapTool.of("brocolli", 2));
+	}
+
+	@Test
+	public void injectField() {
+		class Injectme {
+			private int id;
+		}
+		Injectme target = new Injectme();
+		InstanceTool.injectField(target, FieldTool.getField(Injectme.class, "id"), 9);
+		Check.isEqual(target.id, 9);
+	}
+
+	@Test
+	public void injectFieldConvert() {
+		class Injectme {
+			private long id;
+		}
+		Injectme target = new Injectme();
+		InstanceTool.injectField(target, FieldTool.getField(Injectme.class, "id"), 9);
+		Check.isEqual(target.id, 9l);
 	}
 
 	@Test

@@ -18,12 +18,13 @@ public class PrimitiveTool {
 	}
 
 	private static List<Class<?>> listPrimitives() {
-		return Arrays.asList(boolean.class, short.class, int.class, long.class, float.class, double.class, char.class);
+		return Arrays.asList(byte.class, boolean.class, short.class, int.class, long.class, float.class, double.class,
+				char.class);
 	}
 
 	private static List<Class<?>> listWrappers() {
-		return Arrays.asList(Boolean.class, Short.class, Integer.class, Long.class, Float.class, Double.class,
-				Character.class);
+		return Arrays.asList(Byte.class, Boolean.class, Short.class, Integer.class, Long.class, Float.class,
+				Double.class, Character.class);
 	}
 
 	/**

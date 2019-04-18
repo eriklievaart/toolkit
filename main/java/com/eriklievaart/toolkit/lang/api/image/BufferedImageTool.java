@@ -3,6 +3,8 @@ package com.eriklievaart.toolkit.lang.api.image;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import com.eriklievaart.toolkit.lang.api.check.Check;
+
 public class BufferedImageTool {
 
 	private BufferedImageTool() {
@@ -22,5 +24,18 @@ public class BufferedImageTool {
 		BufferedImage image = new BufferedImage(b.getWidth(), b.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		image.getGraphics().drawImage(source, b.getX(), b.getY(), b.getWidth(), b.getHeight(), null);
 		return image;
+	}
+
+	public static BufferedImage rescalePreserveRatio(final BufferedImage source, final int width, final int height) {
+		Check.notNull(source);
+		double srcRatio = 1.0 * source.getWidth() / source.getHeight();
+		double desRatio = 1.0 * width / height;
+
+		boolean widthLargerInDestination = desRatio > srcRatio;
+		if (widthLargerInDestination) {
+			int rescaledWidth = (int) (height * srcRatio);
+			return rescale(source, new Bounds(0, 0, rescaledWidth, height));
+		}
+		return rescale(source, new Bounds(0, 0, width, (int) (width / srcRatio)));
 	}
 }

@@ -34,16 +34,16 @@ public class InstanceWrapper {
 		ReflectException.on(instance == null, "Cannot populate <null>");
 		ReflectException.on(properties == null, "Cannot populate with <null>");
 
-		for (String name : properties.keySet()) {
+		properties.forEach((name, raw) -> {
 			PropertyWrapper property = literal.getProperty(name);
-			Object value = properties.get(name);
 
 			if (property != null && property.isWritable()) {
+				Object value = ConvertTool.convert(raw, property.getType());
 				property.getMutator(instance).invoke(value);
-				continue;
+				return;
 			}
-			injectField(name, properties.get(name));
-		}
+			injectField(name, raw);
+		});
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class InstanceWrapper {
 		Field field = literal.getField(name);
 		try {
 			field.setAccessible(true);
-			field.set(instance, value);
+			field.set(instance, ConvertTool.convert(value, field.getType()));
 
 		} catch (Exception e) {
 			throw new ReflectException("Unable to inject field: " + Str.sub(name), e);

@@ -43,9 +43,11 @@ public class CheckStr {
 	}
 
 	public static void notBlank(String test) {
-		if (Str.isBlank(test)) {
-			throw new AssertionException("argument is blank");
-		}
+		notBlank(test, "argument is blank");
+	}
+
+	public static void notBlank(String test, String format, Object... args) {
+		AssertionException.on(Str.isBlank(test), format, args);
 	}
 
 	public static void isIdentifier(String test) {

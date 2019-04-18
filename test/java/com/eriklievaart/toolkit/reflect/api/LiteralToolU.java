@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.MapTool;
-import com.eriklievaart.toolkit.reflect.api.LiteralTool;
-import com.eriklievaart.toolkit.reflect.api.ReflectException;
 
 public class LiteralToolU {
 
@@ -30,6 +28,14 @@ public class LiteralToolU {
 		Thread thread = LiteralTool.newPopulatedInstance("java.lang.Thread", MapTool.of("priority", 5));
 		Check.isEqual(thread.getPriority(), 5);
 		Thread thread2 = LiteralTool.newPopulatedInstance("java.lang.Thread", MapTool.of("priority", 6));
+		Check.isEqual(thread2.getPriority(), 6);
+	}
+
+	@Test
+	public void newPopulatedInstancePropertiesConvert() {
+		Thread thread = LiteralTool.newPopulatedInstance("java.lang.Thread", MapTool.of("priority", 5l));
+		Check.isEqual(thread.getPriority(), 5);
+		Thread thread2 = LiteralTool.newPopulatedInstance("java.lang.Thread", MapTool.of("priority", 6l));
 		Check.isEqual(thread2.getPriority(), 6);
 	}
 

@@ -10,7 +10,7 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 public class BombSquad {
 
 	@SuppressWarnings("unchecked")
-	private static <E extends Exception> void diffuse(Class<E> expected, Bomb bomb, Consumer<E> consumer) {
+	public static <E extends Exception> void diffuse(Class<E> expected, Bomb bomb, Consumer<E> consumer) {
 		boolean exploded = false;
 		try {
 			bomb.explode();
@@ -37,6 +37,10 @@ public class BombSquad {
 		});
 	}
 
+	public static <E extends Exception> void diffuse(String message, Bomb bomb) {
+		diffuse(Exception.class, message, bomb);
+	}
+
 	public static <E extends Exception> void diffuse(Class<E> expected, List<String> messages, Bomb bomb) {
 		diffuse(expected, bomb, e -> {
 			if (e.getMessage() == null) {
@@ -46,6 +50,10 @@ public class BombSquad {
 				Check.isTrue(e.getMessage().contains(message), "message % does not contain %", e.getMessage(), message);
 			}
 		});
+	}
+
+	public static <E extends Exception> void diffuse(List<String> messages, Bomb bomb) {
+		diffuse(Exception.class, messages, bomb);
 	}
 
 	public static <E extends Exception> void diffuseRegex(Class<E> expected, String regex, Bomb bomb) {
