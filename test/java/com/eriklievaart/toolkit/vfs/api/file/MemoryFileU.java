@@ -6,8 +6,8 @@ import org.junit.Test;
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
-import com.eriklievaart.toolkit.test.api.BombSquad;
-import com.eriklievaart.toolkit.test.api.MemoryFileSystemCheck;
+import com.eriklievaart.toolkit.mock.BombSquad;
+import com.eriklievaart.toolkit.mock.MemoryFileSystemCheck;
 
 public class MemoryFileU {
 

@@ -18,11 +18,11 @@ public class CheckStr {
 	}
 
 	public static void contains(String test, CharSequence expected) {
-		Check.isTrue(test.contains(expected), "% does not contain %", test, expected);
+		Check.isTrue(test.contains(expected), "% not present in %", expected, test);
 	}
 
 	public static void containsIgnoreCase(String test, String expected) {
-		Check.isTrue(test.toLowerCase().contains(expected.toLowerCase()), "% does not contain %", test, expected);
+		Check.isTrue(test.toLowerCase().contains(expected.toLowerCase()), "% not present in %", expected, test);
 	}
 
 	public static void isEmptyString(String test) {
@@ -31,6 +31,11 @@ public class CheckStr {
 
 	public static void isEqual(String test, String expected) {
 		Check.isEqual(test, expected);
+	}
+
+	public static void notEqual(String test, String expected) {
+		Check.notNull(test, expected);
+		Check.isFalse(test.equals(expected), "Strings are equal: %", test);
 	}
 
 	public static void isBlank(String test) {

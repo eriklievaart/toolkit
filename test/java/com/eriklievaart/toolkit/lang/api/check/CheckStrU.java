@@ -3,9 +3,19 @@ package com.eriklievaart.toolkit.lang.api.check;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
-import com.eriklievaart.toolkit.test.api.BombSquad;
+import com.eriklievaart.toolkit.mock.BombSquad;
 
 public class CheckStrU {
+
+	@Test
+	public void notEqualPass() {
+		CheckStr.notEqual("abc", "def");
+	}
+
+	@Test(expected = AssertionException.class)
+	public void notEqualFail() {
+		CheckStr.notEqual("abc", "abc");
+	}
 
 	@Test
 	public void isIdentifierPass() {

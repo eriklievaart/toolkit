@@ -10,9 +10,9 @@ import org.junit.Test;
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.MapTool;
+import com.eriklievaart.toolkit.mock.Bomb;
+import com.eriklievaart.toolkit.mock.BombSquad;
 import com.eriklievaart.toolkit.reflect.api.BeanProperties;
-import com.eriklievaart.toolkit.test.api.Bomb;
-import com.eriklievaart.toolkit.test.api.BombSquad;
 
 public class BeanPropertiesU {
 

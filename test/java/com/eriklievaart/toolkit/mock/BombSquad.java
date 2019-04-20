@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.test.api;
+package com.eriklievaart.toolkit.mock;
 
 import java.util.List;
 import java.util.function.Consumer;

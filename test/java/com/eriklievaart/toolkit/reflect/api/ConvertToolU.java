@@ -8,7 +8,7 @@ import javax.swing.ListModel;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.test.api.BombSquad;
+import com.eriklievaart.toolkit.mock.BombSquad;
 
 public class ConvertToolU {
 
@@ -21,6 +21,11 @@ public class ConvertToolU {
 	public void convertIfIsAssignable() {
 		DefaultListModel<String> model = new DefaultListModel<>();
 		Check.isEqual(ConvertTool.convert(model, ListModel.class), model);
+	}
+
+	@Test
+	public void convertNulltoNull() {
+		Check.isNull(ConvertTool.convert(null, Long.class));
 	}
 
 	@Test

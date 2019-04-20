@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.test.api;
+package com.eriklievaart.toolkit.mock;
 
 public interface Bomb {
 

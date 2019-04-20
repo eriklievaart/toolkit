@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.test.api;
+package com.eriklievaart.toolkit.mock;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;

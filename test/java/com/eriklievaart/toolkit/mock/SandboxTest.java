@@ -10,7 +10,6 @@ import com.eriklievaart.toolkit.io.api.FileTool;
 import com.eriklievaart.toolkit.io.api.UrlTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.str.Str;
-import com.eriklievaart.toolkit.test.api.MemoryFileSystemCheck;
 import com.eriklievaart.toolkit.vfs.api.file.MemoryFile;
 import com.eriklievaart.toolkit.vfs.api.file.MemoryFileSystem;
 import com.eriklievaart.toolkit.vfs.api.file.SystemFile;
@@ -28,12 +27,12 @@ public class SandboxTest {
 	protected final MemoryFileSystemCheck memoryCheck = new MemoryFileSystemCheck(memoryFileSystem);
 
 	@Before
-	public void createSandbox() {
+	public final void createSandbox() {
 		root.mkdirs();
 	}
 
 	@After
-	public void deleteSandboxFiles() {
+	public final void deleteSandboxFiles() {
 		FileTool.delete(root);
 	}
 

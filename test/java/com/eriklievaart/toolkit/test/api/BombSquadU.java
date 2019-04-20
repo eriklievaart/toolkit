@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.FormattedException;
+import com.eriklievaart.toolkit.mock.BombSquad;
 
 public class BombSquadU {
 

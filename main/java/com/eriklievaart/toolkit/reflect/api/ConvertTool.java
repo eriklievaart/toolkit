@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.FormattedException;
+import com.eriklievaart.toolkit.lang.api.check.Check;
 
 public class ConvertTool {
 
@@ -14,7 +15,11 @@ public class ConvertTool {
 
 	private static Object convertInternal(Object value, Class<?> typeTo) {
 		if (PrimitiveTool.isPrimitive(typeTo)) {
+			Check.notNull(value, "cannot inject <null> into primitive");
 			return convert(value, PrimitiveTool.wrapper(typeTo));
+		}
+		if (value == null) {
+			return null;
 		}
 		Class<? extends Object> actualType = value.getClass();
 		if (LiteralTool.isAssignable(actualType, typeTo)) {
