@@ -38,13 +38,18 @@ public class CachedHttpClient implements HttpClient {
 	}
 
 	@Override
+	public void setHeader(String name, String value) {
+		delegate.setHeader(name, value);
+	}
+
+	@Override
 	public InputStream getInputStream(String url) {
 		Check.notBlank(url);
 		return fetch.apply(url);
 	}
 
 	@Override
-	public void setHeader(String name, String value) {
-		delegate.setHeader(name, value);
+	public InputStream getInputStream(HttpCall call) {
+		return delegate.getInputStream(call);
 	}
 }

@@ -8,10 +8,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.reflect.api.GenericsTool;
-import com.eriklievaart.toolkit.reflect.api.LiteralTool;
-import com.eriklievaart.toolkit.reflect.api.MethodTool;
-import com.eriklievaart.toolkit.reflect.api.ReflectException;
 
 @SuppressWarnings("unused")
 public class GenericsToolU {
@@ -121,7 +117,7 @@ public class GenericsToolU {
 	@Test
 	public void isBaseTypeSuccess() {
 		class Local {
-			private List list;
+			private List<Object> list;
 		}
 		Type type = LiteralTool.wrap(Local.class).getField("list").getType();
 		Check.isTrue(GenericsTool.isBaseType(type, List.class));

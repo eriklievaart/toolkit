@@ -15,7 +15,7 @@ import com.eriklievaart.toolkit.lang.api.concurrent.ThreadSafe;
 public class Converter<T> {
 
 	private final Constructor<T> constructor;
-	private final Serializer serializer;
+	private final Serializer<T> serializer;
 	private final Validator validator;
 
 	/**

@@ -1,12 +1,12 @@
 package com.eriklievaart.toolkit.convert.api;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import com.eriklievaart.toolkit.convert.api.construct.BooleanConstructor;
+import com.eriklievaart.toolkit.convert.api.construct.EnumConstructor;
 import com.eriklievaart.toolkit.convert.api.construct.IntegerConstructor;
 import com.eriklievaart.toolkit.convert.api.construct.LongConstructor;
 import com.eriklievaart.toolkit.convert.api.construct.StringConstructor;
@@ -78,13 +78,17 @@ public class Converters {
 	/**
 	 * Is there a converter for the specified Type?
 	 */
-	public boolean isConvertible(final Type type) {
+	public boolean isConvertible(final Class<?> type) {
 		return getConverter(type) != null;
 	}
 
-	private Converter<?> getConverter(final Type type) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private Converter<?> getConverter(final Class<?> type) {
 		if (PRIMITIVES.containsKey(type)) {
 			return converters.get(PRIMITIVES.get(type));
+		}
+		if (type.isEnum() && !converters.containsKey(type)) {
+			return new EnumConstructor(type).createConverter();
 		}
 		return converters.get(type);
 	}

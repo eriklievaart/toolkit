@@ -21,6 +21,11 @@ public class SimpleHttpClient implements HttpClient {
 	}
 
 	@Override
+	public void setHeader(String name, String value) {
+		headers.put(name, value);
+	}
+
+	@Override
 	public String getString(String url) {
 		return StreamTool.toString(getInputStream(url));
 	}
@@ -32,25 +37,30 @@ public class SimpleHttpClient implements HttpClient {
 
 	@Override
 	public InputStream getInputStream(String url) {
+		return getInputStream(new HttpCall(url));
+	}
+
+	@Override
+	public InputStream getInputStream(HttpCall call) {
 		try {
-			URL obj = new URL(url);
+			URL obj = new URL(call.getUrl());
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-			con.setRequestMethod("GET");
+			con.setRequestMethod(call.getMethod());
 			headers.forEach((name, value) -> con.setRequestProperty(name, value));
 
+			byte[] bytes = call.getBodyBytes();
+			if (bytes.length > 0) {
+				con.setDoOutput(true);
+				con.getOutputStream().write(bytes);
+			}
 			int responseCode = con.getResponseCode();
-			log.debug("GET URL : " + url + " status " + responseCode);
+			log.debug("$ URL % status $", call.getMethod(), call.getUrl(), responseCode);
 
 			return con.getInputStream();
 
 		} catch (Exception e) {
-			throw new RuntimeIOException("Unable to read URL %", e, url);
+			throw new RuntimeIOException("Unable to read URL %", e, call.getUrl());
 		}
-	}
-
-	@Override
-	public void setHeader(String name, String value) {
-		headers.put(name, value);
 	}
 }

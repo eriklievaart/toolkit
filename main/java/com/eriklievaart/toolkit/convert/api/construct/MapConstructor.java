@@ -12,7 +12,7 @@ import com.eriklievaart.toolkit.lang.api.pattern.PatternTool;
  *
  * @author Erik Lievaart
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class MapConstructor extends AbstractConstructor<Map> {
 
 	@Override

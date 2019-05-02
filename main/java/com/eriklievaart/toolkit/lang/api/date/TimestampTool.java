@@ -20,6 +20,26 @@ public class TimestampTool {
 	public static final long YEAR_355 = 355 * ONE_DAY;
 	public static final long YEAR_356 = 356 * ONE_DAY;
 
+	public static String diffHumanReadable(long a, long b) {
+		long diff = Math.abs(a - b);
+		if (diff > 2 * YEAR_355) {
+			return diff / YEAR_355 + "y";
+		}
+		if (diff > 2 * ONE_DAY) {
+			return diff / ONE_DAY + "d";
+		}
+		if (diff > 2 * ONE_HOUR) {
+			return diff / ONE_HOUR + "h";
+		}
+		if (diff > 2 * ONE_MINUTE) {
+			return diff / ONE_MINUTE + "m";
+		}
+		if (diff > 2 * ONE_SECOND) {
+			return diff / ONE_SECOND + "s";
+		}
+		return diff + "ms";
+	}
+
 	/**
 	 * Converts timestamps to UTC for system timezone
 	 */

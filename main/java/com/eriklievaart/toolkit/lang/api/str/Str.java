@@ -144,4 +144,15 @@ public class Str {
 		Collections.sort(result, new NullSafeComparator<>((a, b) -> a.toUpperCase().compareTo(b.toUpperCase())));
 		return result;
 	}
+
+	public static boolean isEqual(String a, String b) {
+		if (a == null || b == null) {
+			return a == b;
+		}
+		return a.equals(b);
+	}
+
+	public static boolean notEqual(String a, String b) {
+		return !isEqual(a, b);
+	}
 }

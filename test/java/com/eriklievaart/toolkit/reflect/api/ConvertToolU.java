@@ -9,12 +9,24 @@ import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.mock.BombSquad;
+import com.eriklievaart.toolkit.vfs.api.file.VirtualFileType;
 
 public class ConvertToolU {
 
 	@Test
 	public void convertStringToString() {
 		Check.isEqual(ConvertTool.convert("foo", String.class), "foo");
+	}
+
+	@Test
+	public void convertStringToEnum() {
+		Check.isEqual(ConvertTool.convert("file", VirtualFileType.class), VirtualFileType.FILE);
+		Check.isEqual(ConvertTool.convert("directory", VirtualFileType.class), VirtualFileType.DIRECTORY);
+	}
+
+	@Test
+	public void convertStringToInteger() {
+		Check.isEqual(ConvertTool.convert("123", Integer.class), 123);
 	}
 
 	@Test

@@ -18,6 +18,8 @@ public interface HttpClient {
 
 	public InputStream getInputStream(String url);
 
+	public InputStream getInputStream(HttpCall call);
+
 	public void setHeader(String name, String value);
 
 	public default void download(String url, File file) {

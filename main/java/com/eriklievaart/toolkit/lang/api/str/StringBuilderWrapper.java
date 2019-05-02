@@ -16,6 +16,10 @@ public class StringBuilderWrapper {
 		this.builder = builder;
 	}
 
+	public StringBuilderWrapper(String format, Object... args) {
+		builder = new StringBuilder(Str.sub(format, args));
+	}
+
 	public StringBuilder getStringBuilder() {
 		return builder;
 	}
@@ -43,10 +47,30 @@ public class StringBuilderWrapper {
 		return this;
 	}
 
+	public void sub(String format, Object... args) {
+		builder.append(Str.sub(format, args));
+	}
+
+	public void subLine(String format, Object... args) {
+		appendLine(Str.sub(format, args));
+	}
+
 	public StringBuilderWrapper clear() {
 		if (builder.length() > 0) {
 			builder.delete(0, builder.length());
 		}
+		return this;
+	}
+
+	public StringBuilderWrapper reset(Object value) {
+		clear();
+		append(value);
+		return this;
+	}
+
+	public StringBuilderWrapper resetLine(Object value) {
+		clear();
+		appendLine(value);
 		return this;
 	}
 

@@ -2,13 +2,15 @@ package com.eriklievaart.toolkit.reflect.api;
 
 import java.sql.Timestamp;
 
+import com.eriklievaart.toolkit.convert.api.ConversionException;
+import com.eriklievaart.toolkit.convert.api.Converters;
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.FormattedException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
+@SuppressWarnings("unchecked")
 public class ConvertTool {
 
-	@SuppressWarnings("unchecked")
 	public static <E> E convert(Object value, Class<E> typeTo) {
 		return (E) convertInternal(value, typeTo);
 	}
@@ -27,6 +29,21 @@ public class ConvertTool {
 		}
 		if (value instanceof Number && LiteralTool.isAssignable(typeTo, Number.class)) {
 			return convertNumber((Number) value, typeTo);
+		}
+		return convertUncommonTypes(value, typeTo);
+	}
+
+	private static Object convertUncommonTypes(Object value, Class<?> typeTo) {
+		Class<? extends Object> actualType = value.getClass();
+		try {
+			if (value.getClass() == String.class) {
+				return Converters.BASIC_CONVERTERS.to(typeTo, (String) value);
+			}
+			if (typeTo == String.class) {
+				return Converters.BASIC_CONVERTERS.convertToString(value);
+			}
+		} catch (ConversionException e) {
+			throw new FormattedException("% is an invalid value for $", value, typeTo);
 		}
 		if (actualType == Timestamp.class && typeTo == Long.class) {
 			Timestamp stamp = (Timestamp) value;

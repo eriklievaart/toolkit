@@ -34,6 +34,26 @@ public class StrU {
 	}
 
 	@Test
+	public void isEqualPass() {
+		Check.isTrue(Str.isEqual("apple", "apple"));
+	}
+
+	@Test
+	public void isEqualFail() {
+		Check.isFalse(Str.isEqual("apple", "orange"));
+	}
+
+	@Test
+	public void notEqualPass() {
+		Check.isTrue(Str.notEqual("apple", "orange"));
+	}
+
+	@Test
+	public void notEqualFail() {
+		Check.isFalse(Str.notEqual("apple", "apple"));
+	}
+
+	@Test
 	public void repeat0() {
 		CheckStr.isBlank(Str.repeat("ignore", 0));
 	}

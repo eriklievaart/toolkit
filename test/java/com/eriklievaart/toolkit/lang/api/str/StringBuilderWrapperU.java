@@ -43,6 +43,20 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void sub() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.sub("$:$", "a", "b");
+		CheckStr.isEqual(sbw.toString(), "a:b");
+	}
+
+	@Test
+	public void subLine() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.subLine("$:$", "a", "b");
+		CheckStr.isEqual(sbw.toString(), "a:b\n");
+	}
+
+	@Test
 	public void clearEmpty() {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.clear();
@@ -55,6 +69,20 @@ public class StringBuilderWrapperU {
 		sbw.append('u');
 		sbw.clear();
 		CheckStr.isEmpty(sbw.toString());
+	}
+
+	@Test
+	public void reset() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper("foo");
+		sbw.reset("bar");
+		CheckStr.isEqual(sbw.toString(), "bar");
+	}
+
+	@Test
+	public void resetLine() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper("foo");
+		sbw.resetLine("bar");
+		CheckStr.isEqual(sbw.toString(), "bar\n");
 	}
 
 	@Test
