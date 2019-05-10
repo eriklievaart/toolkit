@@ -20,7 +20,7 @@ public class SetTool {
 	 * Create an unmodifiable set containing all the unique entries in the original.
 	 */
 	public static <E> Set<E> unmodifiableCopy(final Collection<E> original) {
-		return Collections.unmodifiableSet(new HashSet<E>(original));
+		return Collections.unmodifiableSet(new HashSet<>(original));
 	}
 
 	/**
@@ -57,6 +57,7 @@ public class SetTool {
 	/**
 	 * Returns a new set containing the elements present in one set, but not in both.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <E> Set<E> disjunction(Set<E> first, Set<E> second) {
 		return merge(substract(first, second), substract(second, first));
 	}

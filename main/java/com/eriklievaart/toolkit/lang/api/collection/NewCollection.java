@@ -29,14 +29,14 @@ public class NewCollection {
 	 * Create a HashMap.
 	 */
 	public static <E, F> Map<E, F> hashMap() {
-		return new HashMap<E, F>();
+		return new HashMap<>();
 	}
 
 	/**
 	 * Create a HashTable. Non null values.
 	 */
 	public static <E, F> Hashtable<E, F> hashtable() {
-		return new Hashtable<E, F>();
+		return new Hashtable<>();
 	}
 
 	/**
@@ -57,21 +57,28 @@ public class NewCollection {
 	 * Returns a Map of an unspecified implementation, Keys and values are NOT NULL.
 	 */
 	public static <E, F> Map<E, F> mapNullable() {
-		return new HashMap<E, F>();
+		return new HashMap<>();
 	}
 
 	/**
 	 * Create a {@link TreeMap}.
 	 */
 	public static <E, F> TreeMap<E, F> treeMap() {
-		return new TreeMap<E, F>();
+		return new TreeMap<>();
+	}
+
+	/**
+	 * Create a Map that maintains the natural order of the keys.
+	 */
+	public static <E, F> TreeMap<E, F> sortedMap() {
+		return new TreeMap<>();
 	}
 
 	/**
 	 * Create a MultiMap.
 	 */
 	public static <E, F> MultiMap<E, F> multiMap() {
-		return new MultiMap<E, F>();
+		return new MultiMap<>();
 	}
 
 	/**
@@ -85,7 +92,7 @@ public class NewCollection {
 	 * Create a List of an unspecified implementation.
 	 */
 	public static <E> List<E> list(NullPolicy policy) {
-		return new FilteredNotNullList<E>(policy);
+		return new FilteredNotNullList<>(policy);
 	}
 
 	/**
@@ -99,60 +106,60 @@ public class NewCollection {
 	 * Create a {@link ConcurrentHashMap}.
 	 */
 	public static <E, F> ConcurrentHashMap<E, F> concurrentHashMap() {
-		return new ConcurrentHashMap<E, F>();
+		return new ConcurrentHashMap<>();
 	}
 
 	/**
 	 * Create a {@link Stack}.
 	 */
 	public static <E> Stack<E> stack() {
-		return new Stack<E>();
+		return new Stack<>();
 	}
 
 	/**
 	 * Create a {@link TreeSet}.
 	 */
 	public static <E> TreeSet<E> treeSet() {
-		return new TreeSet<E>();
+		return new TreeSet<>();
 	}
 
 	/**
 	 * Create a {@link TreeSet} with the specified {@link Comparator} for ordering.
 	 */
 	public static <E> TreeSet<E> treeSet(final Comparator<E> comparator) {
-		return new TreeSet<E>(comparator);
+		return new TreeSet<>(comparator);
 	}
 
 	/**
 	 * Create a Set of an unspecified implementation. The set will not accept null values.
 	 */
 	public static <E> Set<E> set() {
-		return new FilteredNotNullSet<E>(NullPolicy.REJECT);
+		return new FilteredNotNullSet<>(NullPolicy.REJECT);
 	}
 
 	/**
 	 * Create a Set with the specified NullPolicyType.
 	 */
 	public static <E> Set<E> set(NullPolicy nill) {
-		return new FilteredNotNullSet<E>(nill);
+		return new FilteredNotNullSet<>(nill);
 	}
 
 	/**
 	 * Create a weak reference {@link Map} of an unspecified implementation.
 	 */
 	public static <K, V> Map<K, V> weakMap() {
-		return new WeakHashMap<K, V>();
+		return new WeakHashMap<>();
 	}
 
 	public static <K, V> Map<K, V> orderedMap() {
-		return new LinkedHashMap<K, V>();
+		return new LinkedHashMap<>();
 	}
 
 	public static <E> Set<E> concurrentSet() {
-		return new CopyOnWriteArraySet<E>();
+		return new CopyOnWriteArraySet<>();
 	}
 
 	public static <E> List<E> concurrentList() {
-		return new CopyOnWriteArrayList<E>();
+		return new CopyOnWriteArrayList<>();
 	}
 }

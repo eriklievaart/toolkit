@@ -37,6 +37,7 @@ public class MemoryFile extends AbstractVirtualFile {
 	@Override
 	public InputStream getInputStream() {
 		onlyForFiles();
+		Check.notNull(contents);
 		return new ByteArrayInputStream(contents);
 	}
 

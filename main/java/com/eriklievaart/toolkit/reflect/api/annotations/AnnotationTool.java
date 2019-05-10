@@ -100,7 +100,7 @@ public class AnnotationTool {
 
 		for (Field field : FieldTool.getFields(clazz)) {
 			if (field.getAnnotation(annotation) != null) {
-				result.add(new AnnotatedField<A>(field, field.getAnnotation(annotation)));
+				result.add(new AnnotatedField<>(field, field.getAnnotation(annotation)));
 			}
 		}
 		return result;
@@ -124,7 +124,7 @@ public class AnnotationTool {
 
 		for (Method method : MethodTool.getAllMethods(clazz)) {
 			if (method.getAnnotation(annotation) != null) {
-				result.add(new AnnotatedMethod<A>(method, method.getAnnotation(annotation)));
+				result.add(new AnnotatedMethod<>(method, method.getAnnotation(annotation)));
 			}
 		}
 		return result;
@@ -138,6 +138,7 @@ public class AnnotationTool {
 		return getMethodsAnnotatedWith(LiteralTool.getLiteral(clazz), annotation);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <A extends Annotation> A getParameterAnnotation(Method m, int argument, Class<A> type) {
 		Annotation[] annotations = m.getParameterAnnotations()[argument];
 		for (Annotation annotation : annotations) {

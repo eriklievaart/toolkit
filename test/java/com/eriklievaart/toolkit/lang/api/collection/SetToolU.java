@@ -5,8 +5,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
-import com.eriklievaart.toolkit.lang.api.collection.SetTool;
 
+@SuppressWarnings("unchecked")
 public class SetToolU {
 
 	@Test

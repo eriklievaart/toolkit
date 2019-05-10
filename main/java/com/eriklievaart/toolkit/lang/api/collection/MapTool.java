@@ -3,6 +3,8 @@ package com.eriklievaart.toolkit.lang.api.collection;
 import java.util.Collections;
 import java.util.Map;
 
+import com.eriklievaart.toolkit.lang.api.function.TryBiConsumer;
+
 /**
  * Utility class for working with {@link java.util.Map}'s.
  *
@@ -59,6 +61,15 @@ public class MapTool {
 			map.put(original.get(key), key);
 		}
 		return map;
+	}
+
+	/**
+	 * For each method that works even if body throws Exceptions.
+	 */
+	public static <K, V, E extends Exception> void forEach(Map<K, V> map, TryBiConsumer<K, V, E> consumer) throws E {
+		for (K key : map.keySet()) {
+			consumer.accept(key, map.get(key));
+		}
 	}
 
 	/**
