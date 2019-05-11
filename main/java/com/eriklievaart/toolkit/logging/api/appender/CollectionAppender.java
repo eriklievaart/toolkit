@@ -27,4 +27,8 @@ public class CollectionAppender extends AbstractAppender {
 	public String popMessage() {
 		return format(list.remove(0));
 	}
+
+	@Override
+	public void close() {
+	}
 }

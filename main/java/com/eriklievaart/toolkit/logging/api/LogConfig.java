@@ -25,11 +25,16 @@ public class LogConfig {
 	}
 
 	static synchronized void init() {
+		closeAllAppenders();
 		appenders.clear();
 		loggers.clear();
 		// sensible defaults
 		formatterReference.set(new SimpleFormatter());
-		resetAppenders("");
+		installDefaultRootAppenders("");
+	}
+
+	public static void closeAllAppenders() {
+		appenders.values().forEach(list -> list.forEach(Appender::close));
 	}
 
 	public static synchronized Logger getLogger(String name) {
@@ -69,7 +74,7 @@ public class LogConfig {
 		appenders.put(logger, Collections.unmodifiableList(new CopyOnWriteArrayList<>(list)));
 	}
 
-	public static void resetAppenders(String logger) {
+	public static void installDefaultRootAppenders(String logger) {
 		if (Str.isBlank(logger)) {
 			appenders.put("", Arrays.asList(new ConsoleAppender()));
 		}

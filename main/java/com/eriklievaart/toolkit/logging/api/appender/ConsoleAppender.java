@@ -25,4 +25,8 @@ public class ConsoleAppender extends AbstractAppender {
 			System.out.println(message);
 		}
 	}
+
+	@Override
+	public void close() {
+	}
 }

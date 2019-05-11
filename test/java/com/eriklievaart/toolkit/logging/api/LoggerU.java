@@ -118,5 +118,9 @@ public class LoggerU {
 		public void append(LogRecord record) {
 			buffer = record.getMessage();
 		}
+
+		@Override
+		public void close() {
+		}
 	}
 }
