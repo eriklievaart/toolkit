@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
@@ -16,6 +19,20 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 public class ListTool {
 
 	private ListTool() {
+	}
+
+	/**
+	 * Filter elements in a list.
+	 */
+	public static <E> List<E> filter(List<E> test, Predicate<E> predicate) {
+		return test.stream().filter(predicate).collect(Collectors.toList());
+	}
+
+	/**
+	 * Filter elements in a list and map the results.
+	 */
+	public static <E, F> List<F> filterAndMap(List<E> test, Predicate<E> predicate, Function<E, F> function) {
+		return test.stream().filter(predicate).map(function).collect(Collectors.toList());
 	}
 
 	/**

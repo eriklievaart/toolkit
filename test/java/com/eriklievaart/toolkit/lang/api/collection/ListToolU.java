@@ -3,12 +3,26 @@ package com.eriklievaart.toolkit.lang.api.collection;
 import java.util.Arrays;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.lang.api.collection.ListTool;
 
 public class ListToolU {
+
+	@Test
+	public void filter() {
+		List<String> test = Arrays.asList("1a", "2a", "3a", "1b", "2b", "3b");
+		List<String> result = ListTool.filter(test, e -> e.matches("[12]."));
+		Assertions.assertThat(result).containsExactly("1a", "2a", "1b", "2b");
+	}
+
+	@Test
+	public void filterAndMap() {
+		List<String> test = Arrays.asList("1", "2", "3");
+		List<Integer> result = ListTool.filterAndMap(test, e -> e.matches("[12]"), s -> Integer.parseInt(s));
+		Assertions.assertThat(result).containsExactly(1, 2);
+	}
 
 	@Test
 	public void subList() {
