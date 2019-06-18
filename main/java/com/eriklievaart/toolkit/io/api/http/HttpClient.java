@@ -22,6 +22,8 @@ public interface HttpClient {
 
 	public void setHeader(String name, String value);
 
+	public HttpClient socks5(String ip, int port);
+
 	public default void download(String url, File file) {
 		Check.notBlank(url);
 		Check.notNull(file);

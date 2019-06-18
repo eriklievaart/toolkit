@@ -319,6 +319,11 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void getDomainSlash() {
+		Check.isEqual(UrlTool.getDomain("https://example.com/"), "example.com");
+	}
+
+	@Test
 	public void getDomainNoProtocol() {
 		Check.isEqual(UrlTool.getDomain("example.com/ignore"), "example.com");
 	}

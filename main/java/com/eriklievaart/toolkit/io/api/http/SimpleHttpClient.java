@@ -1,10 +1,15 @@
 package com.eriklievaart.toolkit.io.api.http;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Proxy.Type;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.io.api.StreamTool;
@@ -14,7 +19,8 @@ import com.eriklievaart.toolkit.logging.api.LogTemplate;
 public class SimpleHttpClient implements HttpClient {
 	private LogTemplate log = new LogTemplate(getClass());
 
-	private Map<String, String> headers = NewCollection.map();
+	private Map<String, String> headers = NewCollection.concurrentMap();
+	private AtomicReference<Proxy> proxyReference = new AtomicReference<>();
 
 	{
 		headers.put("Accept", "*/*");
@@ -23,6 +29,12 @@ public class SimpleHttpClient implements HttpClient {
 	@Override
 	public void setHeader(String name, String value) {
 		headers.put(name, value);
+	}
+
+	@Override
+	public SimpleHttpClient socks5(String ip, int port) {
+		proxyReference.set(new Proxy(Type.SOCKS, new InetSocketAddress(ip, port)));
+		return this;
 	}
 
 	@Override
@@ -43,8 +55,7 @@ public class SimpleHttpClient implements HttpClient {
 	@Override
 	public InputStream getInputStream(HttpCall call) {
 		try {
-			URL obj = new URL(call.getUrl());
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			HttpURLConnection con = connect(new URL(call.getUrl()));
 
 			con.setRequestMethod(call.getMethod());
 			headers.forEach((name, value) -> con.setRequestProperty(name, value));
@@ -55,12 +66,22 @@ public class SimpleHttpClient implements HttpClient {
 				con.getOutputStream().write(bytes);
 			}
 			int responseCode = con.getResponseCode();
-			log.debug("$ URL % status $", call.getMethod(), call.getUrl(), responseCode);
+			boolean proxied = proxyReference.get() != null;
+			log.debug("$ URL % proxy $ status $", call.getMethod(), call.getUrl(), proxied, responseCode);
 
 			return con.getInputStream();
 
 		} catch (Exception e) {
 			throw new RuntimeIOException("Unable to read URL %", e, call.getUrl());
+		}
+	}
+
+	private HttpURLConnection connect(URL url) throws IOException {
+		Proxy proxy = proxyReference.get();
+		if (proxy == null) {
+			return (HttpURLConnection) url.openConnection();
+		} else {
+			return (HttpURLConnection) url.openConnection(proxy);
 		}
 	}
 }

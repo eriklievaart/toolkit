@@ -26,9 +26,10 @@ public class SimpleFileAppender extends AbstractAppender {
 	public synchronized void append(LogRecord record) {
 		String message = format(record) + "\n";
 		try {
-			ByteBuffer buf = ByteBuffer.allocate(48);
+			byte[] bytes = message.getBytes();
+			ByteBuffer buf = ByteBuffer.allocate(bytes.length);
 			buf.clear();
-			buf.put(message.getBytes());
+			buf.put(bytes);
 			buf.flip();
 
 			while (buf.hasRemaining()) {

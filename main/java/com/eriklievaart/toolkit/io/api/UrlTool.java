@@ -96,7 +96,7 @@ public class UrlTool {
 	 */
 	public static String getDomain(String url) {
 		if (url.contains(":")) {
-			return url.replaceFirst("[^:]++:/++", "").replaceFirst("/.++", "");
+			return url.replaceFirst("[^:]++:/++", "").replaceFirst("/.*+", "");
 		}
 		return url.startsWith(SLASH) ? null : url.replaceFirst("/.++", "");
 	}

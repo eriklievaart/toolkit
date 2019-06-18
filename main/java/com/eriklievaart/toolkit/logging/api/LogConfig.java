@@ -50,7 +50,11 @@ public class LogConfig {
 	}
 
 	public static synchronized void setDefaultAppenders(Appender... appenders) {
-		LogConfig.appenders.put("", Collections.unmodifiableList(new CopyOnWriteArrayList<>(Arrays.asList(appenders))));
+		setDefaultAppenders(Arrays.asList(appenders));
+	}
+
+	public static synchronized void setDefaultAppenders(List<Appender> list) {
+		LogConfig.appenders.put("", Collections.unmodifiableList(new CopyOnWriteArrayList<>(list)));
 	}
 
 	public static List<Appender> getDefaultAppenders() {

@@ -11,17 +11,23 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 
 public class CachedHttpClient implements HttpClient {
 
-	private Function<String, InputStream> fetch;
-	private HttpClient delegate = new SimpleHttpClient();
+	private final Function<String, InputStream> fetch;
+	private final HttpClient delegate;
 
 	public CachedHttpClient(File root) {
+		this(root, new SimpleHttpClient());
+	}
+
+	public CachedHttpClient(File root, HttpClient delegate) {
 		root.mkdirs();
 		CheckFile.isDirectory(root);
 
+		this.delegate = delegate;
 		fetch = new HttpDirectoryCache(root, delegate);
 	}
 
 	public CachedHttpClient(Function<String, InputStream> cache) {
+		this.delegate = new SimpleHttpClient();
 		this.fetch = cache;
 	}
 
@@ -51,5 +57,11 @@ public class CachedHttpClient implements HttpClient {
 	@Override
 	public InputStream getInputStream(HttpCall call) {
 		return delegate.getInputStream(call);
+	}
+
+	@Override
+	public CachedHttpClient socks5(String ip, int port) {
+		delegate.socks5(ip, port);
+		return this;
 	}
 }

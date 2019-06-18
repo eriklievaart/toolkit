@@ -48,6 +48,7 @@ public class FromCollection {
 	/**
 	 * Place all the elements in a read-write List.
 	 */
+	@SafeVarargs
 	public static <E> List<E> toList(final E... args) {
 		List<E> list = NewCollection.list(NullPolicy.ACCEPT);
 		for (E item : args) {
@@ -62,6 +63,7 @@ public class FromCollection {
 	 * @param <E>
 	 *            type of the elements.
 	 */
+	@SafeVarargs
 	public static <E> Iterator<E> toIterator(final E... args) {
 		return Arrays.asList(args).iterator();
 	}
@@ -71,5 +73,12 @@ public class FromCollection {
 	 */
 	public static <E> Set<E> toSet(final Collection<E> collection) {
 		return new HashSet<>(collection);
+	}
+
+	/**
+	 * Place all the elements of the original collection in a Enumeration.
+	 */
+	public static <E> Enumeration<E> toEnumeration(final Collection<E> collection) {
+		return Collections.enumeration(collection);
 	}
 }

@@ -9,6 +9,10 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 
 public class BombSquad {
 
+	/**
+	 * @param consumer
+	 *            pass the Exception to this consumer for additional checks if it occurs
+	 */
 	@SuppressWarnings("unchecked")
 	public static <E extends Exception> void diffuse(Class<E> expected, Bomb bomb, Consumer<E> consumer) {
 		boolean exploded = false;
@@ -23,6 +27,11 @@ public class BombSquad {
 			consumer.accept((E) e);
 		}
 		Check.isTrue(exploded, "$ expected", expected);
+	}
+
+	public static <E extends Exception> void diffuse(Class<E> expected, Bomb bomb) {
+		diffuse(expected, bomb, e -> {
+		});
 	}
 
 	public static <E extends Exception> void diffuse(Class<E> expected, String message, Bomb bomb) {
