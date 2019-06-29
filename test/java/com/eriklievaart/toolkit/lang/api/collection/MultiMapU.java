@@ -11,6 +11,22 @@ import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 public class MultiMapU {
 
 	@Test
+	public void toHashMap() {
+		MultiMap<String, Integer> map = new MultiMap<>();
+		map.add("numbers", 1);
+		map.add("numbers", 2);
+		Assertions.assertThat(map.toHashMap().get("numbers")).containsExactly(1, 2);
+	}
+
+	@Test
+	public void toHashtable() {
+		MultiMap<String, Integer> map = new MultiMap<>();
+		map.add("numbers", 1);
+		map.add("numbers", 2);
+		Assertions.assertThat(map.toHashtable().get("numbers")).containsExactly(1, 2);
+	}
+
+	@Test
 	public void forEach() {
 		MultiMap<String, Integer> map = new MultiMap<>();
 		map.add("bytes", 1);

@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 
-@SuppressWarnings("unchecked")
 public class SetToolU {
 
 	@Test

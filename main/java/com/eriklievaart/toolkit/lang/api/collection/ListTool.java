@@ -22,17 +22,24 @@ public class ListTool {
 	}
 
 	/**
-	 * Filter elements in a list.
+	 * Filter elements in a collection.
 	 */
-	public static <E> List<E> filter(List<E> test, Predicate<E> predicate) {
-		return test.stream().filter(predicate).collect(Collectors.toList());
+	public static <E> List<E> filter(Collection<E> c, Predicate<E> predicate) {
+		return c.stream().filter(predicate).collect(Collectors.toList());
 	}
 
 	/**
-	 * Filter elements in a list and map the results.
+	 * Map elements in a collection.
 	 */
-	public static <E, F> List<F> filterAndMap(List<E> test, Predicate<E> predicate, Function<E, F> function) {
-		return test.stream().filter(predicate).map(function).collect(Collectors.toList());
+	public static <E, F> List<F> map(Collection<E> c, Function<E, F> function) {
+		return c.stream().map(function).collect(Collectors.toList());
+	}
+
+	/**
+	 * Filter elements in a collection and map the results.
+	 */
+	public static <E, F> List<F> filterAndMap(Collection<E> c, Predicate<E> predicate, Function<E, F> function) {
+		return c.stream().filter(predicate).map(function).collect(Collectors.toList());
 	}
 
 	/**
@@ -124,6 +131,7 @@ public class ListTool {
 	/**
 	 * Create a modifiable List from the specified elements.
 	 */
+	@SafeVarargs
 	public static <E> List<E> of(final E... elements) {
 		return new ArrayList<>(Arrays.asList(elements));
 	}

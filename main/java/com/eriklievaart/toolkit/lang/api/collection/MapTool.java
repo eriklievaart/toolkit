@@ -1,8 +1,13 @@
 package com.eriklievaart.toolkit.lang.api.collection;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
+import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.function.TryBiConsumer;
 
 /**
@@ -12,6 +17,26 @@ import com.eriklievaart.toolkit.lang.api.function.TryBiConsumer;
  */
 public class MapTool {
 	private MapTool() {
+	}
+
+	/**
+	 * Create a new Map containing keys as keys and the values are derived from applying the mapping function.
+	 */
+	public static <K, V> Map<K, V> map(Collection<K> keys, Function<K, V> function) {
+		Set<K> duplicates = new HashSet<>();
+		Map<K, V> map = NewCollection.mapNotNull();
+		for (K key : keys) {
+			AssertionException.unless(duplicates.add(key), "duplicate key %", key);
+			map.put(key, function.apply(key));
+		}
+		return map;
+	}
+
+	/**
+	 * Apply function to values in Map and create a new map as result;
+	 */
+	public static <K, V, W> Map<K, W> mapValues(Map<K, V> map, Function<V, W> function) {
+		return map(map.keySet(), k -> function.apply(map.get(k)));
 	}
 
 	/**

@@ -1,6 +1,8 @@
 package com.eriklievaart.toolkit.lang.api.collection;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
@@ -15,6 +17,28 @@ public class MapToolU {
 	public void of() {
 		Map<String, String> map = MapTool.of("key", "value");
 		Check.isEqual(map.get("key"), "value");
+	}
+
+	@Test
+	public void mapCollection() {
+		List<String> keys = Arrays.asList("1", "2", "3");
+		Map<String, Integer> map = MapTool.map(keys, Integer::parseInt);
+		Check.isEqual(map.get("1"), 1);
+		Check.isEqual(map.get("2"), 2);
+		Check.isEqual(map.get("3"), 3);
+	}
+
+	@Test
+	public void mapNoDuplicates() {
+		List<String> keys = Arrays.asList("1", "1");
+		BombSquad.diffuse("duplicate key `1`", () -> MapTool.map(keys, Integer::parseInt));
+	}
+
+	@Test
+	public void mapValues() {
+		Map<String, String> map = MapTool.mapValues(MapTool.of("a", 1, "b", 2), v -> "number" + v);
+		Check.isEqual(map.get("a"), "number1");
+		Check.isEqual(map.get("b"), "number2");
 	}
 
 	@Test

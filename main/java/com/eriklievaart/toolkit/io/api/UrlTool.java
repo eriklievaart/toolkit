@@ -3,6 +3,7 @@ package com.eriklievaart.toolkit.io.api;
 import java.util.Map;
 import java.util.Optional;
 
+import com.eriklievaart.toolkit.io.api.http.UrlParameterEncoder;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.MapTool;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
@@ -210,6 +211,16 @@ public class UrlTool {
 		}
 		String protocol = url.replaceFirst(":.*+", "").trim();
 		return protocol.matches("[a-z]++") ? Optional.of(protocol) : Optional.empty();
+	}
+
+	/**
+	 * concatenates the parameters into a valid HTTP GET query string.
+	 *
+	 * @param map
+	 *            key value map for the parameters. toString() will be called on the values.
+	 */
+	public static String getQueryString(Map<String, ?> map) {
+		return UrlParameterEncoder.encodeToString(MapTool.mapValues(map, v -> String.valueOf(v)));
 	}
 
 	private static String unix(String url) {

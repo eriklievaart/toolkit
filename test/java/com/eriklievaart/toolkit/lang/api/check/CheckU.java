@@ -1,11 +1,25 @@
 package com.eriklievaart.toolkit.lang.api.check;
 
+import java.util.Optional;
+
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.mock.BombSquad;
 
 public class CheckU {
+
+	@Test
+	public void checkIsPresent() {
+		Check.isPresent(Optional.of("present"));
+		BombSquad.diffuse(AssertionException.class, "empty", () -> Check.isPresent(Optional.empty()));
+	}
+
+	@Test
+	public void checkIsEmpty() {
+		Check.isEmpty(Optional.empty());
+		BombSquad.diffuse(AssertionException.class, "optional has value", () -> Check.isEmpty(Optional.of("present")));
+	}
 
 	@Test
 	public void checkIsEqualStringPass() {
@@ -44,9 +58,14 @@ public class CheckU {
 	}
 
 	@Test
-	public void checkIsEqualArrayFail() {
+	public void checkIsEqualArrayFailValue() {
+		BombSquad.diffuse(AssertionException.class, "!=", () -> Check.isEqual(new int[] { 1, 2 }, new int[] { 1, 3 }));
+	}
+
+	@Test
+	public void checkIsEqualArrayFailLength() {
 		int[] actual = new int[] { 1 };
 		int[] expected = new int[] { 1, 2, 3 };
-		BombSquad.diffuse(AssertionException.class, "!=", () -> Check.isEqual(actual, expected));
+		BombSquad.diffuse(AssertionException.class, "array length", () -> Check.isEqual(actual, expected));
 	}
 }

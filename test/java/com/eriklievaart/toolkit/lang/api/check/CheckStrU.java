@@ -8,6 +8,13 @@ import com.eriklievaart.toolkit.mock.BombSquad;
 public class CheckStrU {
 
 	@Test
+	public void isLengthPass() {
+		CheckStr.isLength("abc", 3);
+		BombSquad.diffuse("expected length 2", () -> CheckStr.isLength("abc", 2));
+		BombSquad.diffuse("expected length 4", () -> CheckStr.isLength("abc", 4));
+	}
+
+	@Test
 	public void notEqualPass() {
 		CheckStr.notEqual("abc", "def");
 	}

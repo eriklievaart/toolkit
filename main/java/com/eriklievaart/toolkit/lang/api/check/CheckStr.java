@@ -58,4 +58,8 @@ public class CheckStr {
 	public static void isIdentifier(String test) {
 		Check.matches(test, "\\w++");
 	}
+
+	public static void isLength(String test, int expected) {
+		Check.isEqual(test.length(), expected, "string length $ != expected length $", test.length(), expected);
+	}
 }

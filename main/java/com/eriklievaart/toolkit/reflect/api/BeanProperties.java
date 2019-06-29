@@ -9,6 +9,7 @@ import com.eriklievaart.toolkit.reflect.api.method.PropertyWrapper;
 
 public class BeanProperties {
 
+	@SafeVarargs
 	public static Object resolveProperty(String property, Map<String, ?> primary, Map<String, ?>... secondary) {
 		String[] path = PatternTool.split("\\.", property.trim());
 
@@ -23,6 +24,7 @@ public class BeanProperties {
 		return bean;
 	}
 
+	@SafeVarargs
 	private static Object resolveBean(String bean, Map<String, ?> primary, Map<String, ?>... secondary) {
 		if (primary.containsKey(bean)) {
 			return primary.get(bean);

@@ -1,6 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.check;
 
 import java.lang.reflect.Array;
+import java.util.Optional;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.Obj;
@@ -105,7 +106,7 @@ public class Check {
 		Check.notNull(actual, "Expected %, but got <null>", expected);
 
 		if (expected instanceof Number && actual instanceof Number) {
-			isEqual((Number) actual, (Number) expected);
+			isEqual((Number) actual, (Number) expected, format, args);
 		}
 		if (expected.getClass().isArray()) {
 			Check.isTrue(actual.getClass().isArray(), "Expected %, but result was not an array: %", expected, actual);
@@ -116,22 +117,26 @@ public class Check {
 	}
 
 	public static void isEqual(Number actual, Number expected) {
+		Check.isEqual(actual, expected, "actual % != expected %", actual, expected);
+	}
+
+	public static void isEqual(Number actual, Number expected, final String format, final Object... args) {
 		Check.notNull(actual, expected);
 
 		if (expected instanceof Long || expected instanceof Integer || expected instanceof Byte) {
-			isLongValueEqual(actual, expected);
+			isLongValueEqual(actual, expected, format, args);
 			return;
 		}
 
 		if (expected instanceof Float || expected instanceof Double) {
-			isDoubleValueEqual(actual, expected);
+			isDoubleValueEqual(actual, expected, format, args);
 			return;
 		}
-		Check.isTrue(actual.equals(expected), "actual % != expected %", actual, expected);
+		Check.isTrue(actual.equals(expected), format, args);
 	}
 
-	private static void isLongValueEqual(Number actual, Number expected) {
-		Check.isTrue(actual.longValue() == expected.longValue(), "actual $ != expected $", actual, expected);
+	private static void isLongValueEqual(Number actual, Number expected, final String format, final Object... args) {
+		Check.isTrue(actual.longValue() == expected.longValue(), format, args);
 
 		Class<?> actualClass = actual.getClass();
 		Class<?> expectedClass = expected.getClass();
@@ -141,8 +146,8 @@ public class Check {
 		Check.isTrue(actualClass == expectedClass, "Number type actual $ != expected $", actualName, expectedName);
 	}
 
-	private static void isDoubleValueEqual(Number actual, Number expected) {
-		Check.isTrue(actual.doubleValue() == expected.doubleValue(), "actual $ != expected $", actual, expected);
+	private static void isDoubleValueEqual(Number actual, Number expected, final String format, final Object... args) {
+		Check.isTrue(actual.doubleValue() == expected.doubleValue(), format, args);
 
 		Class<?> actualClass = actual.getClass();
 		Class<?> expectedClass = expected.getClass();
@@ -153,11 +158,23 @@ public class Check {
 	}
 
 	private static <E> void isArrayEqual(final E actual, final E expected) {
-		int expectedLength = Array.getLength(expected);
-		int actualLength = Array.getLength(actual);
-		Check.isEqual(actualLength, expectedLength, "Expected array length %, but was %", expectedLength, actualLength);
-		for (int i = 0; i < expectedLength; i++) {
-			Check.isEqual(Array.get(actual, i), Array.get(expected, i));
+		int el = Array.getLength(expected);
+		int al = Array.getLength(actual);
+		Check.isEqual(al, el, "Expected array length $, but was $ -> $", el, al);
+		for (int i = 0; i < el; i++) {
+			Object ai = Array.get(actual, i);
+			Object ei = Array.get(expected, i);
+			Check.isEqual(ai, ei, "value mismatch at index $ ($ != $)", i, ai, ei);
+		}
+	}
+
+	public static void isPresent(Optional<?> optional) {
+		Check.isTrue(optional.isPresent(), "optional is empty");
+	}
+
+	public static void isEmpty(Optional<?> optional) {
+		if (optional.isPresent()) {
+			throw new AssertionException("optional has value %", optional.get());
 		}
 	}
 }

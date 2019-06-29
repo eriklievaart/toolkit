@@ -19,6 +19,7 @@ public class MapFacade<K, V> implements Map<K, V> {
 		this.maps = maps;
 	}
 
+	@SafeVarargs
 	public MapFacade(Map<K, V>... maps) {
 		this(ListTool.of(maps));
 	}

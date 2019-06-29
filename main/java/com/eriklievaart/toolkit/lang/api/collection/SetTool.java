@@ -26,6 +26,7 @@ public class SetTool {
 	/**
 	 * Create a TreeSet from the specified elements.
 	 */
+	@SafeVarargs
 	public static <E> TreeSet<E> treeSet(final E... elements) {
 		TreeSet<E> set = NewCollection.treeSet();
 		for (E element : elements) {
@@ -37,6 +38,7 @@ public class SetTool {
 	/**
 	 * Create a Set from the specified elements.
 	 */
+	@SafeVarargs
 	public static <E> Set<E> of(final E... elements) {
 		Set<E> set = NewCollection.set();
 		set.addAll(Arrays.asList(elements));
@@ -46,6 +48,7 @@ public class SetTool {
 	/**
 	 * Merge the supplied Set's into a single Set containing all unique entries.
 	 */
+	@SafeVarargs
 	public static <E> Set<E> merge(final Set<E>... sets) {
 		Set<E> result = NewCollection.set();
 		for (Set<E> set : sets) {
@@ -57,7 +60,6 @@ public class SetTool {
 	/**
 	 * Returns a new set containing the elements present in one set, but not in both.
 	 */
-	@SuppressWarnings("unchecked")
 	public static <E> Set<E> disjunction(Set<E> first, Set<E> second) {
 		return merge(substract(first, second), substract(second, first));
 	}

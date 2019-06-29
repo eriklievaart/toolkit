@@ -1,12 +1,41 @@
 package com.eriklievaart.toolkit.io.api;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
+import com.eriklievaart.toolkit.lang.api.collection.MapTool;
+import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 
 public class UrlToolU {
+
+	@Test
+	public void getQueryStringEmpty() {
+		CheckStr.isBlank(UrlTool.getQueryString(NewCollection.map()));
+	}
+
+	@Test
+	public void getQueryStringString() {
+		Check.isEqual(UrlTool.getQueryString(MapTool.of("a", "b")), "a=b");
+	}
+
+	@Test
+	public void getQueryStringObject() {
+		Check.isEqual(UrlTool.getQueryString(MapTool.of("a", 1)), "a=1");
+	}
+
+	@Test
+	public void getQueryStringMultiple() {
+		String query = UrlTool.getQueryString(MapTool.of("a", 1, "b", 2));
+		Assertions.assertThat(query).isIn("a=1&b=2", "b=2&a=1");
+	}
+
+	@Test
+	public void getQueryStringEscape() {
+		Check.isEqual(UrlTool.getQueryString(MapTool.of("a", "with space")), "a=with+space");
+	}
 
 	@Test
 	public void getFullFileName() {

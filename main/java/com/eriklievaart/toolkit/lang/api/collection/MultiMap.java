@@ -2,6 +2,8 @@ package com.eriklievaart.toolkit.lang.api.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -84,6 +86,20 @@ public class MultiMap<K, V> {
 	 */
 	public Set<Entry<K, List<V>>> entrySet() {
 		return delegate.entrySet();
+	}
+
+	/**
+	 * Copies all elements in this map to a Hashtable.
+	 */
+	public Map<K, List<V>> toHashtable() {
+		return new Hashtable<>(delegate);
+	}
+
+	/**
+	 * Copies all elements in this map to a HashMap.
+	 */
+	public Map<K, List<V>> toHashMap() {
+		return new HashMap<>(delegate);
 	}
 
 	/**
