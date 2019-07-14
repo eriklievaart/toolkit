@@ -115,7 +115,7 @@ public class LoggerU {
 		private String buffer;
 
 		@Override
-		public void append(LogRecord record) {
+		protected void write(LogRecord record) {
 			buffer = record.getMessage();
 		}
 

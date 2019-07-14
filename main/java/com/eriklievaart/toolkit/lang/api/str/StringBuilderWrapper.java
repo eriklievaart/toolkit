@@ -47,12 +47,14 @@ public class StringBuilderWrapper {
 		return this;
 	}
 
-	public void sub(String format, Object... args) {
+	public StringBuilderWrapper sub(String format, Object... args) {
 		builder.append(Str.sub(format, args));
+		return this;
 	}
 
-	public void subLine(String format, Object... args) {
+	public StringBuilderWrapper subLine(String format, Object... args) {
 		appendLine(Str.sub(format, args));
+		return this;
 	}
 
 	public StringBuilderWrapper clear() {

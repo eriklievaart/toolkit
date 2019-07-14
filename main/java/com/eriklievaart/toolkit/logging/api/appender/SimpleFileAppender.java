@@ -23,7 +23,7 @@ public class SimpleFileAppender extends AbstractAppender {
 	}
 
 	@Override
-	public synchronized void append(LogRecord record) {
+	protected synchronized void write(LogRecord record) {
 		String message = format(record) + "\n";
 		try {
 			byte[] bytes = message.getBytes();

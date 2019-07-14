@@ -16,7 +16,7 @@ public class ConsoleAppender extends AbstractAppender {
 	}
 
 	@Override
-	public void append(LogRecord record) {
+	protected void write(LogRecord record) {
 		String message = format(record);
 
 		if (ERROR_LEVELS.contains(record.getLevel())) {
