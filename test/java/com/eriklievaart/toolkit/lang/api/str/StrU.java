@@ -54,6 +54,26 @@ public class StrU {
 	}
 
 	@Test
+	public void joinSingle() {
+		Check.isEqual(Str.join(Arrays.asList("a"), ","), "a");
+	}
+
+	@Test
+	public void joinString() {
+		Check.isEqual(Str.join(Arrays.asList("a", "b"), ","), "a,b");
+	}
+
+	@Test
+	public void joinInteger() {
+		Check.isEqual(Str.join(Arrays.asList(1, 2), ":"), "1:2");
+	}
+
+	@Test
+	public void joinNull() {
+		Check.isEqual(Str.join(Arrays.asList("a", null), "?"), "a?null");
+	}
+
+	@Test
 	public void repeat0() {
 		CheckStr.isBlank(Str.repeat("ignore", 0));
 	}

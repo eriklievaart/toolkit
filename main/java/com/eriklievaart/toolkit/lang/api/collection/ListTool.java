@@ -29,6 +29,13 @@ public class ListTool {
 	}
 
 	/**
+	 * Filter elements in an array.
+	 */
+	public static <E> List<E> filter(E[] c, Predicate<E> predicate) {
+		return filter(Arrays.asList(c), predicate);
+	}
+
+	/**
 	 * Map elements in a collection.
 	 */
 	public static <E, F> List<F> map(Collection<E> c, Function<E, F> function) {
@@ -36,10 +43,24 @@ public class ListTool {
 	}
 
 	/**
+	 * Map elements in an array.
+	 */
+	public static <E, F> List<F> map(E[] c, Function<E, F> function) {
+		return map(Arrays.asList(c), function);
+	}
+
+	/**
 	 * Filter elements in a collection and map the results.
 	 */
 	public static <E, F> List<F> filterAndMap(Collection<E> c, Predicate<E> predicate, Function<E, F> function) {
 		return c.stream().filter(predicate).map(function).collect(Collectors.toList());
+	}
+
+	/**
+	 * Filter elements in an array and map the results.
+	 */
+	public static <E, F> List<F> filterAndMap(E[] c, Predicate<E> predicate, Function<E, F> function) {
+		return filterAndMap(Arrays.asList(c), predicate, function);
 	}
 
 	/**

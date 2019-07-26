@@ -10,6 +10,7 @@ import java.util.List;
 import com.eriklievaart.toolkit.lang.api.NullSafeComparator;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.FromCollection;
+import com.eriklievaart.toolkit.lang.api.collection.ListTool;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 import com.eriklievaart.toolkit.lang.api.collection.NullPolicy;
 
@@ -123,6 +124,10 @@ public class Str {
 
 	public static String joinLines(Collection<String> lines) {
 		return String.join("\n", lines);
+	}
+
+	public static String join(Collection<?> c, String separator) {
+		return String.join(separator, ListTool.map(c, e -> e == null ? null : e.toString()));
 	}
 
 	public static List<String> sort(String... strings) {
