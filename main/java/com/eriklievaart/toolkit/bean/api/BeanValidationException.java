@@ -15,7 +15,7 @@ public class BeanValidationException extends RuntimeException {
 	}
 
 	private static String createMessage(List<BeanValidationMessage> messages) {
-		return "invalid: " + messages.stream().map(m -> m.getField()).collect(Collectors.toList());
+		return "invalid: " + messages.stream().map(m -> m.getMessage()).collect(Collectors.toList());
 	}
 
 	private Map<String, String> fieldToMessage(List<BeanValidationMessage> list) {

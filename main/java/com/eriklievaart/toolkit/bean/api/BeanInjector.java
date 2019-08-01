@@ -1,6 +1,7 @@
 package com.eriklievaart.toolkit.bean.api;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import com.eriklievaart.toolkit.bean.impl.NotEmptyBeanValidator;
 import com.eriklievaart.toolkit.bean.impl.RegexBeanValidator;
 import com.eriklievaart.toolkit.bean.impl.RequiredBeanValidator;
 import com.eriklievaart.toolkit.bean.impl.SizeBeanValidator;
+import com.eriklievaart.toolkit.convert.api.Constructor;
+import com.eriklievaart.toolkit.convert.api.ConversionException;
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
@@ -18,6 +21,7 @@ import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 import com.eriklievaart.toolkit.reflect.api.FieldTool;
 import com.eriklievaart.toolkit.reflect.api.InstanceTool;
 import com.eriklievaart.toolkit.reflect.api.LiteralTool;
+import com.eriklievaart.toolkit.reflect.api.ReflectException;
 import com.eriklievaart.toolkit.reflect.api.annotations.AnnotatedField;
 import com.eriklievaart.toolkit.reflect.api.annotations.AnnotationTool;
 
@@ -25,6 +29,7 @@ public class BeanInjector {
 
 	private Map<String, String> values = new Hashtable<>();
 	private Map<Class<? extends Annotation>, BeanValidator<?>> validators = new Hashtable<>();
+	private Map<Class<?>, Constructor<?>> constructors = new Hashtable<>();
 
 	public BeanInjector() {
 		this(new Hashtable<>());
@@ -44,10 +49,18 @@ public class BeanInjector {
 		addValidator(new NotBlankBeanValidator());
 	}
 
-	public void addValidator(BeanValidator<?> validator) {
+	public BeanInjector addValidator(BeanValidator<?> validator) {
 		Check.notNull(validator);
 		CheckCollection.notEmpty(validator.getSupportedTypes());
 		validators.put(validator.getAnnotation(), validator);
+		return this;
+	}
+
+	public BeanInjector addConstructor(Constructor<?> constructor) {
+		Check.notNull(constructor);
+		Check.notNull(constructor.getLiteral());
+		constructors.put(constructor.getLiteral(), constructor);
+		return this;
 	}
 
 	public BeanInjector inject(Object object) {
@@ -57,10 +70,20 @@ public class BeanInjector {
 		Class<?> literal = object.getClass();
 		for (String name : FieldTool.getFieldNames(literal)) {
 			if (values.containsKey(name)) {
-				InstanceTool.injectField(object, FieldTool.getField(literal, name), values.get(name));
+				String value = values.get(name);
+				Field field = FieldTool.getField(literal, name);
+				InstanceTool.injectField(object, field, customConvert(value, field.getType()));
 			}
 		}
 		return this;
+	}
+
+	private Object customConvert(String value, Class<?> type) {
+		try {
+			return constructors.containsKey(type) ? constructors.get(type).constructObject(value) : value;
+		} catch (ConversionException e) {
+			throw new ReflectException("Conversion failed for type " + type.getSimpleName(), e);
+		}
 	}
 
 	public void validate(Object object) {

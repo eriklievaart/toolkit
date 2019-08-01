@@ -1,5 +1,6 @@
 package com.eriklievaart.toolkit.bean.api;
 
+import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
@@ -34,6 +35,20 @@ public class BeanInjectorU {
 		new BeanInjector(map).inject(injectme);
 		Check.isEqual(injectme.a, "alpha");
 		Check.isEqual(injectme.b, "beta");
+	}
+
+	@Test
+	public void injectCustomConstructor() {
+		class Injectme {
+			public List<String> list;
+		}
+		Injectme injectme = new Injectme();
+
+		Map<String, String> map = NewCollection.map();
+		map.put("list", "a,b");
+
+		new BeanInjector(map).addConstructor(new ListConstructor()).inject(injectme);
+		Assertions.assertThat(injectme.list).containsExactly("a", "b");
 	}
 
 	@Test
