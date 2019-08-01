@@ -165,4 +165,13 @@ public class ListTool {
 			iterate.accept(i, list.get(i));
 		}
 	}
+
+	/**
+	 * Return a List containing no more than max elements from the provided list.
+	 *
+	 * @return the oroginal List, or a copy containing the first "max" elements.
+	 */
+	public static List<Integer> limitSize(List<Integer> list, int max) {
+		return list.size() <= max ? list : subList(list, 0, max - 1);
+	}
 }

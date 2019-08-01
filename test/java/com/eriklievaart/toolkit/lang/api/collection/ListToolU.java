@@ -47,6 +47,24 @@ public class ListToolU {
 	}
 
 	@Test
+	public void limitSize() {
+		List<Integer> test = Arrays.asList(1, 2, 3, 4, 5);
+		Assertions.assertThat(ListTool.limitSize(test, 3)).containsExactly(1, 2, 3);
+	}
+
+	@Test
+	public void limitSizeBorderCaseEqual() {
+		List<Integer> test = Arrays.asList(1, 2, 3);
+		Assertions.assertThat(ListTool.limitSize(test, 3)).containsExactly(1, 2, 3);
+	}
+
+	@Test
+	public void limitSizeBorderCaseSmaller() {
+		List<Integer> test = Arrays.asList(1, 2);
+		Assertions.assertThat(ListTool.limitSize(test, 3)).containsExactly(1, 2);
+	}
+
+	@Test
 	public void lookupMin() {
 		List<String> test = Arrays.asList("1", "3", "5");
 		Check.isEqual(ListTool.lookup(test, "0"), "1");
