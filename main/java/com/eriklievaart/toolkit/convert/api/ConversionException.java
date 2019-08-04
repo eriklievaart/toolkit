@@ -2,7 +2,7 @@ package com.eriklievaart.toolkit.convert.api;
 
 import com.eriklievaart.toolkit.lang.api.str.Str;
 
-public class ConversionException extends Exception {
+public class ConversionException extends RuntimeException {
 
 	public ConversionException(String msg) {
 		super(msg);
