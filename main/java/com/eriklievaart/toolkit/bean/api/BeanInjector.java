@@ -41,22 +41,22 @@ public class BeanInjector {
 	}
 
 	private void registerDefaultValidators() {
-		addValidator(new SizeBeanValidator());
-		addValidator(new EmailBeanValidator());
-		addValidator(new RegexBeanValidator());
-		addValidator(new RequiredBeanValidator());
-		addValidator(new NotEmptyBeanValidator());
-		addValidator(new NotBlankBeanValidator());
+		validator(new SizeBeanValidator());
+		validator(new EmailBeanValidator());
+		validator(new RegexBeanValidator());
+		validator(new RequiredBeanValidator());
+		validator(new NotEmptyBeanValidator());
+		validator(new NotBlankBeanValidator());
 	}
 
-	public BeanInjector addValidator(BeanValidator<?> validator) {
+	public BeanInjector validator(BeanValidator<?> validator) {
 		Check.notNull(validator);
 		CheckCollection.notEmpty(validator.getSupportedTypes());
 		validators.put(validator.getAnnotation(), validator);
 		return this;
 	}
 
-	public BeanInjector addConstructor(Constructor<?> constructor) {
+	public BeanInjector constructor(Constructor<?> constructor) {
 		Check.notNull(constructor);
 		Check.notNull(constructor.getLiteral());
 		constructors.put(constructor.getLiteral(), constructor);

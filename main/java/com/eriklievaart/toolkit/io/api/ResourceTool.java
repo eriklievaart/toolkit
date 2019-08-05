@@ -14,6 +14,23 @@ public class ResourceTool {
 
 	private static final String NULL_RESOURCE_MESSAGE = "<null> is not a valid resource";
 
+	/**
+	 * Checks whether or not the resource denotes by the specified path is available.
+	 *
+	 * @param loader
+	 *            use this class to get the ClassLoader.
+	 */
+	public static boolean isAvailable(Class<?> loader, String res) {
+		return getURL(loader, res) != null;
+	}
+
+	/**
+	 * Checks whether or not the resource denotes by the specified path is available.
+	 */
+	public static boolean isAvailable(String res) {
+		return isAvailable(getLiteral(), res);
+	}
+
 	public static ValidatingMap<String, String> loadProperties(String res) {
 		return loadProperties(getLiteral(), res);
 	}

@@ -47,7 +47,7 @@ public class BeanInjectorU {
 		Map<String, String> map = NewCollection.map();
 		map.put("list", "a,b");
 
-		new BeanInjector(map).addConstructor(new ListConstructor()).inject(injectme);
+		new BeanInjector(map).constructor(new ListConstructor()).inject(injectme);
 		Assertions.assertThat(injectme.list).containsExactly("a", "b");
 	}
 

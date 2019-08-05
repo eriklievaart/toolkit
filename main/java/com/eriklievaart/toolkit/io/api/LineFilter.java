@@ -2,6 +2,7 @@ package com.eriklievaart.toolkit.io.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -29,6 +30,10 @@ public class LineFilter {
 
 	public LineFilter(File file) throws IOException {
 		this(FileTool.toString(file));
+	}
+
+	public LineFilter(InputStream is) throws IOException {
+		this(StreamTool.readLines(is));
 	}
 
 	public List<String> list() {

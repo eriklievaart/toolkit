@@ -5,9 +5,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
@@ -173,5 +176,28 @@ public class ListTool {
 	 */
 	public static List<Integer> limitSize(List<Integer> list, int max) {
 		return list.size() <= max ? list : subList(list, 0, max - 1);
+	}
+
+	/**
+	 * Generate the specified amount of elements using operator next, starting at seed.
+	 */
+	public static <E> List<E> generate(E seed, UnaryOperator<E> next, int count) {
+		return Stream.iterate(seed, next).limit(count).collect(Collectors.toList());
+	}
+
+	/**
+	 * Randomly select 'count' elements from data. If count is larger than the data list size, the list will simply be
+	 * shuffled.
+	 */
+	public static <E> List<E> random(List<E> data, int count) {
+		int remaining = count;
+		Random random = new Random();
+		List<E> out = NewCollection.list();
+		List<E> copy = new ArrayList<>(data);
+
+		while (remaining-- > 0 && copy.size() > 0) {
+			out.add(copy.remove(random.nextInt(copy.size())));
+		}
+		return out;
 	}
 }

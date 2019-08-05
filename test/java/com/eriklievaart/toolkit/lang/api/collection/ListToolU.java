@@ -7,8 +7,40 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
+import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 
 public class ListToolU {
+
+	@Test
+	public void generate() {
+		List<Integer> result = ListTool.generate(1, i -> i + 1, 10);
+		Assertions.assertThat(result).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+	}
+
+	@Test
+	public void random1() {
+		List<Integer> input = Arrays.asList(1);
+		Assertions.assertThat(ListTool.random(input, 1)).containsExactly(1);
+	}
+
+	@Test
+	public void random() {
+		List<Integer> data = Arrays.asList(1, 2, 3, 4, 5);
+		List<Integer> random1 = ListTool.random(data, 4);
+		List<Integer> random2 = ListTool.random(data, 4);
+
+		Assertions.assertThat(random1).isSubsetOf(data);
+		Assertions.assertThat(random2).isSubsetOf(data);
+		Assertions.assertThat(random1).isNotEqualTo(random2);
+		CheckCollection.isSize(random1, 4);
+		CheckCollection.isSize(random2, 4);
+	}
+
+	@Test
+	public void randomBorderCaseTooManyRequested() {
+		List<Integer> input = Arrays.asList(1);
+		Assertions.assertThat(ListTool.random(input, 2)).containsExactly(1);
+	}
 
 	@Test
 	public void filter() {
