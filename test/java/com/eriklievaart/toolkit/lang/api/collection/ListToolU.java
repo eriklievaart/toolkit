@@ -25,7 +25,7 @@ public class ListToolU {
 
 	@Test
 	public void random() {
-		List<Integer> data = Arrays.asList(1, 2, 3, 4, 5);
+		List<Integer> data = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 		List<Integer> random1 = ListTool.random(data, 4);
 		List<Integer> random2 = ListTool.random(data, 4);
 
