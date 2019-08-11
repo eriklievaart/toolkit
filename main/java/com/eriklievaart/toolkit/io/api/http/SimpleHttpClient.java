@@ -24,6 +24,7 @@ public class SimpleHttpClient implements HttpClient {
 
 	{
 		headers.put("Accept", "*/*");
+		headers.put("User-Agent", "Googlebot/2.1");
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class SimpleHttpClient implements HttpClient {
 			HttpURLConnection con = connect(new URL(call.getUrl()));
 
 			con.setRequestMethod(call.getMethod());
-			headers.forEach((name, value) -> con.setRequestProperty(name, value));
+			setHeaders(con);
 
 			byte[] bytes = call.getBodyBytes();
 			if (bytes.length > 0) {
@@ -74,6 +75,13 @@ public class SimpleHttpClient implements HttpClient {
 		} catch (Exception e) {
 			throw new RuntimeIOException("Unable to read URL %", e, call.getUrl());
 		}
+	}
+
+	private void setHeaders(HttpURLConnection con) {
+		headers.forEach((name, value) -> {
+			log.trace("header: $: $", name, value);
+			con.setRequestProperty(name, value);
+		});
 	}
 
 	private HttpURLConnection connect(URL url) throws IOException {
