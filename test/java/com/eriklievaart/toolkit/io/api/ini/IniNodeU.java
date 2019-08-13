@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
+import com.eriklievaart.toolkit.mock.BombSquad;
 
 public class IniNodeU {
 
@@ -59,6 +60,31 @@ public class IniNodeU {
 	}
 
 	@Test
+	public void hasPropertyPathRoot() {
+		IniNode rootNode = new IniNode("thread");
+		rootNode.setProperty("type", "java.lang.Thread");
+
+		Check.isTrue(rootNode.hasProperty("type"));
+		Check.isFalse(rootNode.hasProperty("pear"));
+	}
+
+	@Test
+	public void hasPropertyPathNested() {
+		IniNode rootNode = new IniNode("thread");
+		rootNode.setProperty("type", "java.lang.Thread");
+
+		IniNode propertiesNode = new IniNode("properties");
+		propertiesNode.setProperty("name", "myid");
+		propertiesNode.setProperty("priority", "3");
+		rootNode.addChild(propertiesNode);
+
+		Check.isTrue(rootNode.hasProperty("type"));
+		Check.isTrue(rootNode.hasProperty("properties/priority"));
+		Check.isFalse(rootNode.hasProperty("pear"));
+		Check.isFalse(rootNode.hasProperty("properties/pear"));
+	}
+
+	@Test
 	public void getPropertyPathRoot() {
 		IniNode rootNode = new IniNode("thread");
 		rootNode.setProperty("type", "java.lang.Thread");
@@ -83,8 +109,7 @@ public class IniNodeU {
 	public void getPropertyPathNestedMissing() {
 		IniNode rootNode = new IniNode("thread");
 		rootNode.setProperty("type", "java.lang.Thread");
-
-		Check.isNull(rootNode.getProperty("properties/priority"));
+		BombSquad.diffuse("missing property", () -> rootNode.getProperty("properties/priority"));
 	}
 
 	@Test

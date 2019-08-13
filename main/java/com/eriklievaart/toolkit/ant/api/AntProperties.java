@@ -30,6 +30,10 @@ public class AntProperties {
 		return new AntProperty("source.test.java.dir");
 	}
 
+	public static AntProperty getJavaResourceDir() {
+		return new AntProperty("source.test.resource.dir");
+	}
+
 	public static AntProperty getRunDir() {
 		return new AntProperty("build.run.dir");
 	}

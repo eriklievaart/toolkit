@@ -193,6 +193,15 @@ public class LogTemplate {
 	 *
 	 * @see Str#sub(String, Object...)
 	 */
+	public void error(final String format, Object... args) {
+		log.log(createLogRecord(Level.SEVERE, format), args);
+	}
+
+	/**
+	 * Write a formatted error level message.
+	 *
+	 * @see Str#sub(String, Object...)
+	 */
 	public void error(final String format, final Throwable thrown, Object... args) {
 		log.log(createLogRecord(Level.SEVERE, thrown, format), args);
 	}

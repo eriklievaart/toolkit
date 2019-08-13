@@ -80,6 +80,7 @@ public class IniNodeValidator {
 	private static void validateProperties(IniNode contentNode, IniNode schemaNode) throws IniSchemaException {
 		IniSchemaPropertyToken token = getSchemaPropertyToken(schemaNode);
 		token.getType().verifyProperty(contentNode, token);
+		verifyRequiredPropertiesExist(contentNode, schemaNode);
 	}
 
 	private static IniSchemaPropertyToken getSchemaPropertyToken(IniNode schemaNode) {
@@ -90,6 +91,25 @@ public class IniNodeValidator {
 			}
 		}
 		return new IniSchemaPropertyToken(IniSchemaPropertyEnum.NONE);
+	}
+
+	private static void verifyRequiredPropertiesExist(IniNode contentNode, IniNode schemaNode) {
+		if (schemaNode == null) {
+			return;
+		}
+		if (!schemaNode.hasProperty("required")) {
+			return;
+		}
+		IniSchemaPropertyToken required = IniSchemaPropertyTokenizer.parse(schemaNode.getProperty("required"));
+		IniSchemaPropertyEnum type = required.getType();
+		if (type != IniSchemaPropertyEnum.EXACT) {
+			throw new FormattedException("required must be of type EXACT, but was $", type);
+		}
+		for (String property : required.getValueAsList()) {
+			if (!contentNode.hasProperty(property)) {
+				throw new IniSchemaException("node $ does not have property %", contentNode, property);
+			}
+		}
 	}
 
 	public static boolean isValid(IniNode contentNode, IniNode schemaNode) {

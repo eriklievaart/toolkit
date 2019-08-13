@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
@@ -110,7 +111,8 @@ public class IniNode {
 	 * @param key
 	 *            property identified 'type' to retrieve the type property from this node, mainboard/type to retrieve
 	 *            the type property from the mainboard child node.
-	 * @return the property found, or null if none was found.
+	 * @throws AssertionException
+	 *             when property was not found
 	 */
 	public String getProperty(String key) {
 		IniNodePath path = new IniNodePath(key);
@@ -118,7 +120,7 @@ public class IniNode {
 			if (hasChild(path.getHead())) {
 				return getChild(path.getHead()).getProperty(path.getTail());
 			} else {
-				return null;
+				throw new AssertionException("missing property %", key);
 			}
 		} else {
 			return properties.get(key);
@@ -138,7 +140,9 @@ public class IniNode {
 	}
 
 	public boolean hasProperty(String key) {
-		return properties.containsKey(key);
+		AtomicBoolean result = new AtomicBoolean();
+		ifProperty(key, p -> result.set(true));
+		return result.get();
 	}
 
 	public Map<String, String> getPropertiesMap() {
