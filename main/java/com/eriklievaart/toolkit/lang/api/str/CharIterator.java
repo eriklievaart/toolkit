@@ -50,8 +50,8 @@ public class CharIterator {
 
 	private void checkAssertionExceptions() {
 		Check.notNull(chars);
-		Check.isTrue(last == -1 || last < chars.length(), "Last index % does not exist in CharSequence %", last, chars);
-		Check.isTrue(last == -1 || index <= last, "Start index is past final index: % > % in %", start, last, chars);
+		Check.isTrue(last == -1 || last < chars.length(), "Last index $ does not exist in CharSequence %", last, chars);
+		Check.isTrue(last == -1 || index <= last + 1, "Start is beyond content: $ > $ in %", start, last, chars);
 	}
 
 	public char next() {

@@ -80,11 +80,7 @@ public class Check {
 	}
 
 	public static void notBlank(final String str, final String message, Object... args) {
-		if (args.length == 0) {
-			Check.isTrue(Str.notBlank(str), message);
-		} else {
-			Check.isTrue(Str.notBlank(str), message, args);
-		}
+		Check.isTrue(Str.notBlank(str), message, args);
 	}
 
 	/**

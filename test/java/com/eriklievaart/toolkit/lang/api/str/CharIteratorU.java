@@ -4,9 +4,28 @@ import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.lang.api.str.CharIterator;
 
 public class CharIteratorU {
+
+	@Test
+	public void newCharIteratorFromHere() {
+		CharIterator testable = new CharIterator("123");
+		testable.next();
+
+		CharIterator copy = testable.newCharIteratorFromHere();
+		copy.next();
+
+		Check.isEqual(testable.toString(), "23");
+		Check.isEqual(copy.toString(), "3");
+	}
+
+	@Test
+	public void newCharIteratorFromHereBorderCaseEndOfInput() {
+		CharIterator testable = new CharIterator("1");
+		testable.next();
+		CharIterator copy = testable.newCharIteratorFromHere();
+		Check.isEqual(copy.toString(), "");
+	}
 
 	@Test(expected = AssertionException.class)
 	public void constructorEmptyFail() {

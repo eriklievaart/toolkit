@@ -112,17 +112,17 @@ public class ListTool {
 	}
 
 	/**
-	 * Return an unmodifiable List containing the elements in the original Collection.
-	 */
-	public static <E> List<E> unmodifiableCopy(final Collection<E> original) {
-		return Collections.unmodifiableList(new ArrayList<>(original));
-	}
-
-	/**
 	 * Add all of the specified elements to the specified List.
 	 */
 	public static <E> void addAll(final List<E> list, final E[] elements) {
 		list.addAll(Arrays.asList(elements));
+	}
+
+	/**
+	 * Return an unmodifiable List containing the elements in the original Collection.
+	 */
+	public static <E> List<E> unmodifiableCopy(final Collection<E> original) {
+		return Collections.unmodifiableList(new ArrayList<>(original));
 	}
 
 	/**
@@ -131,6 +131,15 @@ public class ListTool {
 	public static <E extends Comparable<? super E>> List<E> sortedCopy(final Collection<E> original) {
 		List<E> copy = new ArrayList<>(original);
 		Collections.sort(copy);
+		return copy;
+	}
+
+	/**
+	 * Return a copy of a list with the elements in reverse order.
+	 */
+	public static <E> List<E> reversedCopy(final Collection<E> original) {
+		List<E> copy = new ArrayList<>(original);
+		Collections.reverse(copy);
 		return copy;
 	}
 
@@ -170,11 +179,20 @@ public class ListTool {
 	}
 
 	/**
+	 * Iterate a list in reverse order and pass index along with the element.
+	 */
+	public static <E> void iterateBackwards(final List<E> list, final IterationElement<E> iterate) {
+		for (int i = list.size() - 1; i >= 0; i--) {
+			iterate.accept(i, list.get(i));
+		}
+	}
+
+	/**
 	 * Return a List containing no more than max elements from the provided list.
 	 *
 	 * @return the oroginal List, or a copy containing the first "max" elements.
 	 */
-	public static List<Integer> limitSize(List<Integer> list, int max) {
+	public static <E> List<E> limitSize(List<E> list, int max) {
 		return list.size() <= max ? list : subList(list, 0, max - 1);
 	}
 

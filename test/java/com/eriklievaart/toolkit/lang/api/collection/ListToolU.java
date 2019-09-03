@@ -12,6 +12,52 @@ import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 public class ListToolU {
 
 	@Test
+	public void sortedCopy() {
+		List<Integer> original = Arrays.asList(3, 1, 2);
+		List<Integer> sorted = ListTool.sortedCopy(original);
+
+		Assertions.assertThat(sorted).containsExactly(1, 2, 3);
+		Assertions.assertThat(original).containsExactly(3, 1, 2);
+	}
+
+	@Test
+	public void reverseCopy() {
+		List<Integer> original = Arrays.asList(3, 1, 2);
+		List<Integer> reversed = ListTool.reversedCopy(original);
+
+		Assertions.assertThat(reversed).containsExactly(2, 1, 3);
+		Assertions.assertThat(original).containsExactly(3, 1, 2);
+	}
+
+	@Test
+	public void iterate() {
+		List<String> data = Arrays.asList("zero", "one", "two");
+
+		List<Integer> indices = NewCollection.list();
+		List<String> elements = NewCollection.list();
+		ListTool.iterate(data, (index, value) -> {
+			indices.add(index);
+			elements.add(value);
+		});
+		Assertions.assertThat(indices).containsExactly(0, 1, 2);
+		Assertions.assertThat(elements).containsExactly("zero", "one", "two");
+	}
+
+	@Test
+	public void iterateBackwards() {
+		List<String> data = Arrays.asList("zero", "one", "two");
+
+		List<Integer> indices = NewCollection.list();
+		List<String> elements = NewCollection.list();
+		ListTool.iterateBackwards(data, (index, value) -> {
+			indices.add(index);
+			elements.add(value);
+		});
+		Assertions.assertThat(indices).containsExactly(2, 1, 0);
+		Assertions.assertThat(elements).containsExactly("two", "one", "zero");
+	}
+
+	@Test
 	public void generate() {
 		List<Integer> result = ListTool.generate(1, i -> i + 1, 10);
 		Assertions.assertThat(result).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
