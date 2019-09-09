@@ -8,6 +8,52 @@ import com.eriklievaart.toolkit.lang.api.check.CheckStr;
 public class StringBuilderWrapperU {
 
 	@Test
+	public void charAt() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
+
+		Check.isEqual(testable.charAt(0), 'h');
+		Check.isEqual(testable.charAt(1), 'e');
+		Check.isEqual(testable.charAt(2), 'l');
+		Check.isEqual(testable.charAt(3), 'l');
+		Check.isEqual(testable.charAt(4), 'o');
+
+		Check.isEqual(testable.charAt(-5), 'h');
+		Check.isEqual(testable.charAt(-4), 'e');
+		Check.isEqual(testable.charAt(-3), 'l');
+		Check.isEqual(testable.charAt(-2), 'l');
+		Check.isEqual(testable.charAt(-1), 'o');
+	}
+
+	@Test
+	public void endsWith() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
+		Check.isTrue(testable.endsWith("lo"));
+		Check.isFalse(testable.endsWith("ld"));
+
+		testable.append(" world");
+		Check.isFalse(testable.endsWith("lo"));
+		Check.isTrue(testable.endsWith("ld"));
+	}
+
+	@Test
+	public void endsWithBorderCases() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
+		Check.isTrue(testable.endsWith("hello"));
+		Check.isFalse(testable.endsWith("hello world"));
+	}
+
+	@Test
+	public void replaceChar() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
+		testable.replaceChar(1, 'a');
+		Check.isEqual(testable.toString(), "hallo");
+
+		testable.replaceChar(-5, 'w');
+		testable.replaceChar(-1, 'y');
+		Check.isEqual(testable.toString(), "wally");
+	}
+
+	@Test
 	public void appendChar() {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.append('a');

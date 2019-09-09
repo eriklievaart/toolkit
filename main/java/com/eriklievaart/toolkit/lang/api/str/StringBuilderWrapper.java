@@ -1,5 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.str;
 
+import com.eriklievaart.toolkit.lang.api.check.Check;
+
 public class StringBuilderWrapper {
 
 	private final StringBuilder builder;
@@ -22,6 +24,43 @@ public class StringBuilderWrapper {
 
 	public StringBuilder getStringBuilder() {
 		return builder;
+	}
+
+	/**
+	 * Get the char at index i, use negative numbers to get indexes relative to the end of the string.
+	 */
+	public char charAt(int i) {
+		return builder.charAt(translate(i));
+	}
+
+	public boolean endsWith(String tail) {
+		Check.notNull(tail);
+
+		int lengthB = builder.length();
+		int lengthT = tail.length();
+		int start = lengthB - lengthT;
+
+		if (start < 0) {
+			return false;
+		}
+		for (int i = 0; i < lengthT; i++) {
+			if (builder.charAt(start + i) != tail.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Replace the char at index i, use negative numbers to use indexes relative to the end of the string.
+	 */
+	public void replaceChar(int i, char c) {
+		int index = translate(i);
+		builder.replace(index, index + 1, "" + c);
+	}
+
+	private int translate(int i) {
+		return i >= 0 ? i : builder.length() + i;
 	}
 
 	public StringBuilderWrapper append(char c) {
