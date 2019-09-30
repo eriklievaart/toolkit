@@ -44,6 +44,17 @@ public class StrU {
 	}
 
 	@Test
+	public void isEqualIgnoreCasePass() {
+		Check.isTrue(Str.isEqualIgnoreCase("apple", "apple"));
+		Check.isTrue(Str.isEqualIgnoreCase("apple", "APPLE"));
+	}
+
+	@Test
+	public void isEqualIgnoreCaseFail() {
+		Check.isFalse(Str.isEqualIgnoreCase("apple", "orange"));
+	}
+
+	@Test
 	public void notEqualPass() {
 		Check.isTrue(Str.notEqual("apple", "orange"));
 	}

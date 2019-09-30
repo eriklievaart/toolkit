@@ -54,9 +54,14 @@ public class StringBuilderWrapper {
 	/**
 	 * Replace the char at index i, use negative numbers to use indexes relative to the end of the string.
 	 */
-	public void replaceChar(int i, char c) {
+	public StringBuilderWrapper replaceChar(int i, char c) {
 		int index = translate(i);
 		builder.replace(index, index + 1, "" + c);
+		return this;
+	}
+
+	public void deleteLast(int count) {
+		builder.delete(builder.length() - count, builder.length());
 	}
 
 	private int translate(int i) {

@@ -157,6 +157,13 @@ public class Str {
 		return a.equals(b);
 	}
 
+	public static boolean isEqualIgnoreCase(String a, String b) {
+		if (a == null || b == null) {
+			return a == b;
+		}
+		return a.toUpperCase().equals(b.toUpperCase());
+	}
+
 	public static boolean notEqual(String a, String b) {
 		return !isEqual(a, b);
 	}

@@ -54,6 +54,19 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void deleteLast() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
+		testable.deleteLast(1);
+		Check.isEqual(testable.toString(), "hell");
+
+		testable.deleteLast(3);
+		Check.isEqual(testable.toString(), "h");
+
+		testable.deleteLast(1);
+		Check.isEqual(testable.toString(), "");
+	}
+
+	@Test
 	public void appendChar() {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.append('a');
