@@ -18,15 +18,17 @@ public class CheckStr {
 	}
 
 	public static void contains(String test, CharSequence expected) {
+		Check.notNull(test);
 		Check.isTrue(test.contains(expected), "% not present in %", expected, test);
 	}
 
 	public static void containsIgnoreCase(String test, String expected) {
+		Check.notNull(test);
 		Check.isTrue(test.toLowerCase().contains(expected.toLowerCase()), "% not present in %", expected, test);
 	}
 
 	public static void isEmptyString(String test) {
-		Check.isTrue("".equals(test), "% is not an empty string literal", test);
+		Check.isTrue(test == null || "".equals(test), "% is not an empty string literal", test);
 	}
 
 	public static void isEqual(String test, String expected) {
