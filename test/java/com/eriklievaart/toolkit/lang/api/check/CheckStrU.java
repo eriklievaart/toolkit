@@ -8,6 +8,20 @@ import com.eriklievaart.toolkit.mock.BombSquad;
 public class CheckStrU {
 
 	@Test
+	public void isEqual() {
+		CheckStr.isEqual("abc", "abc");
+		BombSquad.diffuse(AssertionException.class, () -> CheckStr.isEqual("abc", "ABC"));
+		BombSquad.diffuse(AssertionException.class, () -> CheckStr.isEqual("abc", "a b c"));
+	}
+
+	@Test
+	public void isEqualIgnoreCase() {
+		CheckStr.isEqualIgnoreCase("abc", "abc");
+		CheckStr.isEqualIgnoreCase("abc", "ABC");
+		BombSquad.diffuse(AssertionException.class, () -> CheckStr.isEqualIgnoreCase("abc", "a b c"));
+	}
+
+	@Test
 	public void isLengthPass() {
 		CheckStr.isLength("abc", 3);
 		BombSquad.diffuse("expected length 2", () -> CheckStr.isLength("abc", 2));

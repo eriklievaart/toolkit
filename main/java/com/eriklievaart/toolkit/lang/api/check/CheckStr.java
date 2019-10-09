@@ -31,6 +31,14 @@ public class CheckStr {
 		Check.isTrue(test == null || "".equals(test), "% is not an empty string literal", test);
 	}
 
+	public static void isEqualIgnoreCase(String test, String expected) {
+		if (test == expected) {
+			return;
+		}
+		Check.notNull(test, expected);
+		AssertionException.unless(test.equalsIgnoreCase(expected), "% not equal to %", test, expected);
+	}
+
 	public static void isEqual(String test, String expected) {
 		Check.isEqual(test, expected);
 	}
