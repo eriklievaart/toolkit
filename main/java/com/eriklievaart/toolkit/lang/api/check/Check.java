@@ -88,10 +88,10 @@ public class Check {
 	 */
 	public static <E> void isEqual(final E actual, final E expected) {
 		if (expected == null) {
-			Check.isNull(actual, "Expected <null>, but was: %", actual);
+			Check.isNull(actual, "Expected\n<null>, but was:\n%", actual);
 			return;
 		}
-		isEqual(actual, expected, "actual % != expected %", actual, expected);
+		isEqual(actual, expected, "actual \n% != expected \n%", actual, expected);
 	}
 
 	public static <E> void isEqual(final E actual, final E expected, final String format, final Object... args) {
@@ -99,7 +99,7 @@ public class Check {
 			Check.isNull(actual, format, args);
 			return;
 		}
-		Check.notNull(actual, "Expected %, but got <null>", expected);
+		Check.notNull(actual, "\nExpected %,\n but was <null>", expected);
 
 		if (expected instanceof Number && actual instanceof Number) {
 			isEqual((Number) actual, (Number) expected, format, args);
