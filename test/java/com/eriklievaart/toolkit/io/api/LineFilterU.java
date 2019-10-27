@@ -5,6 +5,8 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
+
 public class LineFilterU {
 
 	@Test
@@ -83,5 +85,14 @@ public class LineFilterU {
 	public void regexReplaceAll() {
 		List<String> lines = new LineFilter("red").regexReplaceAll("e", "a").list();
 		Assertions.assertThat(lines).containsExactly("rad");
+	}
+
+	@Test
+	public void iterate() {
+		List<String> actual = NewCollection.list();
+		new LineFilter("one\n \nthree").dropBlank().iterate((index, line) -> {
+			actual.add(index + line);
+		});
+		Assertions.assertThat(actual).containsExactly("1one", "3three");
 	}
 }

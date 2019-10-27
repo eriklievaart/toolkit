@@ -67,7 +67,7 @@ public class ResourceTool {
 		checkResourceString(res);
 		try {
 			InputStream stream = loader.getResourceAsStream(res);
-			Check.notNull(stream, NULL_RESOURCE_MESSAGE);
+			Check.notNull(stream, "not a valid resource; % was <null>", res);
 			return stream;
 		} catch (Exception e) {
 			throw resourceException(e, res);

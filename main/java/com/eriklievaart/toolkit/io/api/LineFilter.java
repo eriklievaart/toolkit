@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -37,17 +38,23 @@ public class LineFilter {
 	}
 
 	public List<String> list() {
-		List<String> result = NewCollection.list();
+		List<String> list = NewCollection.list();
+		iterate((number, text) -> {
+			list.add(text);
+		});
+		return list;
+	}
 
-		for (String line : lines) {
+	public void iterate(BiConsumer<Integer, String> consumer) {
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
 			if (eof != null && line.trim().equalsIgnoreCase(eof.trim())) {
-				return result;
+				return;
 			}
 			if (predicates.stream().noneMatch(p -> p.test(line))) {
-				result.add(applyFunctions(line));
+				consumer.accept(i + 1, applyFunctions(line));
 			}
 		}
-		return result;
 	}
 
 	private String applyFunctions(String line) {

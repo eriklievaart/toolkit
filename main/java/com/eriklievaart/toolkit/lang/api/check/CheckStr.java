@@ -19,7 +19,7 @@ public class CheckStr {
 
 	public static void contains(String test, CharSequence expected) {
 		Check.notNull(test);
-		Check.isTrue(test.contains(expected), "% not present in %", expected, test);
+		Check.isTrue(test.contains(expected), "\n% not present in \n%", expected, test);
 	}
 
 	public static void containsIgnoreCase(String test, String expected) {

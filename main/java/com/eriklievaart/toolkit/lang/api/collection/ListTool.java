@@ -39,6 +39,13 @@ public class ListTool {
 	}
 
 	/**
+	 * Map elements in an array.
+	 */
+	public static <E, F> List<F> map(E[] c, Function<E, F> function) {
+		return map(Arrays.asList(c), function);
+	}
+
+	/**
 	 * Map elements in a collection.
 	 */
 	public static <E, F> List<F> map(Collection<E> c, Function<E, F> function) {
@@ -46,10 +53,12 @@ public class ListTool {
 	}
 
 	/**
-	 * Map elements in an array.
+	 * Map elements and then sort them (natural order).
 	 */
-	public static <E, F> List<F> map(E[] c, Function<E, F> function) {
-		return map(Arrays.asList(c), function);
+	public static <E, F extends Comparable<F>> List<F> mapAndSort(Collection<E> c, Function<E, F> function) {
+		List<F> list = map(c, function);
+		Collections.sort(list);
+		return list;
 	}
 
 	/**

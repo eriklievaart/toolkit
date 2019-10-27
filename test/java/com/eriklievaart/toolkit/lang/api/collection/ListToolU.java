@@ -110,6 +110,13 @@ public class ListToolU {
 	}
 
 	@Test
+	public void mapAndSort() {
+		List<String> test = Arrays.asList("3", "1", "2");
+		List<Integer> result = ListTool.mapAndSort(test, s -> Integer.parseInt(s));
+		Assertions.assertThat(result).containsExactly(1, 2, 3);
+	}
+
+	@Test
 	public void subList() {
 		List<String> test = Arrays.asList("1", "2", "3");
 		Check.isEqual(ListTool.subList(test, 2), Arrays.asList("3"));

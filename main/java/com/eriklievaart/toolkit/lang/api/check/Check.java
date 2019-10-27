@@ -139,7 +139,7 @@ public class Check {
 		String actualName = actualClass.getSimpleName();
 		String expectedName = expectedClass.getSimpleName();
 
-		Check.isTrue(actualClass == expectedClass, "Number type actual $ != expected $", actualName, expectedName);
+		Check.isTrue(actualClass == expectedClass, "Number type\n actual $ != expected $", actualName, expectedName);
 	}
 
 	private static void isDoubleValueEqual(Number actual, Number expected, final String format, final Object... args) {
