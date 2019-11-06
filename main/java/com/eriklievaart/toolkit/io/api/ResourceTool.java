@@ -12,8 +12,6 @@ import com.eriklievaart.toolkit.lang.api.collection.ValidatingMap;
 
 public class ResourceTool {
 
-	private static final String NULL_RESOURCE_MESSAGE = "<null> is not a valid resource";
-
 	/**
 	 * Checks whether or not the resource denotes by the specified path is available.
 	 *

@@ -17,7 +17,7 @@ import com.eriklievaart.toolkit.lang.api.date.TimestampTool;
  * cause conflicts when multiple VM's write to the same file.
  */
 public class RotatingFileAppender extends AbstractAppender {
-	private static final String DATE_FORMAT = "yyyy-dd-MM";
+	private static final String DATE_FORMAT = "yyyy-MM-dd";
 	private static final long INTERVAL = TimestampTool.ONE_DAY;
 
 	private AtomicBoolean closed = new AtomicBoolean(false);

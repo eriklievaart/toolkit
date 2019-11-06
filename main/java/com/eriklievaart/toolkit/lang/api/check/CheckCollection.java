@@ -74,7 +74,7 @@ public class CheckCollection {
 	}
 
 	public static <E, F> void isPresent(final Map<E, F> map, final E key) {
-		isPresent(map, key, "% not in map.keys $", key, map.keySet());
+		isPresent(map, key, "% not in map.keys\n$", key, map.keySet());
 	}
 
 	public static <E, F> void isPresent(final Map<E, F> map, final E key, final String format, final Object... args) {
