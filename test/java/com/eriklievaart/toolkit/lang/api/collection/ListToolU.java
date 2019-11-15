@@ -2,6 +2,7 @@ package com.eriklievaart.toolkit.lang.api.collection;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -10,6 +11,16 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 
 public class ListToolU {
+
+	@Test
+	public void equalsInAnyOrder() {
+		Check.isTrue(ListTool.equalsInAnyOrder(Arrays.asList(4, 3, 2, 1), Arrays.asList(1, 2, 3, 4)));
+		Check.isTrue(ListTool.equalsInAnyOrder(Arrays.asList(4, 3, 2, 1), Arrays.asList(4, 3, 2, 1)));
+
+		Check.isFalse(ListTool.equalsInAnyOrder(Arrays.asList(1, 2), Arrays.asList(1)));
+		Check.isFalse(ListTool.equalsInAnyOrder(Arrays.asList(1), Arrays.asList(1, 2)));
+		Check.isFalse(ListTool.equalsInAnyOrder(Arrays.asList(1, 2), Arrays.asList(2, 3)));
+	}
 
 	@Test
 	public void sortedCopy() {
@@ -114,6 +125,20 @@ public class ListToolU {
 		List<String> test = Arrays.asList("3", "1", "2");
 		List<Integer> result = ListTool.mapAndSort(test, s -> Integer.parseInt(s));
 		Assertions.assertThat(result).containsExactly(1, 2, 3);
+	}
+
+	@Test
+	public void mapAndMerge() {
+		List<String> test = Arrays.asList("1:2", "3:4");
+		List<String> result = ListTool.mapAndMerge(test, s -> Arrays.asList(s.split(":")));
+		Assertions.assertThat(result).containsExactly("1", "2", "3", "4");
+	}
+
+	@Test
+	public void mapMap() {
+		Map<String, Integer> map = MapTool.of("a", 1, "b", 2);
+		List<String> result = ListTool.map(map, (k, v) -> k + ":" + v);
+		Assertions.assertThat(result).containsExactly("a:1", "b:2");
 	}
 
 	@Test

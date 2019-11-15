@@ -25,6 +25,15 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void insert() {
+		Check.isEqual(new StringBuilderWrapper("123456").insert(0, "abc").toString(), "abc123456");
+		Check.isEqual(new StringBuilderWrapper("123456").insert(1, "abc").toString(), "1abc23456");
+		Check.isEqual(new StringBuilderWrapper("123456").insert(2, "abc").toString(), "12abc3456");
+		Check.isEqual(new StringBuilderWrapper("123456").insert(-1, "abc").toString(), "12345abc6");
+		Check.isEqual(new StringBuilderWrapper("123456").insert(-2, "abc").toString(), "1234abc56");
+	}
+
+	@Test
 	public void endsWith() {
 		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
 		Check.isTrue(testable.endsWith("lo"));

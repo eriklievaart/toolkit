@@ -1,7 +1,6 @@
 package com.eriklievaart.toolkit.io.api;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -29,11 +28,11 @@ public class LineFilter {
 		lines = data.toArray(new String[] {});
 	}
 
-	public LineFilter(File file) throws IOException {
+	public LineFilter(File file) throws RuntimeIOException {
 		this(FileTool.toString(file));
 	}
 
-	public LineFilter(InputStream is) throws IOException {
+	public LineFilter(InputStream is) throws RuntimeIOException {
 		this(StreamTool.readLines(is));
 	}
 

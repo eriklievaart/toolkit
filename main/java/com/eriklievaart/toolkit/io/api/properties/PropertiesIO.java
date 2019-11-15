@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.io.api;
+package com.eriklievaart.toolkit.io.api.properties;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,12 +10,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import com.eriklievaart.toolkit.io.api.CheckFile;
+import com.eriklievaart.toolkit.io.api.RuntimeIOException;
+import com.eriklievaart.toolkit.io.api.StreamTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
-import com.eriklievaart.toolkit.logging.api.LogTemplate;
 
 public class PropertiesIO {
-	private static LogTemplate log = new LogTemplate(PropertiesIO.class);
 
 	public static void storeStrings(Map<String, String> props, File file) {
 		Check.notNull(props, file);
@@ -37,7 +38,6 @@ public class PropertiesIO {
 	}
 
 	public static void store(Properties props, File file) {
-		log.debug("Storing property file $", file);
 		Check.notNull(props, file);
 		file.getParentFile().mkdirs();
 		try {

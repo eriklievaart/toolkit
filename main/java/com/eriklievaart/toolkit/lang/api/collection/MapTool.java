@@ -22,7 +22,7 @@ public class MapTool {
 	/**
 	 * Create a new Map containing keys as keys and the values are derived from applying the mapping function.
 	 */
-	public static <K, V> Map<K, V> map(Collection<K> keys, Function<K, V> function) {
+	public static <K, V> Map<K, V> toMap(Collection<K> keys, Function<K, V> function) {
 		Set<K> duplicates = new HashSet<>();
 		Map<K, V> map = NewCollection.mapNotNull();
 		for (K key : keys) {
@@ -33,10 +33,32 @@ public class MapTool {
 	}
 
 	/**
+	 * Use a collection to generate a map.
+	 *
+	 * @param generator
+	 *            create a map entry per item
+	 * @param keys
+	 *            function to create key from the generator
+	 * @param values
+	 *            function to create key from the generator
+	 */
+	public static <G, K, V> Map<K, V> toMap(Collection<G> generator, Function<G, K> keys, Function<G, V> values) {
+		Set<K> duplicates = new HashSet<>();
+		Map<K, V> map = NewCollection.mapNotNull();
+		for (G source : generator) {
+			K key = keys.apply(source);
+			V value = values.apply(source);
+			AssertionException.unless(duplicates.add(key), "duplicate key %", key);
+			map.put(key, value);
+		}
+		return map;
+	}
+
+	/**
 	 * Apply function to values in Map and create a new map as result;
 	 */
 	public static <K, V, W> Map<K, W> mapValues(Map<K, V> map, Function<V, W> function) {
-		return map(map.keySet(), k -> function.apply(map.get(k)));
+		return toMap(map.keySet(), k -> function.apply(map.get(k)));
 	}
 
 	/**

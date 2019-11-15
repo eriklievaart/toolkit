@@ -7,6 +7,7 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Optional;
 
+import com.eriklievaart.toolkit.io.api.properties.PropertiesIO;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.ValidatingMap;
 
@@ -127,6 +128,6 @@ public class ResourceTool {
 	}
 
 	private static RuntimeIOException resourceException(Exception e, String res) {
-		return new RuntimeIOException("% could not be read; $", e, res, e.getMessage());
+		return new RuntimeIOException("% could not be read;\n $", e, res, e.getMessage());
 	}
 }

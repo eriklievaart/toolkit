@@ -20,25 +20,34 @@ public class MapToolU {
 	}
 
 	@Test
-	public void mapCollection() {
+	public void toMapCollection() {
 		List<String> keys = Arrays.asList("1", "2", "3");
-		Map<String, Integer> map = MapTool.map(keys, Integer::parseInt);
+		Map<String, Integer> map = MapTool.toMap(keys, Integer::parseInt);
 		Check.isEqual(map.get("1"), 1);
 		Check.isEqual(map.get("2"), 2);
 		Check.isEqual(map.get("3"), 3);
 	}
 
 	@Test
-	public void mapNoDuplicates() {
+	public void toMapNoDuplicates() {
 		List<String> keys = Arrays.asList("1", "1");
-		BombSquad.diffuse("duplicate key `1`", () -> MapTool.map(keys, Integer::parseInt));
+		BombSquad.diffuse("duplicate key `1`", () -> MapTool.toMap(keys, Integer::parseInt));
 	}
 
 	@Test
-	public void mapValues() {
+	public void toMapValues() {
 		Map<String, String> map = MapTool.mapValues(MapTool.of("a", 1, "b", 2), v -> "number" + v);
 		Check.isEqual(map.get("a"), "number1");
 		Check.isEqual(map.get("b"), "number2");
+	}
+
+	@Test
+	public void toMap2Functions() {
+		List<Integer> generator = Arrays.asList(1, 2, 3);
+		Map<String, Integer> map = MapTool.toMap(generator, a -> a.toString(), a -> a * a);
+		Check.isEqual(map.get("1"), 1);
+		Check.isEqual(map.get("2"), 4);
+		Check.isEqual(map.get("3"), 9);
 	}
 
 	@Test

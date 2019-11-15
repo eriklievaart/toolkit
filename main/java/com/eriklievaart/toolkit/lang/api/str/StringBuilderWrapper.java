@@ -68,6 +68,11 @@ public class StringBuilderWrapper {
 		return i >= 0 ? i : builder.length() + i;
 	}
 
+	public StringBuilderWrapper insert(int index, String value) {
+		builder.insert(translate(index), value);
+		return this;
+	}
+
 	public StringBuilderWrapper append(char c) {
 		builder.append(c);
 		return this;

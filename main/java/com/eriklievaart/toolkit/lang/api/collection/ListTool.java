@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
@@ -24,37 +29,46 @@ public class ListTool {
 	private ListTool() {
 	}
 
-	/**
-	 * Filter elements in a collection.
-	 */
+	public static <E> boolean equalsInAnyOrder(List<E> a, List<E> b) {
+		if (a.size() != b.size()) {
+			return false;
+		}
+		Set<Integer> bRemaining = new HashSet<>(generate(0, i -> i + 1, b.size()));
+
+		OUTER: for (E element : a) {
+			for (int i = 0; i < b.size(); i++) {
+				if (bRemaining.contains(i) && Objects.equals(element, b.get(i))) {
+					bRemaining.remove(i);
+					continue OUTER;
+				}
+			}
+			return false; // optimization
+		}
+		return bRemaining.isEmpty();
+	}
+
 	public static <E> List<E> filter(Collection<E> c, Predicate<E> predicate) {
 		return c.stream().filter(predicate).collect(Collectors.toList());
 	}
 
-	/**
-	 * Filter elements in an array.
-	 */
 	public static <E> List<E> filter(E[] c, Predicate<E> predicate) {
 		return filter(Arrays.asList(c), predicate);
 	}
 
-	/**
-	 * Map elements in an array.
-	 */
 	public static <E, F> List<F> map(E[] c, Function<E, F> function) {
 		return map(Arrays.asList(c), function);
 	}
 
-	/**
-	 * Map elements in a collection.
-	 */
+	public static <E, K, V> List<E> map(Map<K, V> map, BiFunction<K, V, E> function) {
+		List<E> result = NewCollection.list();
+		map.forEach((k, v) -> result.add(function.apply(k, v)));
+		return result;
+	}
+
 	public static <E, F> List<F> map(Collection<E> c, Function<E, F> function) {
 		return c.stream().map(function).collect(Collectors.toList());
 	}
 
-	/**
-	 * Map elements and then sort them (natural order).
-	 */
 	public static <E, F extends Comparable<F>> List<F> mapAndSort(Collection<E> c, Function<E, F> function) {
 		List<F> list = map(c, function);
 		Collections.sort(list);
@@ -62,15 +76,25 @@ public class ListTool {
 	}
 
 	/**
-	 * Filter elements in a collection and map the results.
+	 * Map every element in a collection to a Collection and merge them into a single List.
 	 */
+	public static <E, F> List<F> mapAndMerge(Collection<E> c, Function<E, Collection<F>> function) {
+		List<F> result = NewCollection.list();
+		c.forEach(e -> result.addAll(function.apply(e)));
+		return result;
+	}
+
+	/**
+	 * Map every element in an array to a Collection and merge them into a single List.
+	 */
+	public static <E, F> List<F> mapAndMerge(E[] c, Function<E, Collection<F>> function) {
+		return mapAndMerge(Arrays.asList(c), function);
+	}
+
 	public static <E, F> List<F> filterAndMap(Collection<E> c, Predicate<E> predicate, Function<E, F> function) {
 		return c.stream().filter(predicate).map(function).collect(Collectors.toList());
 	}
 
-	/**
-	 * Filter elements in an array and map the results.
-	 */
 	public static <E, F> List<F> filterAndMap(E[] c, Predicate<E> predicate, Function<E, F> function) {
 		return filterAndMap(Arrays.asList(c), predicate, function);
 	}

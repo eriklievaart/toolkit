@@ -14,9 +14,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JFrame;
 
 import com.eriklievaart.toolkit.io.api.JvmPaths;
-import com.eriklievaart.toolkit.io.api.PropertiesIO;
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.io.api.UrlTool;
+import com.eriklievaart.toolkit.io.api.properties.PropertiesIO;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
 /**
