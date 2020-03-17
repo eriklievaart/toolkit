@@ -23,7 +23,7 @@ public class CliInvoker {
 	 * Invokes the supplied {@link CliCommand}.
 	 */
 	public static boolean invoke(final CliCommand command) {
-		return invoke(command, null);
+		return invoke(command, new File(System.getProperty("java.io.tmpdir")));
 	}
 
 	/**

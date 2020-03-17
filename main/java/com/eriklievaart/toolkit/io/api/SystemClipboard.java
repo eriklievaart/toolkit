@@ -30,7 +30,10 @@ public class SystemClipboard {
 	 * Write a simple String to the selection clipboard.
 	 */
 	public static void writeSelection(final String data) {
-		Toolkit.getDefaultToolkit().getSystemSelection().setContents(new StringSelection(data), null);
+		Clipboard selection = Toolkit.getDefaultToolkit().getSystemSelection();
+		if (selection != null) {
+			selection.setContents(new StringSelection(data), null);
+		}
 	}
 
 	/**
@@ -57,11 +60,10 @@ public class SystemClipboard {
 	/**
 	 * Try to read the contents of the clipboard in the supplied flavor.
 	 *
-	 * @param <E>
-	 *            auto cast the resulting data to this type.
-	 * @param flavor
-	 *            Flavor to read from the clipboard.
-	 * @return the contents of the clipboard, or null if no data is available in this flavor.
+	 * @param <E>    auto cast the resulting data to this type.
+	 * @param flavor Flavor to read from the clipboard.
+	 * @return the contents of the clipboard, or null if no data is available in
+	 *         this flavor.
 	 */
 	public static <E> E readFlavor(final DataFlavor flavor) {
 		return readFlavor(flavor, Toolkit.getDefaultToolkit().getSystemClipboard());
