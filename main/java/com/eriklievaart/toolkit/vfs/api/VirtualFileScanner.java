@@ -21,6 +21,13 @@ public class VirtualFileScanner implements Iterable<VirtualFile> {
 	private final List<VirtualFileFilter> filterFiles = NewCollection.list();
 	private final List<VirtualFile> roots;
 
+	public VirtualFileScanner(File... files) {
+		roots = NewCollection.list();
+		for (File file : files) {
+			roots.add(new SystemFile(file));
+		}
+	}
+
 	public VirtualFileScanner(VirtualFile... roots) {
 		this.roots = ListTool.of(roots);
 	}

@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -117,6 +118,13 @@ public class NewCollection {
 	}
 
 	/**
+	 * Create a {@link Set} that is sorted.
+	 */
+	public static <E> TreeSet<E> sortedSet() {
+		return treeSet();
+	}
+
+	/**
 	 * Create a {@link TreeSet}.
 	 */
 	public static <E> TreeSet<E> treeSet() {
@@ -142,6 +150,13 @@ public class NewCollection {
 	 */
 	public static <E> Set<E> set(NullPolicy nill) {
 		return new FilteredNotNullSet<>(nill);
+	}
+
+	/**
+	 * Create an ordered Set of an unspecified implementation.
+	 */
+	public static <E> Set<E> orderedSet() {
+		return new LinkedHashSet<>();
 	}
 
 	/**

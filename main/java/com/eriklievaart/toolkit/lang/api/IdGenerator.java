@@ -16,4 +16,8 @@ public class IdGenerator {
 	public long next() {
 		return value.incrementAndGet();
 	}
+
+	public int nextInt() {
+		return (int) next();
+	}
 }

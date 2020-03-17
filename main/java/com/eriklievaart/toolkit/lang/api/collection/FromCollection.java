@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 /**
@@ -64,8 +65,8 @@ public class FromCollection {
 	 *            type of the elements.
 	 */
 	@SafeVarargs
-	public static <E> Iterator<E> toIterator(final E... args) {
-		return Arrays.asList(args).iterator();
+	public static <E> ListIterator<E> toIterator(final E... args) {
+		return Arrays.asList(args).listIterator();
 	}
 
 	/**

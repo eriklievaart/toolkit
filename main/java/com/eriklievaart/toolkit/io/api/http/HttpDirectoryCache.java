@@ -10,6 +10,7 @@ import java.util.function.Function;
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.io.api.StreamTool;
 import com.eriklievaart.toolkit.io.api.UrlTool;
+import com.eriklievaart.toolkit.io.api.sha1.Sha1;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.logging.api.LogTemplate;
 
@@ -33,7 +34,7 @@ public class HttpDirectoryCache implements Function<String, InputStream> {
 			if (!cached.exists()) {
 				log.trace("cache miss for % -> $", url, cached);
 				InputStream input = client.getInputStream(url);
-				StreamTool.copyStream(input, new FileOutputStream(cached));
+				safeCopy(input, cached);
 			}
 			return new FileInputStream(cached);
 
@@ -42,7 +43,20 @@ public class HttpDirectoryCache implements Function<String, InputStream> {
 		}
 	}
 
+	private void safeCopy(InputStream input, File cached) throws FileNotFoundException {
+		try {
+			StreamTool.copyStream(input, new FileOutputStream(cached));
+		} catch (Exception e) {
+			cached.delete();
+		}
+	}
+
 	static String encode(String string) {
-		return string.replaceFirst(".*:/*+", "").replace('/', '_');
+		String safe = string.replaceFirst(".*:/*+", "").replace('/', '_');
+		if (safe.length() < 200) {
+			return safe;
+		} else {
+			return safe.substring(0, 50) + "..." + safe.substring(safe.length() - 50) + "-" + Sha1.hash(safe);
+		}
 	}
 }

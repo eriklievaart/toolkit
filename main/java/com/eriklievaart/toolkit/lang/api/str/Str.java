@@ -122,8 +122,16 @@ public class Str {
 		return str.split("\r?\n|\r");
 	}
 
+	public static String joinLines(String[] lines) {
+		return String.join("\n", lines);
+	}
+
 	public static String joinLines(Collection<String> lines) {
 		return String.join("\n", lines);
+	}
+
+	public static <E> String join(E[] c, String separator) {
+		return String.join(separator, ListTool.map(c, e -> e == null ? null : e.toString()));
 	}
 
 	public static String join(Collection<?> c, String separator) {
