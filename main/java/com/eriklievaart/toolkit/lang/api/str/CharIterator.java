@@ -29,11 +29,11 @@ public class CharIterator {
 	 * Construct a new CharIterator.
 	 *
 	 * @param chars
-	 *            CharSequence to iterate over.
+	 *                  CharSequence to iterate over.
 	 * @param start
-	 *            index to start iterating.
+	 *                  index to start iterating.
 	 * @param last
-	 *            Last index to iterate over. Typically: chars.length() - 1
+	 *                  Last index to iterate over. Typically: chars.length() - 1
 	 */
 	public CharIterator(final CharSequence chars, final int start, final int last) {
 		this.chars = chars;
@@ -90,12 +90,40 @@ public class CharIterator {
 		return index > start;
 	}
 
+	public int length() {
+		return chars.length() - index;
+	}
+
+	/**
+	 * Find a substring, move all skipped characters to the StringBuilder.
+	 */
+	public void find(String query, StringBuilderWrapper builder) {
+		find(query.toCharArray(), builder);
+	}
+
+	private void find(char[] query, StringBuilderWrapper builder) {
+		while (hasNext()) {
+			if (match(query)) {
+				return;
+			}
+			builder.append(next());
+		}
+	}
+
+	private boolean match(char[] query) {
+		if (index + query.length == last) {
+			return false;
+		}
+		for (int i = 0; i < query.length; i++) {
+			if (chars.charAt(index + i) != query[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return chars.toString().substring(index);
-	}
-
-	public int length() {
-		return chars.length() - index;
 	}
 }

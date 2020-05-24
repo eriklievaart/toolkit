@@ -109,6 +109,36 @@ public class CharIteratorU {
 	}
 
 	@Test
+	public void findLast() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+		CharIterator iterator = new CharIterator("123456789");
+
+		iterator.find("89", builder);
+		Check.isEqual(builder.toString(), "1234567");
+		Check.isEqual(iterator.toString(), "89");
+	}
+
+	@Test
+	public void findFirst() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+		CharIterator iterator = new CharIterator("123456789");
+
+		iterator.find("12", builder);
+		Check.isEqual(builder.toString(), "");
+		Check.isEqual(iterator.toString(), "123456789");
+	}
+
+	@Test
+	public void findMiddle() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+		CharIterator iterator = new CharIterator("1234512345");
+
+		iterator.find("5", builder);
+		Check.isEqual(builder.toString(), "1234");
+		Check.isEqual(iterator.toString(), "512345");
+	}
+
+	@Test
 	public void hasNext() {
 		CharIterator iter = new CharIterator("a");
 		Check.isTrue(iter.hasNext());

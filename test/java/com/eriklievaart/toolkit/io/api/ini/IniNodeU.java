@@ -143,6 +143,18 @@ public class IniNodeU {
 	}
 
 	@Test
+	public void deleteProperty() {
+		IniNode rootNode = new IniNode("thread");
+		rootNode.setProperty("type", "java.lang.Thread");
+
+		Check.isTrue(rootNode.hasProperty("type"));
+		Check.isEqual(rootNode.getProperty("type"), "java.lang.Thread");
+		rootNode.deleteProperty("type");
+		Check.isFalse(rootNode.hasProperty("type"));
+		Check.isFalse(rootNode.getPropertiesMap().containsKey("type"));
+	}
+
+	@Test
 	public void createPath() {
 		IniNode rootNode = new IniNode("parent");
 		IniNode nested = rootNode.createPath("child/nested");
