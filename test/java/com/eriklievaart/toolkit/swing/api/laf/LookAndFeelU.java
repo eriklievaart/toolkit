@@ -7,11 +7,24 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.eriklievaart.toolkit.io.api.StreamTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.ListTool;
 import com.eriklievaart.toolkit.lang.api.collection.MapTool;
 
 public class LookAndFeelU {
+
+	@Test
+	public void parse() {
+		String lines = "$font  = font Serif 26\n";
+		lines += "javax.swing.JButton#font          = $font";
+
+		Map<String, Object> config = LookAndFeel.instance().parseConfig(StreamTool.toInputStream(lines));
+
+		Font font = (Font) config.get("javax.swing.JButton#font");
+		Check.isEqual(font.getName(), "Serif");
+		Check.isEqual(font.getSize(), 26);
+	}
 
 	@Test
 	public void createSettingsMapVariable() {
@@ -38,6 +51,11 @@ public class LookAndFeelU {
 		Font font = LookAndFeel.instance().convert("font Serif 26");
 		Check.isEqual(font.getName(), "Serif");
 		Check.isEqual(font.getSize(), 26);
+	}
+
+	@Test
+	public void convertMissingName() {
+		LookAndFeel.instance().convert("0,0,0");
 	}
 
 	@Test

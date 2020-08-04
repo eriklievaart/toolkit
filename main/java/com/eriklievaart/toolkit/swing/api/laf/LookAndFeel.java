@@ -1,14 +1,18 @@
 package com.eriklievaart.toolkit.swing.api.laf;
 
+import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
 import com.eriklievaart.toolkit.convert.api.Converter;
 import com.eriklievaart.toolkit.io.api.LineFilter;
 import com.eriklievaart.toolkit.io.api.ResourceTool;
+import com.eriklievaart.toolkit.io.api.StreamTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 import com.eriklievaart.toolkit.lang.api.collection.ListTool;
@@ -37,6 +41,17 @@ public class LookAndFeel {
 
 	private Map<String, Converter<?>> converters = new Hashtable<>();
 
+	public static void listKeys() {
+		UIDefaults defaults = UIManager.getDefaults();
+		Enumeration<?> e = defaults.keys();
+		while (e.hasMoreElements()) {
+			Object key = e.nextElement();
+			Object current = defaults.get(key);
+			String value = current == null ? "" : current.getClass().toString();
+			System.out.println(key + "=" + value);
+		}
+	}
+
 	public static LookAndFeel instance() {
 		LookAndFeel laf = new LookAndFeel();
 
@@ -52,22 +67,35 @@ public class LookAndFeel {
 	}
 
 	public void load() {
-		LineFilter filter = new LineFilter(ResourceTool.readLines("/laf.txt"));
+		load(ResourceTool.getInputStream("/laf.txt"));
+	}
+
+	public void load(InputStream is) {
+		parseConfig(is).forEach((key, value) -> UIManager.getLookAndFeelDefaults().put(key, value));
+	}
+
+	public Map<String, Object> parseConfig(InputStream is) {
+		LineFilter filter = new LineFilter(StreamTool.toString(is));
 		List<String> lines = filter.eof().dropHash().dropBlank().trim().list();
 		Map<String, Object> variables = loadVariables(ListTool.filter(lines, s -> s.startsWith("$")));
-		Map<String, Object> settings = createSettingsMap(ListTool.filter(lines, s -> !s.startsWith("$")), variables);
-		settings.forEach((key, value) -> UIManager.getLookAndFeelDefaults().put(key, value));
+		return createSettingsMap(ListTool.filter(lines, s -> !s.startsWith("$")), variables);
 	}
 
 	Map<String, Object> createSettingsMap(List<String> lines, Map<String, Object> variables) {
 		Map<String, Object> settings = new Hashtable<>();
+
 		for (String line : lines) {
 			String[] keyToValue = line.split("=", 2);
 			Check.isTrue(keyToValue.length == 2, "invalid line: %", line);
 			String key = keyToValue[0].trim();
 			String value = keyToValue[1].trim();
-			Object object = value.startsWith("$") ? variables.get(value.substring(1)) : convert(value);
-			settings.put(key, object);
+
+			if (value.startsWith("$")) {
+				CheckCollection.isPresent(variables, value.substring(1));
+				settings.put(key, variables.get(value.substring(1)));
+			} else {
+				settings.put(key, convert(value));
+			}
 		}
 		return settings;
 	}
@@ -76,7 +104,7 @@ public class LookAndFeel {
 		Map<String, Object> variables = new Hashtable<>();
 
 		for (String line : lines) {
-			String[] variableToValue = line.substring(1).trim().split("=", 2);
+			String[] variableToValue = line.substring(1).trim().split("\\s*+=\\s*+", 2);
 			Check.isTrue(variableToValue.length == 2, "expecting '=' on line %", line);
 			variables.put(variableToValue[0], convert(variableToValue[1]));
 		}
