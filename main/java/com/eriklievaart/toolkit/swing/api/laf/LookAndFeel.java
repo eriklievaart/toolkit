@@ -114,6 +114,7 @@ public class LookAndFeel {
 	@SuppressWarnings("unchecked")
 	<E> E convert(String raw) {
 		String[] typeToValue = raw.trim().split("\\s++", 2);
+		Check.isTrue(typeToValue.length == 2, "converter and value required: %", raw);
 		String converter = typeToValue[0];
 		String value = typeToValue[1];
 		return (E) converters.get(converter).convertToObject(value);

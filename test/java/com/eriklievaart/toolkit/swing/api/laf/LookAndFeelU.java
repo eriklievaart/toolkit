@@ -11,6 +11,7 @@ import com.eriklievaart.toolkit.io.api.StreamTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.ListTool;
 import com.eriklievaart.toolkit.lang.api.collection.MapTool;
+import com.eriklievaart.toolkit.mock.BombSquad;
 
 public class LookAndFeelU {
 
@@ -55,7 +56,7 @@ public class LookAndFeelU {
 
 	@Test
 	public void convertMissingName() {
-		LookAndFeel.instance().convert("0,0,0");
+		BombSquad.diffuse("converter and value required", () -> LookAndFeel.instance().convert("0,0,0"));
 	}
 
 	@Test
