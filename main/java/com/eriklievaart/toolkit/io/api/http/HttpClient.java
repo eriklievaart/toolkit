@@ -27,6 +27,7 @@ public interface HttpClient {
 	public default void download(String url, File file) {
 		Check.notBlank(url);
 		Check.notNull(file);
+		file.getParentFile().mkdirs();
 
 		try (InputStream is = getInputStream(url)) {
 			StreamTool.copyStream(is, new FileOutputStream(file));
