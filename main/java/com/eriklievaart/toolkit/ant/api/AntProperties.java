@@ -30,7 +30,7 @@ public class AntProperties {
 		return new AntProperty("source.test.java.dir");
 	}
 
-	public static AntProperty getJavaResourceDir() {
+	public static AntProperty getTestResourceDir() {
 		return new AntProperty("source.test.resource.dir");
 	}
 
@@ -48,6 +48,10 @@ public class AntProperties {
 
 	public static AntProperty getGenerateDir() {
 		return new AntProperty("build.generated.dir");
+	}
+
+	public static AntProperty getBuildZipDir() {
+		return new AntProperty("build.zip.dir");
 	}
 
 	public static boolean isTestMode() {
