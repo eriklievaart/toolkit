@@ -2,16 +2,12 @@ package com.eriklievaart.toolkit.ant.api;
 
 public class AntProperties {
 
-	public static AntProperty getSpoolDir() {
-		return new AntProperty("build.spool.dir");
-	}
-
 	public static AntProperty getSqlDir() {
 		return new AntProperty("source.main.sql.dir");
 	}
 
 	public static AntProperty getRootSrcDir() {
-		return new AntProperty("source.project.src.dir");
+		return new AntProperty("source.root.dir");
 	}
 
 	public static AntProperty getJavaSourceDir() {
@@ -32,6 +28,10 @@ public class AntProperties {
 
 	public static AntProperty getTestResourceDir() {
 		return new AntProperty("source.test.resource.dir");
+	}
+
+	public static AntProperty getSpoolDir() {
+		return new AntProperty("build.spool.dir");
 	}
 
 	public static AntProperty getRunDir() {
