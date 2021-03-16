@@ -56,24 +56,42 @@ public class SimpleHttpClient implements HttpClient {
 	@Override
 	public InputStream getInputStream(HttpCall call) {
 		try {
-			HttpURLConnection con = connect(new URL(call.getUrl()));
+			return getHttpUrlConnection(call).getInputStream();
+		} catch (IOException e) {
+			throw new RuntimeIOException("Unable to read URL %", e, call.getUrl());
+		}
+	}
 
-			con.setRequestMethod(call.getMethod());
-			setHeaders(con);
+	@Override
+	public HttpURLConnection getHttpUrlConnection(String url) {
+		return getHttpUrlConnection(new HttpCall(url));
+	}
+
+	public HttpURLConnection getHttpUrlConnection(HttpCall call) {
+		try {
+			HttpURLConnection connection = connect(new URL(call.getUrl()));
+
+			connection.setRequestMethod(call.getMethod());
+			setHeaders(connection);
 
 			byte[] bytes = call.getBodyBytes();
 			if (bytes.length > 0) {
-				con.setDoOutput(true);
-				con.getOutputStream().write(bytes);
+				connection.setDoOutput(true);
+				connection.getOutputStream().write(bytes);
 			}
-			int responseCode = con.getResponseCode();
 			boolean proxied = proxyReference.get() != null;
-			log.debug("$ URL % proxy $ status $", call.getMethod(), call.getUrl(), proxied, responseCode);
-
-			return con.getInputStream();
+			logResponseResult(call, connection, proxied);
+			return connection;
 
 		} catch (Exception e) {
 			throw new RuntimeIOException("Unable to read URL %", e, call.getUrl());
+		}
+	}
+
+	private void logResponseResult(HttpCall call, HttpURLConnection con, boolean proxied) throws IOException {
+		log.debug("$ URL % proxy $ status $", call.getMethod(), call.getUrl(), proxied, con.getResponseCode());
+		if (log.isTraceEnabled()) {
+			con.getHeaderFields().forEach((k, v) -> log.trace("response header % = %", k, v));
 		}
 	}
 

@@ -1,6 +1,7 @@
 package com.eriklievaart.toolkit.io.api.http;
 
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -15,6 +16,11 @@ public class RotatingHttpClient implements HttpClient {
 		for (HttpClient client : robin) {
 			clients.add(client);
 		}
+	}
+
+	@Override
+	public HttpURLConnection getHttpUrlConnection(String url) {
+		return getDelegate().getHttpUrlConnection(url);
 	}
 
 	@Override

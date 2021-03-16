@@ -2,6 +2,7 @@ package com.eriklievaart.toolkit.io.api.http;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.function.Function;
 
@@ -29,6 +30,11 @@ public class CachedHttpClient implements HttpClient {
 	public CachedHttpClient(Function<String, InputStream> cache) {
 		this.delegate = new SimpleHttpClient();
 		this.fetch = cache;
+	}
+
+	@Override
+	public HttpURLConnection getHttpUrlConnection(String url) {
+		return delegate.getHttpUrlConnection(url);
 	}
 
 	@Override

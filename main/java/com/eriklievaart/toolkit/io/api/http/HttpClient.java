@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
@@ -11,6 +12,8 @@ import com.eriklievaart.toolkit.io.api.StreamTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
 public interface HttpClient {
+
+	public HttpURLConnection getHttpUrlConnection(String url);
 
 	public String getString(String url);
 

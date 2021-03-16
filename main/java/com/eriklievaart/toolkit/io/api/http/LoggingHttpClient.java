@@ -1,6 +1,7 @@
 package com.eriklievaart.toolkit.io.api.http;
 
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 import com.eriklievaart.toolkit.lang.api.str.Str;
@@ -17,6 +18,12 @@ public class LoggingHttpClient implements HttpClient {
 
 	public LoggingHttpClient(HttpClient delegate) {
 		this.delegate = delegate;
+	}
+
+	@Override
+	public HttpURLConnection getHttpUrlConnection(String url) {
+		log.debug("HttpUrlConnection(%)", url);
+		return delegate.getHttpUrlConnection(url);
 	}
 
 	@Override
