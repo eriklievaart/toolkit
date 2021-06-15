@@ -44,9 +44,9 @@ public class RotatingHttpClient implements HttpClient {
 	}
 
 	@Override
-	public void setHeader(String name, String value) {
+	public void defaultHeaderIfAbsent(String name, String value) {
 		for (HttpClient client : clients) {
-			client.setHeader(name, value);
+			client.defaultHeaderIfAbsent(name, value);
 		}
 	}
 

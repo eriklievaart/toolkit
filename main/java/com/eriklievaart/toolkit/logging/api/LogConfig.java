@@ -5,7 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 import com.eriklievaart.toolkit.lang.api.collection.LazyMap;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
@@ -16,7 +21,9 @@ import com.eriklievaart.toolkit.logging.api.format.SimpleFormatter;
 
 public class LogConfig {
 
-	private static AtomicReference<Formatter> formatterReference = new AtomicReference<>();
+	private static final AtomicReference<Formatter> FORMATTER_REFERENCE = new AtomicReference<>();
+	private static final ThreadPoolExecutor EXECUTOR = initExecutor();
+	private static Supplier<Executor> executorSupplier;
 	private static Map<String, List<Appender>> appenders = NewCollection.concurrentMap();
 	private static LazyMap<String, Logger> loggers = new LazyMap<>(id -> new Logger(id));
 
@@ -24,13 +31,29 @@ public class LogConfig {
 		init();
 	}
 
+	private static ThreadPoolExecutor initExecutor() {
+		return new ThreadPoolExecutor(1, 10, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+	}
+
 	static synchronized void init() {
 		closeAllAppenders();
 		appenders.clear();
 		loggers.clear();
 		// sensible defaults
-		formatterReference.set(new SimpleFormatter());
+		FORMATTER_REFERENCE.set(new SimpleFormatter());
 		installDefaultRootAppenders("");
+
+		if (executorSupplier == null) {
+			executorSupplier = () -> EXECUTOR;
+		}
+	}
+
+	public static void setSameThreadLogging() {
+		executorSupplier = () -> task -> task.run();
+	}
+
+	static Executor getLoggingExecutor() {
+		return executorSupplier.get();
 	}
 
 	public static void closeAllAppenders() {
@@ -42,11 +65,11 @@ public class LogConfig {
 	}
 
 	public static synchronized void setDefaultFormatter(Formatter formatter) {
-		LogConfig.formatterReference.set(formatter);
+		LogConfig.FORMATTER_REFERENCE.set(formatter);
 	}
 
 	public static synchronized Formatter getDefaultFormatter() {
-		return formatterReference.get();
+		return FORMATTER_REFERENCE.get();
 	}
 
 	public static synchronized void setDefaultAppenders(Appender... appenders) {

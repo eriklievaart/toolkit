@@ -9,6 +9,7 @@ public class HttpCall {
 
 	private String url;
 	private String method = "GET";
+	private Map<String, String> headers = NewCollection.map();
 	private Map<String, String> parameters = NewCollection.map();
 
 	public HttpCall(String url) {
@@ -27,8 +28,16 @@ public class HttpCall {
 		method = value;
 	}
 
+	public void header(String key, String value) {
+		headers.put(key, value);
+	}
+
 	public void bodyParameter(String key, String value) {
 		parameters.put(key, value);
+	}
+
+	public Map<String, String> getHeaders() {
+		return Collections.unmodifiableMap(headers);
 	}
 
 	public Map<String, String> getParameters() {

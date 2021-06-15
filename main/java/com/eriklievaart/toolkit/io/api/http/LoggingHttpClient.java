@@ -45,9 +45,9 @@ public class LoggingHttpClient implements HttpClient {
 	}
 
 	@Override
-	public void setHeader(String name, String value) {
+	public void defaultHeaderIfAbsent(String name, String value) {
 		log.debug("setHeader(%, %)", name, value);
-		delegate.setHeader(name, value);
+		delegate.defaultHeaderIfAbsent(name, value);
 	}
 
 	@Override

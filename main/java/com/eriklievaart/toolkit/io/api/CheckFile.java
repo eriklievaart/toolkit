@@ -41,7 +41,8 @@ public class CheckFile {
 
 	public static void containsData(File file, String data) {
 		isFile(file);
-		RuntimeIOException.unless(FileTool.toString(file).equals(data), "data was %", data);
+		String actual = FileTool.toString(file);
+		RuntimeIOException.unless(actual.equals(data), "data was:\n$ instead of:\n$", actual, data);
 	}
 
 	public static void isEmptyDirectory(File file) {

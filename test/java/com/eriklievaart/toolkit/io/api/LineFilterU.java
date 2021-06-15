@@ -10,6 +10,12 @@ import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 public class LineFilterU {
 
 	@Test
+	public void join() {
+		String result = new LineFilter("\n \n#\nfoo").join();
+		Assertions.assertThat(result).isEqualTo("\n \n#\nfoo");
+	}
+
+	@Test
 	public void dropEof() {
 		List<String> lines = new LineFilter("\n \n#\n@eof@\nbla").eof().list();
 		Assertions.assertThat(lines).containsExactly("", " ", "#");

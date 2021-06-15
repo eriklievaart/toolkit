@@ -44,6 +44,10 @@ public class LineFilter {
 		return list;
 	}
 
+	public String join() {
+		return Str.joinLines(list());
+	}
+
 	public void iterate(BiConsumer<Integer, String> consumer) {
 		for (int i = 0; i < lines.length; i++) {
 			String line = lines[i];

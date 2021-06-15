@@ -16,6 +16,7 @@ public class LoggerU {
 	@Before
 	public void setup() {
 		LogConfig.init();
+		LogConfig.setSameThreadLogging();
 	}
 
 	@Test

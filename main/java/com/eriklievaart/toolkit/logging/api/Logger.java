@@ -1,9 +1,5 @@
 package com.eriklievaart.toolkit.logging.api;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -12,10 +8,6 @@ import com.eriklievaart.toolkit.lang.api.str.Str;
 import com.eriklievaart.toolkit.logging.api.appender.Appender;
 
 public class Logger {
-	private static final Executor EXECUTOR;
-	static {
-		EXECUTOR = new ThreadPoolExecutor(1, 10, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-	}
 
 	private String name;
 	private AtomicReference<Level> levelReference = new AtomicReference<>(Level.FINEST);
@@ -65,7 +57,7 @@ public class Logger {
 
 	private void append(final LogRecord record) {
 		record.setLoggerName(name);
-		EXECUTOR.execute(() -> {
+		LogConfig.getLoggingExecutor().execute(() -> {
 			for (Appender appender : LogConfig.getAppenders(name)) {
 				try {
 					appender.append(record);

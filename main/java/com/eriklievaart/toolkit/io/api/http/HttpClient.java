@@ -23,9 +23,14 @@ public interface HttpClient {
 
 	public InputStream getInputStream(HttpCall call);
 
-	public void setHeader(String name, String value);
+	public void defaultHeaderIfAbsent(String name, String value);
 
 	public HttpClient socks5(String ip, int port);
+
+	public default void useDefaultHeaders() {
+		defaultHeaderIfAbsent("Accept", "*/*");
+		defaultHeaderIfAbsent("User-Agent", "Googlebot/2.1");
+	}
 
 	public default void download(String url, File file) {
 		Check.notBlank(url);

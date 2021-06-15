@@ -7,6 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.net.URL;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -22,13 +23,8 @@ public class SimpleHttpClient implements HttpClient {
 	private Map<String, String> headers = NewCollection.concurrentMap();
 	private AtomicReference<Proxy> proxyReference = new AtomicReference<>();
 
-	{
-		headers.put("Accept", "*/*");
-		headers.put("User-Agent", "Googlebot/2.1");
-	}
-
 	@Override
-	public void setHeader(String name, String value) {
+	public void defaultHeaderIfAbsent(String name, String value) {
 		headers.put(name, value);
 	}
 
@@ -72,7 +68,7 @@ public class SimpleHttpClient implements HttpClient {
 			HttpURLConnection connection = connect(new URL(call.getUrl()));
 
 			connection.setRequestMethod(call.getMethod());
-			setHeaders(connection);
+			setHeaders(call, connection);
 
 			byte[] bytes = call.getBodyBytes();
 			if (bytes.length > 0) {
@@ -95,8 +91,10 @@ public class SimpleHttpClient implements HttpClient {
 		}
 	}
 
-	private void setHeaders(HttpURLConnection con) {
-		headers.forEach((name, value) -> {
+	private void setHeaders(HttpCall call, HttpURLConnection con) {
+		Map<String, String> merged = new Hashtable<>(headers);
+		merged.putAll(call.getHeaders());
+		merged.forEach((name, value) -> {
 			log.trace("header: $: $", name, value);
 			con.setRequestProperty(name, value);
 		});

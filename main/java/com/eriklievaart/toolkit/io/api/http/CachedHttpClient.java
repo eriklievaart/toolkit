@@ -50,8 +50,8 @@ public class CachedHttpClient implements HttpClient {
 	}
 
 	@Override
-	public void setHeader(String name, String value) {
-		delegate.setHeader(name, value);
+	public void defaultHeaderIfAbsent(String name, String value) {
+		delegate.defaultHeaderIfAbsent(name, value);
 	}
 
 	@Override

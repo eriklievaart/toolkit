@@ -35,7 +35,14 @@ public class MapToolU {
 	}
 
 	@Test
-	public void toMapValues() {
+	public void mapKeys() {
+		Map<String, Integer> map = MapTool.mapKeys(MapTool.of("a", 1, "b", 2), k -> k.toUpperCase());
+		Check.isEqual(map.get("A"), 1);
+		Check.isEqual(map.get("B"), 2);
+	}
+
+	@Test
+	public void mapValues() {
 		Map<String, String> map = MapTool.mapValues(MapTool.of("a", 1, "b", 2), v -> "number" + v);
 		Check.isEqual(map.get("a"), "number1");
 		Check.isEqual(map.get("b"), "number2");

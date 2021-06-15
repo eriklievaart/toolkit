@@ -69,6 +69,10 @@ public class ListTool {
 		return c.stream().map(function).collect(Collectors.toList());
 	}
 
+	public static <E, F extends Comparable<F>> List<F> mapAndSort(E[] c, Function<E, F> function) {
+		return mapAndSort(Arrays.asList(c), function);
+	}
+
 	public static <E, F extends Comparable<F>> List<F> mapAndSort(Collection<E> c, Function<E, F> function) {
 		List<F> list = map(c, function);
 		Collections.sort(list);

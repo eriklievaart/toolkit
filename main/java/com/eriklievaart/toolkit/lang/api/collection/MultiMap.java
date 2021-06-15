@@ -45,6 +45,14 @@ public class MultiMap<K, V> {
 	}
 
 	/**
+	 * Stores a single value for a key. Just like the put method of a regular map.
+	 */
+	public void setSingleValue(final K key, final V value) {
+		Check.notNull(key, value);
+		delegate.put(key, ListTool.of(value));
+	}
+
+	/**
 	 * Add a unique value (no duplicates) to a key, the key is added if necessary. Relies on the value's equals method.
 	 */
 	public void addUniqueValue(final K key, final V value) {

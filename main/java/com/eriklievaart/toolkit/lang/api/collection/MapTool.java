@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
+import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.function.TryBiConsumer;
 
 /**
@@ -52,6 +53,16 @@ public class MapTool {
 			map.put(key, value);
 		}
 		return map;
+	}
+
+	/**
+	 * Apply function to keys in Map and create a new map as result;
+	 */
+	public static <K, L, V> Map<L, V> mapKeys(Map<K, V> map, Function<K, L> function) {
+		Check.notNull(map, function);
+		Map<L, V> result = NewCollection.mapNotNull();
+		map.forEach((k, v) -> result.put(function.apply(k), v));
+		return result;
 	}
 
 	/**

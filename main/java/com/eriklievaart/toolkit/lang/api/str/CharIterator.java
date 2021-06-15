@@ -29,11 +29,11 @@ public class CharIterator {
 	 * Construct a new CharIterator.
 	 *
 	 * @param chars
-	 *                  CharSequence to iterate over.
+	 *            CharSequence to iterate over.
 	 * @param start
-	 *                  index to start iterating.
+	 *            index to start iterating.
 	 * @param last
-	 *                  Last index to iterate over. Typically: chars.length() - 1
+	 *            Last index to iterate over. Typically: chars.length() - 1
 	 */
 	public CharIterator(final CharSequence chars, final int start, final int last) {
 		this.chars = chars;
@@ -46,6 +46,10 @@ public class CharIterator {
 
 	public CharIterator newCharIteratorFromHere() {
 		return new CharIterator(chars, index);
+	}
+
+	public String getDebugLine() {
+		return Str.sub("$:$", index, chars);
 	}
 
 	private void checkAssertionExceptions() {
