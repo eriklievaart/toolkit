@@ -32,7 +32,7 @@ public class LogConfig {
 	}
 
 	private static ThreadPoolExecutor initExecutor() {
-		return new ThreadPoolExecutor(1, 10, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+		return new ThreadPoolExecutor(0, 10, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 	}
 
 	static synchronized void init() {
