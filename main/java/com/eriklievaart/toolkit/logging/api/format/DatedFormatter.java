@@ -11,6 +11,14 @@ public class DatedFormatter implements Formatter {
 	private Formatter delegate;
 	private String format;
 
+	public DatedFormatter() {
+		this("dd-MM-yyyy HH:mm:ss");
+	}
+
+	public DatedFormatter(String dateFormat) {
+		this(dateFormat, new SimpleFormatter());
+	}
+
 	public DatedFormatter(String dateFormat, Formatter delegate) {
 		this.format = dateFormat;
 		this.delegate = delegate;

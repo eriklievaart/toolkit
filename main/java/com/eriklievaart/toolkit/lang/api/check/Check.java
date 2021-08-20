@@ -83,6 +83,15 @@ public class Check {
 		Check.isTrue(Str.notBlank(str), message, args);
 	}
 
+	public static void isDouble(double value, double expect) {
+		isDouble(value, expect, 0.000000001);
+	}
+
+	public static void isDouble(double value, double expect, double precision) {
+		Check.isTrue(value - precision < expect, "$ > $", value, expect);
+		Check.isTrue(value + precision > expect, "$ < $", value, expect);
+	}
+
 	/**
 	 * Assert that two arguments are equal by means of Object.equal().
 	 */
