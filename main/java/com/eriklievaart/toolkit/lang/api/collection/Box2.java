@@ -1,5 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.collection;
 
+import com.eriklievaart.toolkit.lang.api.ToString;
+
 public class Box2<A, B> {
 
 	private final A primary;
@@ -32,5 +34,10 @@ public class Box2<A, B> {
 
 	public B getObject() {
 		return secondary;
+	}
+
+	@Override
+	public String toString() {
+		return ToString.simple(this, "$ {\n\t$,\n\t$\n}", primary, secondary);
 	}
 }

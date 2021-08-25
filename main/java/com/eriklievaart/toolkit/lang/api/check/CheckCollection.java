@@ -13,7 +13,7 @@ public class CheckCollection {
 	}
 
 	public static void isEmpty(final Collection<?> match) {
-		isEmpty(match, "Collection not empty $", match);
+		isEmpty(match, "Collection not empty\n$", match);
 	}
 
 	public static void isEmpty(final Collection<?> match, final String format, final Object... args) {
