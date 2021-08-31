@@ -67,7 +67,7 @@ public class Check {
 	}
 
 	public static void matches(final String value, final String regex) {
-		matches(value, regex, "value % does not match regex %", value, regex);
+		matches(value, regex, "value %\n\tdoes not match regex %", value, regex);
 	}
 
 	public static void matches(final String value, final String regex, final String format, final Object... args) {
