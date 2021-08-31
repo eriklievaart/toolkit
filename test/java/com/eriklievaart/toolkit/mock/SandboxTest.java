@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.vfs.api.file;
+package com.eriklievaart.toolkit.mock;
 
 import java.io.File;
 
@@ -10,7 +10,9 @@ import com.eriklievaart.toolkit.io.api.FileTool;
 import com.eriklievaart.toolkit.io.api.UrlTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.str.Str;
-import com.eriklievaart.toolkit.mock.MemoryFileSystemCheck;
+import com.eriklievaart.toolkit.vfs.api.file.MemoryFile;
+import com.eriklievaart.toolkit.vfs.api.file.MemoryFileSystem;
+import com.eriklievaart.toolkit.vfs.api.file.SystemFile;
 
 /**
  * Relative paths should be entered WITHOUT any escape characters.

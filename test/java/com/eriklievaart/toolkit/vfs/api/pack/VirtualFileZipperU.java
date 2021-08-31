@@ -4,9 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
+import com.eriklievaart.toolkit.mock.SandboxTest;
 import com.eriklievaart.toolkit.vfs.api.check.VirtualFileCheck;
 import com.eriklievaart.toolkit.vfs.api.file.MemoryFile;
-import com.eriklievaart.toolkit.vfs.api.file.SandboxTest;
 
 public class VirtualFileZipperU extends SandboxTest {
 
