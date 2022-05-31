@@ -17,7 +17,7 @@ public class DatedFormatterU {
 		record.setLoggerName("com.example.bar");
 
 		String expectedDate = SimpleDateFormatFactory.getDateFormatNL().format(new Date());
-		String expected = expectedDate + " DEBUG    com.example.bar    foo";
+		String expected = expectedDate + " DEBUG com.example.bar    foo";
 
 		String actual = new DatedFormatter("dd-MM-yyyy", new SimpleFormatter()).format(record);
 		Check.isEqual(actual, expected);
