@@ -134,7 +134,8 @@ public class ListTool {
 	 * @return the sublist.
 	 */
 	public static <E> List<E> subList(List<E> list, int from, int to) {
-		int max = to < 0 ? list.size() - 1 : to;
+		int last = list.size() - 1;
+		int max = to < 0 ? last : Math.min(to, last);
 
 		Check.notNull(list, "supplied List is null!");
 		Check.isTrue(from >= 0, "from is negative! " + from);

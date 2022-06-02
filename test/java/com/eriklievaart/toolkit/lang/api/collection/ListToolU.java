@@ -151,9 +151,10 @@ public class ListToolU {
 	@Test
 	public void subListFromTo() {
 		List<String> test = Arrays.asList("1", "2", "3");
-		Check.isEqual(ListTool.subList(test, 1, 1), Arrays.asList("2"));
-		Check.isEqual(ListTool.subList(test, 3, -1), Arrays.asList());
-		Check.isEqual(ListTool.subList(test, 0, 2), Arrays.asList("1", "2", "3"));
+		Assertions.assertThat(ListTool.subList(test, 1, 1)).isEqualTo(Arrays.asList("2"));
+		Assertions.assertThat(ListTool.subList(test, 3, -1)).isEqualTo(Arrays.asList());
+		Assertions.assertThat(ListTool.subList(test, 0, 2)).isEqualTo(Arrays.asList("1", "2", "3"));
+		Assertions.assertThat(ListTool.subList(test, 0, 99)).isEqualTo(Arrays.asList("1", "2", "3"));
 	}
 
 	@Test
