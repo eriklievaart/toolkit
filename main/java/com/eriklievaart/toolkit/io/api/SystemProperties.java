@@ -1,5 +1,7 @@
 package com.eriklievaart.toolkit.io.api;
 
+import java.io.File;
+
 public class SystemProperties {
 	private static final String OS = System.getProperty("os.name").toLowerCase();
 
@@ -21,5 +23,9 @@ public class SystemProperties {
 
 	public static boolean isUnix() {
 		return OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
+	}
+
+	public static File getHomeDir() {
+		return new File(System.getProperty("user.home"));
 	}
 }
