@@ -139,6 +139,13 @@ public class FileTool {
 		RuntimeIOException.on(isChildOfItself, "% is a child of source dir %", to, from);
 	}
 
+	public static void delete(File head, File... tail) {
+		delete(head);
+		for (File next : tail) {
+			delete(next);
+		}
+	}
+
 	public static void delete(File delete) {
 		if (delete == null) {
 			return;
