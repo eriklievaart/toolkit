@@ -173,6 +173,15 @@ public class ListTool {
 	}
 
 	/**
+	 * Return a shuffled copy of a list.
+	 */
+	public static <E> List<E> shuffledCopy(final Collection<E> original) {
+		List<E> copy = new ArrayList<>(original);
+		Collections.shuffle(copy);
+		return copy;
+	}
+
+	/**
 	 * Return a copy of a list with the elements in reverse order.
 	 */
 	public static <E> List<E> reversedCopy(final Collection<E> original) {
