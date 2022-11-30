@@ -73,6 +73,14 @@ public class ResourceTool {
 		}
 	}
 
+	public static List<String> getLines(String res) {
+		return StreamTool.readLines(getInputStream(res));
+	}
+
+	public static List<String> getLines(Class<?> loader, String res) {
+		return StreamTool.readLines(getInputStream(loader, res));
+	}
+
 	public static String getString(String res) {
 		return getString(getLiteral(), res);
 	}
