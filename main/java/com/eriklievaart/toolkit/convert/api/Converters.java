@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.eriklievaart.toolkit.convert.api.construct.BooleanConstructor;
+import com.eriklievaart.toolkit.convert.api.construct.DoubleConstructor;
 import com.eriklievaart.toolkit.convert.api.construct.EnumConstructor;
 import com.eriklievaart.toolkit.convert.api.construct.IntegerConstructor;
 import com.eriklievaart.toolkit.convert.api.construct.LongConstructor;
@@ -27,7 +28,8 @@ public class Converters {
 
 	private static final List<Converter<?>> BASIC_CONVERTERS_LIST = Arrays.<Converter<?>> asList(
 			new StringConstructor().createConverter(), new IntegerConstructor().createConverter(),
-			new LongConstructor().createConverter(), new BooleanConstructor().createConverter());
+			new LongConstructor().createConverter(), new DoubleConstructor().createConverter(),
+			new BooleanConstructor().createConverter());
 
 	public static final Converters BASIC_CONVERTERS = new Converters(BASIC_CONVERTERS_LIST);
 

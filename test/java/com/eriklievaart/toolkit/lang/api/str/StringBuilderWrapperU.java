@@ -1,9 +1,12 @@
 package com.eriklievaart.toolkit.lang.api.str;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
+import com.eriklievaart.toolkit.lang.api.collection.ListTool;
 
 public class StringBuilderWrapperU {
 
@@ -108,6 +111,14 @@ public class StringBuilderWrapperU {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.appendLine("a", "b", "c");
 		CheckStr.isEqual(sbw.toString(), "abc\n");
+	}
+
+	@Test
+	public void appendJoined() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		List<String> collection = ListTool.of("foo", "bar", "baz");
+		sbw.appendJoined(collection, "@");
+		CheckStr.isEqual(sbw.toString(), "foo@bar@baz");
 	}
 
 	@Test

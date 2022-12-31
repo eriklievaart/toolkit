@@ -1,5 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.str;
 
+import java.util.Collection;
+
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
 public class StringBuilderWrapper {
@@ -93,6 +95,11 @@ public class StringBuilderWrapper {
 			builder.append(args[i]);
 		}
 		appendLine();
+		return this;
+	}
+
+	public <E> StringBuilderWrapper appendJoined(Collection<E> collection, String joinSeparator) {
+		builder.append(Str.join(collection, joinSeparator));
 		return this;
 	}
 
