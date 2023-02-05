@@ -5,6 +5,10 @@ import com.eriklievaart.toolkit.lang.api.str.StringBuilderWrapper;
 
 public class ThrowableTool {
 
+	public static <C extends Throwable> boolean isRootCause(Throwable t, Class<C> clazz) {
+		return clazz.isInstance(getRootCause(t));
+	}
+
 	public static Throwable getRootCause(Throwable t) {
 		Check.notNull(t);
 		return t.getCause() == null ? t : getRootCause(t.getCause());

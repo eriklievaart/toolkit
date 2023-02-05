@@ -25,7 +25,7 @@ public class FieldTool {
 	static Map<String, Field> introspectFields(final Class<?> literal) {
 		Map<String, Field> fields = NewCollection.concurrentMap();
 
-		if (literal.getSuperclass() != Object.class) {
+		if (literal.getSuperclass() != Object.class && literal.getSuperclass() != null) {
 			fields.putAll(introspectFields(literal.getSuperclass()));
 		}
 

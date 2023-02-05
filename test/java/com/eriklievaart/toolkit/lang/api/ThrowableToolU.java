@@ -1,10 +1,10 @@
 package com.eriklievaart.toolkit.lang.api;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.junit.Test;
 
-import com.eriklievaart.toolkit.lang.api.ThrowableTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
 
@@ -14,6 +14,14 @@ public class ThrowableToolU {
 	public void getRootCause() {
 		Exception parent = new Exception(new RuntimeException(new IOException()));
 		Check.isEqual(ThrowableTool.getRootCause(parent).getClass(), IOException.class);
+	}
+
+	@Test
+	public void isRootCause() {
+		Exception parent = new Exception(new RuntimeException(new FileNotFoundException()));
+		Check.isTrue(ThrowableTool.isRootCause(parent, FileNotFoundException.class));
+		Check.isTrue(ThrowableTool.isRootCause(parent, IOException.class));
+		Check.isFalse(ThrowableTool.isRootCause(parent, ArrayIndexOutOfBoundsException.class));
 	}
 
 	@Test
