@@ -35,6 +35,21 @@ public class StringBuilderWrapper {
 		return builder.charAt(translate(i));
 	}
 
+	/**
+	 * Check if the supplied substring is present at the specified index
+	 */
+	public boolean substringAt(int i, String query) {
+		if (builder.length() < i + query.length()) {
+			return false;
+		}
+		for (int q = 0; q < query.length(); q++) {
+			if (builder.charAt(i + q) != query.charAt(q)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public boolean endsWith(String tail) {
 		Check.notNull(tail);
 
@@ -60,6 +75,12 @@ public class StringBuilderWrapper {
 		int index = translate(i);
 		builder.replace(index, index + 1, "" + c);
 		return this;
+	}
+
+	public String deleteAt(int index, int length) {
+		String delete = builder.substring(index, index + length);
+		builder.delete(index, index + length);
+		return delete;
 	}
 
 	public void deleteLast(int count) {

@@ -1,5 +1,6 @@
 package com.eriklievaart.toolkit.lang.api.check;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -53,6 +54,11 @@ public class CheckCollection {
 	public static void isSize(final Collection<?> c, final int size) {
 		Check.notNull(c);
 		Check.isTrue(c.size() == size, "Collection has $ elements, expecting $: $", c.size(), size, c);
+	}
+
+	public static <A> void isSize(final A[] a, final int size) {
+		Check.notNull(a);
+		Check.isTrue(a.length == size, "Array has $ elements, expecting $: $", a.length, size, Arrays.asList(a));
 	}
 
 	public static void isSize(final Collection<?> c, int size, String format, Object... args) {

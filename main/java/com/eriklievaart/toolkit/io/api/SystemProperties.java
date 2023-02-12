@@ -13,6 +13,10 @@ public class SystemProperties {
 		return actual.equalsIgnoreCase(value);
 	}
 
+	public static boolean getBoolean(String key) {
+		return isSet(key, "true");
+	}
+
 	public static boolean isWindows() {
 		return OS.indexOf("win") >= 0;
 	}

@@ -11,6 +11,26 @@ import com.eriklievaart.toolkit.lang.api.collection.ListTool;
 public class StringBuilderWrapperU {
 
 	@Test
+	public void substringAt() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("0123456789");
+
+		Check.isTrue(testable.substringAt(0, "0"));
+		Check.isTrue(testable.substringAt(0, "01234"));
+		Check.isTrue(testable.substringAt(0, "0123456789"));
+		Check.isFalse(testable.substringAt(0, "01235"));
+
+		Check.isFalse(testable.substringAt(5, "012345"));
+		Check.isTrue(testable.substringAt(5, "56789"));
+	}
+
+	@Test
+	public void substringAtOutOfBounds() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("0");
+		Check.isTrue(testable.substringAt(0, "0"));
+		Check.isFalse(testable.substringAt(1, "0")); // out of bounds
+	}
+
+	@Test
 	public void charAt() {
 		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
 
@@ -34,6 +54,19 @@ public class StringBuilderWrapperU {
 		Check.isEqual(new StringBuilderWrapper("123456").insert(2, "abc").toString(), "12abc3456");
 		Check.isEqual(new StringBuilderWrapper("123456").insert(-1, "abc").toString(), "12345abc6");
 		Check.isEqual(new StringBuilderWrapper("123456").insert(-2, "abc").toString(), "1234abc56");
+	}
+
+	@Test
+	public void deleteAt() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("0123456789");
+
+		String deleted = testable.deleteAt(8, 2);
+		Check.isEqual(testable.toString(), "01234567");
+		Check.isEqual(deleted, "89");
+
+		deleted = testable.deleteAt(0, 3);
+		Check.isEqual(testable.toString(), "34567");
+		Check.isEqual(deleted, "012");
 	}
 
 	@Test
