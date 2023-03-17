@@ -19,12 +19,12 @@ import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 public class PropertiesIO {
 
 	public static void storeStrings(Map<String, String> props, File file) {
-		Check.notNull(props, file);
+		Check.noneNull(props, file);
 		store(convertToStrings(props), file);
 	}
 
 	public static void storeStrings(Map<String, String> props, OutputStream os) {
-		Check.notNull(props, os);
+		Check.noneNull(props, os);
 		store(convertToStrings(props), os);
 	}
 
@@ -38,7 +38,7 @@ public class PropertiesIO {
 	}
 
 	public static void store(Properties props, File file) {
-		Check.notNull(props, file);
+		Check.noneNull(props, file);
 		file.getParentFile().mkdirs();
 		try {
 			store(props, new FileOutputStream(file));
@@ -48,7 +48,7 @@ public class PropertiesIO {
 	}
 
 	public static void store(Properties props, OutputStream os) {
-		Check.notNull(props, os);
+		Check.noneNull(props, os);
 		try {
 			props.store(os, null);
 

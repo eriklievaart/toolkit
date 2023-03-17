@@ -102,7 +102,7 @@ public class PropertyTool {
 	 * Converts properties in a Map and injects them into the instance as properties.
 	 */
 	private static void convertAndInjectProperties(Object object, Map<String, String> properties, Converters convert) {
-		Check.notNull(object, properties, convert);
+		Check.noneNull(object, properties, convert);
 
 		Class<? extends Object> type = object.getClass();
 		Map<String, PropertyWrapper> map = getPropertyMap(type);

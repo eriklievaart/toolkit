@@ -56,14 +56,14 @@ public class Check {
 		notNull(o, "Validating " + Str.NULL);
 	}
 
-	public static void notNull(final Object... args) {
+	public static void notNull(final Object o, final String format, final Object... args) {
+		Check.notTrue(o == null, format, args);
+	}
+
+	public static void noneNull(final Object... args) {
 		for (int i = 0; i < args.length; i++) {
 			notNull(args[i], "Argument % is <null>", i);
 		}
-	}
-
-	public static void notNull(final Object o, final String format, final Object... args) {
-		Check.notTrue(o == null, format, args);
 	}
 
 	public static void matches(final String value, final String regex) {
@@ -126,7 +126,7 @@ public class Check {
 	}
 
 	public static void isEqual(Number actual, Number expected, final String format, final Object... args) {
-		Check.notNull(actual, expected);
+		Check.noneNull(actual, expected);
 
 		if (expected instanceof Long || expected instanceof Integer || expected instanceof Byte) {
 			isLongValueEqual(actual, expected, format, args);

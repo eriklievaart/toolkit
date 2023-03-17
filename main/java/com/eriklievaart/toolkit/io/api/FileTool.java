@@ -79,7 +79,7 @@ public class FileTool {
 	}
 
 	public static void copyFile(File from, File to) {
-		Check.notNull(from, to);
+		Check.noneNull(from, to);
 		errorOnChildOfItself(from, to);
 		errorOnDirectoryToFile(from, to);
 		try {
@@ -110,7 +110,7 @@ public class FileTool {
 	}
 
 	public static void moveFile(File from, File to) {
-		Check.notNull(from, to);
+		Check.noneNull(from, to);
 		errorOnChildOfItself(from, to);
 		errorOnDirectoryToFile(from, to);
 

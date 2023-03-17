@@ -49,7 +49,7 @@ public class CliInvoker {
 
 	private static int execute(final CliCommand command, final File dir, CliStreams output) {
 		try {
-			Check.notNull(command, dir);
+			Check.noneNull(command, dir);
 			output.debug(command.toString());
 			Process process = Runtime.getRuntime().exec(command.cmd(), null, dir);
 

@@ -82,7 +82,7 @@ class LiteralWrapper {
 	}
 
 	Mutator getMutator(final String property, final Object target) {
-		Check.notNull(property, target);
+		Check.noneNull(property, target);
 
 		PropertyWrapper wrapper = properties.get(property);
 		Check.notNull(wrapper, "Unable to find property % on %", property, literal);

@@ -27,7 +27,7 @@ public class MemoryFile extends AbstractVirtualFile {
 	private long modified;
 
 	public MemoryFile(String path, MemoryFileSystem resolver) {
-		Check.notNull(path, resolver);
+		Check.noneNull(path, resolver);
 		this.path = path;
 		this.resolver = resolver;
 		this.type = path.equals(FS_ROOT) ? FileType.DIRECTORY : FileType.UNKNOWN;

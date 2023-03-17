@@ -123,7 +123,7 @@ public class FieldTool {
 	}
 
 	public static Optional<Field> getFieldByTypeOptional(Class<?> parent, Class<?> fieldType) {
-		Check.notNull(parent, fieldType);
+		Check.noneNull(parent, fieldType);
 
 		Field into = null;
 		for (Field field : FieldTool.getFields(parent)) {

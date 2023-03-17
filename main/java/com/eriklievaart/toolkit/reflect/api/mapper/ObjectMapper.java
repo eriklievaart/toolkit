@@ -44,7 +44,7 @@ public class ObjectMapper {
 	}
 
 	public static void inject(Object object, Map<String, String> values, Converters converters) {
-		Check.notNull(object, values);
+		Check.noneNull(object, values);
 		Class<?> type = object.getClass();
 
 		try {

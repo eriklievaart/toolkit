@@ -19,12 +19,12 @@ import com.eriklievaart.toolkit.lang.api.str.StringEscape;
 public class PropertiesUtf {
 
 	public static void store(Map<String, String> props, File file) {
-		Check.notNull(props, file);
+		Check.noneNull(props, file);
 		FileTool.writeLines(file, getLines(props));
 	}
 
 	public static void store(Map<String, String> props, OutputStream os) {
-		Check.notNull(props, os);
+		Check.noneNull(props, os);
 		StreamTool.writeLines(getLines(props), os);
 	}
 

@@ -21,7 +21,7 @@ public class HttpDirectoryCache implements Function<String, InputStream> {
 	private HttpClient client;
 
 	public HttpDirectoryCache(File root, HttpClient client) {
-		Check.notNull(root, client);
+		Check.noneNull(root, client);
 		this.root = root;
 		this.client = client;
 	}

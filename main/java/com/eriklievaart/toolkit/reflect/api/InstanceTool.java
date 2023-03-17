@@ -57,13 +57,13 @@ public class InstanceTool {
 	}
 
 	public static void injectFieldByType(Object target, Object inject) {
-		Check.notNull(target, inject);
+		Check.noneNull(target, inject);
 		Field into = FieldTool.getFieldByType(target.getClass(), inject.getClass());
 		wrap(target).injectField(into.getName(), inject);
 	}
 
 	public static void injectFieldByTypeIfExists(Object target, Object inject) {
-		Check.notNull(target, inject);
+		Check.noneNull(target, inject);
 		Optional<Field> into = FieldTool.getFieldByTypeOptional(target.getClass(), inject.getClass());
 		if (into.isPresent()) {
 			wrap(target).injectField(into.get().getName(), inject);

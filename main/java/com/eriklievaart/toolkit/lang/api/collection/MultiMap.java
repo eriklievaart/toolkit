@@ -48,7 +48,7 @@ public class MultiMap<K, V> {
 	 * Stores a single value for a key. Just like the put method of a regular map.
 	 */
 	public void setSingleValue(final K key, final V value) {
-		Check.notNull(key, value);
+		Check.noneNull(key, value);
 		delegate.put(key, ListTool.of(value));
 	}
 

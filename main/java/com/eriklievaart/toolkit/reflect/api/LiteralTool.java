@@ -138,7 +138,7 @@ public class LiteralTool {
 	 * Flag indicating if an instance of the first argument can be passed when the second argument is requested.
 	 */
 	public static boolean isAssignable(final String from, final Class<?> to) {
-		Check.notNull(from, to);
+		Check.noneNull(from, to);
 
 		return to.isAssignableFrom(getLiteral(from));
 	}
@@ -147,7 +147,7 @@ public class LiteralTool {
 	 * Flag indicating if an instance of the first argument can be passed when the second argument is requested.
 	 */
 	public static boolean isAssignable(final Class<?> from, final Class<?> to) {
-		Check.notNull(from, to);
+		Check.noneNull(from, to);
 
 		return to.isAssignableFrom(from);
 	}
@@ -191,7 +191,7 @@ public class LiteralTool {
 	 * Create a proxy of the specified type that delegates to the InvocationHandler.
 	 */
 	public static <E> E createProxy(final Class<?> type, final InvocationHandler handler) {
-		Check.notNull(type, handler);
+		Check.noneNull(type, handler);
 		Check.isTrue(type.isInterface(), "Not an interface: " + type.getName());
 		return (E) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class<?>[] { type }, handler);
 	}
