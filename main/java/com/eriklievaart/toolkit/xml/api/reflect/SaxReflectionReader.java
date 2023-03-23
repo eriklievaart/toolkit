@@ -1,15 +1,15 @@
-package com.eriklievaart.toolkit.xml.api;
+package com.eriklievaart.toolkit.xml.api.reflect;
 
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.eriklievaart.toolkit.convert.api.Converters;
 import com.eriklievaart.toolkit.lang.api.concurrent.RaceCondition;
+import com.eriklievaart.toolkit.xml.api.SaxTool;
 
 /**
  * This class can be used to read XML files and convert them into Objects. This class is essentially a wrapper over SAX
@@ -42,9 +42,9 @@ import com.eriklievaart.toolkit.lang.api.concurrent.RaceCondition;
  * registered with the in the constructor of the {@link SaxReflectionReader}.
  * <p>
  * You are also required to add a processing instruction of type close. This element specifies which method to call on a
- * parent element, when a child has been processed. So in the example above
- * "&lt;?prefix.close add(java.awt.Component)?&gt;" specifies that when the button has been created, is will be added to
- * the panel using the add method which takes a component as an argument.
+ * parent element, when a child has been processed. So in the example above "&lt;?prefix.close
+ * add(java.awt.Component)?&gt;" specifies that when the button has been created, is will be added to the panel using
+ * the add method which takes a component as an argument.
  *
  * @author Erik Lievaart
  */
@@ -73,7 +73,7 @@ public class SaxReflectionReader {
 	 * @see XMLReader#parse(String)
 	 */
 	public <E> E readXmlFile(final String file) throws SAXException, IOException {
-		createReader().parse(file);
+		SaxTool.parse(file, handler);
 		return (E) handler.getResult();
 	}
 
@@ -82,14 +82,8 @@ public class SaxReflectionReader {
 	 *
 	 * @see XMLReader#parse(InputSource)
 	 */
-	public <E> E readXmlFile(final Reader reader) throws IOException, SAXException {
-		createReader().parse(new InputSource(reader));
+	public <E> E readXmlFile(final InputStream is) throws IOException, SAXException {
+		SaxTool.parse(is, handler);
 		return (E) handler.getResult();
-	}
-
-	private XMLReader createReader() throws SAXException {
-		XMLReader xr = XMLReaderFactory.createXMLReader();
-		xr.setContentHandler(handler);
-		return xr;
 	}
 }

@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.xml.api;
+package com.eriklievaart.toolkit.xml.api.reflect;
 
 import java.util.Map;
 

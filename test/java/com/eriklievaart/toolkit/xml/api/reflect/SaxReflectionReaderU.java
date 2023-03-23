@@ -1,8 +1,7 @@
-package com.eriklievaart.toolkit.xml.api;
+package com.eriklievaart.toolkit.xml.api.reflect;
 
 import java.awt.Component;
 import java.io.IOException;
-import java.io.StringReader;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -14,8 +13,8 @@ import com.eriklievaart.toolkit.convert.api.Converter;
 import com.eriklievaart.toolkit.convert.api.Converters;
 import com.eriklievaart.toolkit.convert.api.construct.IntegerConstructor;
 import com.eriklievaart.toolkit.convert.api.construct.StringConstructor;
+import com.eriklievaart.toolkit.io.api.StreamTool;
 import com.eriklievaart.toolkit.lang.api.check.Check;
-import com.eriklievaart.toolkit.xml.api.SaxReflectionReader;
 
 public class SaxReflectionReaderU {
 
@@ -39,7 +38,8 @@ public class SaxReflectionReaderU {
 		Converter<?> strings = new StringConstructor().createConverter();
 		Converter<?> ints = new IntegerConstructor().createConverter();
 		SaxReflectionReader reader = new SaxReflectionReader("prefix", new Converters(strings, ints));
-		JPanel panel = reader.readXmlFile(new StringReader(xml));
+		System.out.println(xml);
+		JPanel panel = reader.readXmlFile(StreamTool.toInputStream(xml));
 
 		int count = panel.getComponentCount();
 		Check.isEqual(count, 1, "Button child was not created!");

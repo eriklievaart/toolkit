@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.xml.api.parse;
+package com.eriklievaart.toolkit.xml.api.validate;
 
 import java.util.ArrayList;
 import java.util.Collections;

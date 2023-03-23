@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.xml.api;
+package com.eriklievaart.toolkit.xml.api.reflect;
 
 import java.util.Map;
 import java.util.Stack;
@@ -12,7 +12,6 @@ import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
 import com.eriklievaart.toolkit.lang.api.concurrent.RaceCondition;
 import com.eriklievaart.toolkit.lang.api.pattern.PatternTool;
 import com.eriklievaart.toolkit.logging.api.LogTemplate;
-
 
 @RaceCondition("This class is absolutely not Thread safe!")
 class SaxReflectionHandler extends DefaultHandler {
@@ -32,14 +31,14 @@ class SaxReflectionHandler extends DefaultHandler {
 	@Override
 	public void startElement(final String uri, final String element, final String full, final Attributes attributes)
 			throws SAXException {
-		reflection.checkElementMapped(element);
+		reflection.checkElementMapped(full);
 
 		Map<String, Object> properties = NewCollection.map();
 		for (int i = 0; i < attributes.getLength(); i++) {
 			String property = attributes.getLocalName(i);
-			properties.put(property, reflection.createProperty(element, property, attributes.getValue(i)));
+			properties.put(property, reflection.createProperty(full, property, attributes.getValue(i)));
 		}
-		hierarchy.add(reflection.createObject(element, properties));
+		hierarchy.add(reflection.createObject(full, properties));
 	}
 
 	@Override

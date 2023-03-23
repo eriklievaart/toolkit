@@ -1,4 +1,4 @@
-package com.eriklievaart.toolkit.xml.api.parse;
+package com.eriklievaart.toolkit.xml.api.validate;
 
 import org.xml.sax.SAXParseException;
 
