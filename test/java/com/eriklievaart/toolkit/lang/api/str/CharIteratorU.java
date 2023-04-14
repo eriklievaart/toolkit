@@ -47,23 +47,6 @@ public class CharIteratorU {
 		new CharIterator("", 1, 0);
 	}
 
-	@Test(expected = AssertionException.class)
-	public void getNextEmpty() {
-		new CharIterator("", 0, 0).next();
-	}
-
-	@Test
-	public void getNext() {
-		Check.isEqual(new CharIterator("a").next(), 'a');
-	}
-
-	@Test(expected = AssertionException.class)
-	public void getNextFailure() {
-		CharIterator iter = new CharIterator("a");
-		iter.next();
-		iter.next();
-	}
-
 	@Test
 	public void getLookahead() {
 		CharIterator iter = new CharIterator("a");
@@ -90,17 +73,41 @@ public class CharIteratorU {
 		iter.getLookbehind();
 	}
 
+	@Test(expected = AssertionException.class)
+	public void nextEmpty() {
+		new CharIterator("", 0, 0).next();
+	}
+
 	@Test
-	public void getPrevious() {
+	public void next() {
+		Check.isEqual(new CharIterator("a").next(), 'a');
+	}
+
+	@Test(expected = AssertionException.class)
+	public void nextFailure() {
+		CharIterator iter = new CharIterator("a");
+		iter.next();
+		iter.next();
+	}
+
+	@Test
+	public void previous() {
 		CharIterator iter = new CharIterator("a");
 		Check.isEqual(iter.next(), 'a');
 		Check.isEqual(iter.previous(), 'a');
 	}
 
 	@Test(expected = AssertionException.class)
-	public void getPreviousFailure() {
+	public void previousFailure() {
 		CharIterator iter = new CharIterator("a");
 		iter.previous();
+	}
+
+	@Test
+	public void nextLine() {
+		CharIterator iter = new CharIterator("abc\ndef");
+		Check.isEqual(iter.nextLine(), "abc\n");
+		Check.isEqual(iter.nextLine(), "def");
 	}
 
 	@Test
@@ -109,21 +116,11 @@ public class CharIteratorU {
 	}
 
 	@Test
-	public void findLast() {
-		StringBuilderWrapper builder = new StringBuilderWrapper();
-		CharIterator iterator = new CharIterator("123456789");
-
-		iterator.find("89", builder);
-		Check.isEqual(builder.toString(), "1234567");
-		Check.isEqual(iterator.toString(), "89");
-	}
-
-	@Test
 	public void findFirst() {
 		StringBuilderWrapper builder = new StringBuilderWrapper();
 		CharIterator iterator = new CharIterator("123456789");
 
-		iterator.find("12", builder);
+		Check.isTrue(iterator.find("12", builder));
 		Check.isEqual(builder.toString(), "");
 		Check.isEqual(iterator.toString(), "123456789");
 	}
@@ -133,9 +130,25 @@ public class CharIteratorU {
 		StringBuilderWrapper builder = new StringBuilderWrapper();
 		CharIterator iterator = new CharIterator("1234512345");
 
-		iterator.find("5", builder);
+		Check.isTrue(iterator.find("5", builder));
 		Check.isEqual(builder.toString(), "1234");
 		Check.isEqual(iterator.toString(), "512345");
+	}
+
+	@Test
+	public void findLast() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+		CharIterator iterator = new CharIterator("123456789");
+
+		Check.isTrue(iterator.find("89", builder));
+		Check.isEqual(builder.toString(), "1234567");
+		Check.isEqual(iterator.toString(), "89");
+	}
+
+	@Test
+	public void findNone() {
+		CharIterator iterator = new CharIterator("123456789");
+		Check.isFalse(iterator.find("98", new StringBuilderWrapper()));
 	}
 
 	@Test

@@ -63,6 +63,15 @@ public class CharIterator {
 		return chars.charAt(index++);
 	}
 
+	public String nextLine() {
+		StringBuilderWrapper wrapper = new StringBuilderWrapper();
+		find("\n", wrapper);
+		if (hasNext()) {
+			wrapper.append(next());
+		}
+		return wrapper.toString();
+	}
+
 	public void skip() {
 		index++;
 	}
@@ -100,22 +109,25 @@ public class CharIterator {
 
 	/**
 	 * Find a substring, move all skipped characters to the StringBuilder.
+	 *
+	 * @return true iff the query was found.
 	 */
-	public void find(String query, StringBuilderWrapper builder) {
-		find(query.toCharArray(), builder);
+	public boolean find(String query, StringBuilderWrapper builder) {
+		return find(query.toCharArray(), builder);
 	}
 
-	private void find(char[] query, StringBuilderWrapper builder) {
+	private boolean find(char[] query, StringBuilderWrapper builder) {
 		while (hasNext()) {
 			if (match(query)) {
-				return;
+				return true;
 			}
 			builder.append(next());
 		}
+		return false;
 	}
 
 	private boolean match(char[] query) {
-		if (index + query.length == last) {
+		if (query.length > length()) {
 			return false;
 		}
 		for (int i = 0; i < query.length; i++) {

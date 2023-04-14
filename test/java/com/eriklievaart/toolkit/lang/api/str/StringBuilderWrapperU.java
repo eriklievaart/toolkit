@@ -155,6 +155,37 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void appendTag() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.append("some text");
+		sbw.appendTag("br");
+		CheckStr.isEqual(sbw.toString(), "some text<br/>");
+	}
+
+	@Test
+	public void appendTagWithContents() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.appendTag("p", "some text");
+		CheckStr.isEqual(sbw.toString(), "<p>some text</p>");
+	}
+
+	@Test
+	public void appendTagOpen() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.appendTagOpen("p");
+		sbw.append("some text");
+		CheckStr.isEqual(sbw.toString(), "<p>some text");
+	}
+
+	@Test
+	public void appendTagClose() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.append("<p>some text");
+		sbw.appendTagClose("p");
+		CheckStr.isEqual(sbw.toString(), "<p>some text</p>");
+	}
+
+	@Test
 	public void sub() {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.sub("$:$", "a", "b");
@@ -211,5 +242,15 @@ public class StringBuilderWrapperU {
 	@Test
 	public void isEmptyFalse() {
 		Check.isFalse(new StringBuilderWrapper("data").isEmpty());
+	}
+
+	@Test
+	public void isBlank() {
+		Check.isTrue(new StringBuilderWrapper().isBlank());
+		Check.isTrue(new StringBuilderWrapper("").isBlank());
+		Check.isTrue(new StringBuilderWrapper(" ").isBlank());
+		Check.isTrue(new StringBuilderWrapper(" \r\n").isBlank());
+		Check.isFalse(new StringBuilderWrapper("n").isBlank());
+		Check.isFalse(new StringBuilderWrapper("data").isBlank());
 	}
 }

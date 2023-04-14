@@ -124,6 +124,26 @@ public class StringBuilderWrapper {
 		return this;
 	}
 
+	public StringBuilderWrapper appendTag(String element) {
+		builder.append("<").append(element).append("/>");
+		return this;
+	}
+
+	public StringBuilderWrapper appendTag(String element, Object body) {
+		appendTagOpen(element).append(body).appendTagClose(element);
+		return this;
+	}
+
+	public StringBuilderWrapper appendTagOpen(String element) {
+		builder.append("<").append(element).append(">");
+		return this;
+	}
+
+	public StringBuilderWrapper appendTagClose(String element) {
+		builder.append("</").append(element).append(">");
+		return this;
+	}
+
 	public StringBuilderWrapper sub(String format, Object... args) {
 		builder.append(Str.sub(format, args));
 		return this;
@@ -155,6 +175,23 @@ public class StringBuilderWrapper {
 
 	public boolean isEmpty() {
 		return builder.length() == 0;
+	}
+
+	public boolean notEmpty() {
+		return builder.length() != 0;
+	}
+
+	public boolean isBlank() {
+		for (int i = 0; i < length(); i++) {
+			if (builder.charAt(i) != ' ' && builder.charAt(i) != '\r' && builder.charAt(i) != '\n') {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean notBlank() {
+		return !isBlank();
 	}
 
 	public int length() {
