@@ -8,6 +8,6 @@ package com.eriklievaart.toolkit.convert.api.validate;
 public class MapValidator extends RegexValidator {
 
 	public MapValidator() {
-		super("[^#=]++=[^#=]++(?:\\#[^#=]++=[^#=]++)*+", "Not a valid value: %. Does every key have a value?");
+		super("[^#=]++=[^#=]++(?:\\#[^#=]++=[^#=]++)*+", "% is not valid for regex %. Does every key have a value?");
 	}
 }

@@ -5,8 +5,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.convert.api.ConversionException;
-import com.eriklievaart.toolkit.convert.api.construct.MapConstructor;
-import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.MapTool;
 
@@ -24,7 +22,7 @@ public class MapConstructorU {
 		Check.isEqual(map, MapTool.of("key1", "value1", "key2", "value2"));
 	}
 
-	@Test(expected = AssertionException.class)
+	@Test(expected = ConversionException.class)
 	public void createMapFailure() throws ConversionException {
 		new MapConstructor().createConverter().convertToObject("key1=");
 	}
