@@ -1,6 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.str;
 
 import java.util.Collection;
+import java.util.Map;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
@@ -33,6 +34,10 @@ public class StringBuilderWrapper {
 	 */
 	public char charAt(int i) {
 		return builder.charAt(translate(i));
+	}
+
+	public int indexOf(String str) {
+		return builder.indexOf(str);
 	}
 
 	/**
@@ -136,6 +141,17 @@ public class StringBuilderWrapper {
 
 	public StringBuilderWrapper appendTagOpen(String element) {
 		builder.append("<").append(element).append(">");
+		return this;
+	}
+
+	public StringBuilderWrapper appendTagOpen(String element, Map<String, String> attributes) {
+		builder.append("<").append(element);
+		if (attributes != null) {
+			attributes.forEach((k, v) -> {
+				builder.append(' ').append(k).append("=\"").append(v).append("\"");
+			});
+		}
+		builder.append(">");
 		return this;
 	}
 

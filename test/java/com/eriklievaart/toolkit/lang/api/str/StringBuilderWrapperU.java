@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
 import com.eriklievaart.toolkit.lang.api.collection.ListTool;
+import com.eriklievaart.toolkit.lang.api.collection.MapTool;
 
 public class StringBuilderWrapperU {
 
@@ -175,6 +176,13 @@ public class StringBuilderWrapperU {
 		sbw.appendTagOpen("p");
 		sbw.append("some text");
 		CheckStr.isEqual(sbw.toString(), "<p>some text");
+	}
+
+	@Test
+	public void appendTagOpenWithAttributes() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.appendTagOpen("div", MapTool.of("id", "1", "class", "red"));
+		CheckStr.isEqual(sbw.toString(), "<div id=\"1\" class=\"red\">");
 	}
 
 	@Test
