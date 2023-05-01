@@ -164,6 +164,13 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void appendTagWithAttributes() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.appendTag("div", MapTool.of("id", "1", "class", "red"));
+		CheckStr.isEqual(sbw.toString(), "<div id=\"1\" class=\"red\" />");
+	}
+
+	@Test
 	public void appendTagWithContents() {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.appendTag("p", "some text");

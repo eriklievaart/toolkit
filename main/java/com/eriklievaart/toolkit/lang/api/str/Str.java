@@ -122,6 +122,10 @@ public class Str {
 		return str.split("\r?\n|\r");
 	}
 
+	public static List<String> listLines(String str) {
+		return ListTool.of(splitLines(str));
+	}
+
 	public static String joinLines(String[] lines) {
 		return String.join("\n", lines);
 	}
