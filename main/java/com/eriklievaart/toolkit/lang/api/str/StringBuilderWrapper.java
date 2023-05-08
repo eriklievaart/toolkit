@@ -139,7 +139,7 @@ public class StringBuilderWrapper {
 		return this;
 	}
 
-	public StringBuilderWrapper appendTag(String element, Map<String, String> attributes) {
+	public StringBuilderWrapper appendTag(String element, Map<String, ? extends Object> attributes) {
 		builder.append("<").append(element);
 		if (attributes != null) {
 			attributes.forEach((k, v) -> {
