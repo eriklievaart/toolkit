@@ -155,7 +155,7 @@ public class StringBuilderWrapper {
 		return this;
 	}
 
-	public StringBuilderWrapper appendTagOpen(String element, Map<String, String> attributes) {
+	public StringBuilderWrapper appendTagOpen(String element, Map<String, ? extends Object> attributes) {
 		builder.append("<").append(element);
 		if (attributes != null) {
 			attributes.forEach((k, v) -> {
