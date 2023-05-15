@@ -1,19 +1,20 @@
 package com.eriklievaart.toolkit.logging.api;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import com.eriklievaart.toolkit.lang.api.str.Str;
 import com.eriklievaart.toolkit.logging.api.appender.Appender;
+import com.eriklievaart.toolkit.logging.api.level.LogLevelConfig;
 
-public class Logger {
+class Logger {
 
 	private String name;
-	private AtomicReference<Level> levelReference = new AtomicReference<>(Level.FINEST);
+	private LogLevelConfig levels;
 
-	Logger(String name) {
+	Logger(String name, LogLevelConfig levels) {
 		this.name = name;
+		this.levels = levels;
 	}
 
 	public String getLoggerName() {
@@ -34,10 +35,6 @@ public class Logger {
 
 	public boolean isWarnEnabled() {
 		return isLevelEnabled(Level.WARNING);
-	}
-
-	public void setLevel(Level level) {
-		levelReference.set(level);
 	}
 
 	public void log(LogRecord record) {
@@ -73,13 +70,6 @@ public class Logger {
 	 * one appender at "test" level.
 	 */
 	private boolean isLevelEnabled(Level test) {
-		if (test.intValue() >= levelReference.get().intValue()) {
-			for (Appender appender : LogConfig.getAppenders(name)) {
-				if (appender.isLevelEnabled(test)) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return levels.isLevelEnabled(name, test);
 	}
 }

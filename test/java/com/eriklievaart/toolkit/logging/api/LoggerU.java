@@ -10,6 +10,7 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
 import com.eriklievaart.toolkit.logging.api.appender.AbstractAppender;
 import com.eriklievaart.toolkit.logging.api.appender.CollectionAppender;
+import com.eriklievaart.toolkit.logging.api.level.LogLevelConfig;
 
 public class LoggerU {
 
@@ -28,7 +29,7 @@ public class LoggerU {
 
 	@Test
 	public void logLoggerName() {
-		Logger logger = new Logger("test.logger");
+		Logger logger = new Logger("test.logger", new LogLevelConfig());
 
 		String result = logRecord(logger, new LogRecord(Level.INFO, "my message"));
 
@@ -101,7 +102,7 @@ public class LoggerU {
 	}
 
 	private String logRecord(LogRecord record) {
-		return logRecord(new Logger("test.logger.id"), record);
+		return logRecord(new Logger("test.logger.id", new LogLevelConfig()), record);
 	}
 
 	private String logRecord(Logger logger, LogRecord record) {

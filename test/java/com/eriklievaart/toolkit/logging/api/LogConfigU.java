@@ -7,14 +7,10 @@ import com.eriklievaart.toolkit.lang.api.check.Check;
 public class LogConfigU {
 
 	@Test
-	public void getParent() throws Exception {
-		String logger = "parent.child";
-		Check.isEqual(LogConfig.getParent(logger), "parent");
-	}
-
-	@Test
-	public void getParentRoot() throws Exception {
-		String logger = "root";
-		Check.isEqual(LogConfig.getParent(logger), "");
+	public void getParent() {
+		Check.isEqual(LogConfig.getParent("com.apache.commons.lang"), "com.apache.commons");
+		Check.isEqual(LogConfig.getParent("com.apache.commons"), "com.apache");
+		Check.isEqual(LogConfig.getParent("com.apache"), "com");
+		Check.isEqual(LogConfig.getParent("com"), "");
 	}
 }

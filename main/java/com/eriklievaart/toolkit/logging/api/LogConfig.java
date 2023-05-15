@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
+import java.util.logging.Level;
 
 import com.eriklievaart.toolkit.lang.api.collection.LazyMap;
 import com.eriklievaart.toolkit.lang.api.collection.NewCollection;
@@ -18,14 +19,16 @@ import com.eriklievaart.toolkit.lang.api.str.Str;
 import com.eriklievaart.toolkit.logging.api.appender.Appender;
 import com.eriklievaart.toolkit.logging.api.appender.ConsoleAppender;
 import com.eriklievaart.toolkit.logging.api.format.SimpleFormatter;
+import com.eriklievaart.toolkit.logging.api.level.LogLevelConfig;
 
 public class LogConfig {
 
 	private static final AtomicReference<Formatter> FORMATTER_REFERENCE = new AtomicReference<>();
 	private static final ThreadPoolExecutor EXECUTOR = initExecutor();
 	private static Supplier<Executor> executorSupplier;
+	private static LogLevelConfig levels = new LogLevelConfig();
 	private static Map<String, List<Appender>> appenders = NewCollection.concurrentMap();
-	private static LazyMap<String, Logger> loggers = new LazyMap<>(id -> new Logger(id));
+	private static LazyMap<String, Logger> loggers = new LazyMap<>(id -> new Logger(id, levels));
 
 	static {
 		init();
@@ -60,7 +63,7 @@ public class LogConfig {
 		appenders.values().forEach(list -> list.forEach(Appender::close));
 	}
 
-	public static synchronized Logger getLogger(String name) {
+	static synchronized Logger getLogger(String name) {
 		return loggers.get(name);
 	}
 
@@ -89,8 +92,8 @@ public class LogConfig {
 		return result != null ? result : getAppenders(getParent(logger));
 	}
 
-	static String getParent(String logger) {
-		return logger.contains(".") ? logger.replaceFirst(".[^.]*$", "") : "";
+	public static String getParent(String logger) {
+		return logger.contains(".") ? logger.replaceFirst("\\.[^.]++$", "") : "";
 	}
 
 	public static void setAppenders(String logger, Appender... list) {
@@ -99,6 +102,10 @@ public class LogConfig {
 
 	public static void setAppenders(String logger, List<Appender> list) {
 		appenders.put(logger, Collections.unmodifiableList(new CopyOnWriteArrayList<>(list)));
+	}
+
+	public static void setLevel(String pkg, Level level) {
+		levels.setLevel(pkg, level);
 	}
 
 	public static void installDefaultRootAppenders(String logger) {
