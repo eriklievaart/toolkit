@@ -48,6 +48,18 @@ public class CharIterator {
 		return new CharIterator(chars, index);
 	}
 
+	public boolean hasNext() {
+		return index <= last;
+	}
+
+	public boolean hasPrevious() {
+		return index > start;
+	}
+
+	public int length() {
+		return chars.length() - index;
+	}
+
 	public String getDebugLine() {
 		return Str.sub("$:$", index, chars);
 	}
@@ -80,6 +92,10 @@ public class CharIterator {
 		index += s;
 	}
 
+	public boolean isLookahead(char c) {
+		return hasNext() && getLookahead() == c;
+	}
+
 	public char getLookahead() {
 		Check.isTrue(hasNext(), "No more elements! Call hasNext() before calling getLookahead()");
 		return chars.charAt(index);
@@ -95,16 +111,10 @@ public class CharIterator {
 		return chars.charAt(--index);
 	}
 
-	public boolean hasNext() {
-		return index <= last;
-	}
-
-	public boolean hasPrevious() {
-		return index > start;
-	}
-
-	public int length() {
-		return chars.length() - index;
+	public void appendIfLookahead(char c, StringBuilderWrapper builder) {
+		if (isLookahead(c)) {
+			builder.append(next());
+		}
 	}
 
 	/**

@@ -67,6 +67,21 @@ public class CharIteratorU {
 		Check.isEqual(iter.getLookbehind(), 'a');
 	}
 
+	@Test
+	public void isLookahead() {
+		CharIterator iter = new CharIterator("ab");
+		Check.isTrue(iter.isLookahead('a'));
+		Check.isFalse(iter.isLookahead('b'));
+
+		iter.next();
+		Check.isFalse(iter.isLookahead('a'));
+		Check.isTrue(iter.isLookahead('b'));
+
+		iter.next();
+		Check.isFalse(iter.isLookahead('a'));
+		Check.isFalse(iter.isLookahead('b'));
+	}
+
 	@Test(expected = AssertionException.class)
 	public void getLookbackFailure() {
 		CharIterator iter = new CharIterator("a");
@@ -88,6 +103,18 @@ public class CharIteratorU {
 		CharIterator iter = new CharIterator("a");
 		iter.next();
 		iter.next();
+	}
+
+	@Test
+	public void appendIfLookahead() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+
+		CharIterator iter = new CharIterator("abc");
+		iter.appendIfLookahead('a', builder);
+		iter.appendIfLookahead('b', builder);
+		iter.appendIfLookahead('d', builder);
+
+		Check.isEqual(builder.toString(), "ab");
 	}
 
 	@Test

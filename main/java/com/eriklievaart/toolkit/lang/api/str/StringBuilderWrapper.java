@@ -88,8 +88,9 @@ public class StringBuilderWrapper {
 		return delete;
 	}
 
-	public void deleteLast(int count) {
+	public StringBuilderWrapper deleteLast(int count) {
 		builder.delete(builder.length() - count, builder.length());
+		return this;
 	}
 
 	private int translate(int i) {
@@ -223,6 +224,10 @@ public class StringBuilderWrapper {
 
 	public int length() {
 		return builder.length();
+	}
+
+	public String getTrimmed() {
+		return toString().trim();
 	}
 
 	@Override

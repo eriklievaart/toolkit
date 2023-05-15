@@ -49,6 +49,12 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void getTrimmed() {
+		StringBuilderWrapper testable = new StringBuilderWrapper(" \tabc \t");
+		Check.isEqual(testable.getTrimmed(), "abc");
+	}
+
+	@Test
 	public void insert() {
 		Check.isEqual(new StringBuilderWrapper("123456").insert(0, "abc").toString(), "abc123456");
 		Check.isEqual(new StringBuilderWrapper("123456").insert(1, "abc").toString(), "1abc23456");
