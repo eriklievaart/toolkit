@@ -8,6 +8,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.logging.LogRecord;
 
+import com.eriklievaart.toolkit.io.api.RuntimeIOException;
+
 /**
  * Simple Appender for writing to a file. This class is thread safe, but must have only one instance per file and may
  * cause conflicts when multiple VM's write to the same file.
@@ -17,9 +19,14 @@ public class SimpleFileAppender extends AbstractAppender {
 	private FileChannel channel;
 
 	@SuppressWarnings("resource")
-	public SimpleFileAppender(File file) throws FileNotFoundException {
-		file.getParentFile().mkdirs();
-		this.channel = new FileOutputStream(file, true).getChannel();
+	public SimpleFileAppender(File file) {
+		try {
+			file.getParentFile().mkdirs();
+			this.channel = new FileOutputStream(file, true).getChannel();
+
+		} catch (FileNotFoundException e) {
+			throw new RuntimeIOException(e);
+		}
 	}
 
 	@Override

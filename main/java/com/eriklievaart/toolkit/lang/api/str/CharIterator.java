@@ -92,8 +92,27 @@ public class CharIterator {
 		index += s;
 	}
 
-	public boolean isLookahead(char c) {
-		return hasNext() && getLookahead() == c;
+	/**
+	 * Returns true iff there is a lookahead and it is one of the allowed characters.
+	 */
+	public boolean hasLookahead(char... allowed) {
+		Check.isTrue(allowed.length > 0, "at least one argument required");
+		if (!hasNext()) {
+			return false;
+		}
+		for (char c : allowed) {
+			if (getLookahead() == c) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Returns true iff there is a lookahead and it is NOT one of the allowed characters.
+	 */
+	public boolean hasLookaheadNotIn(char... reject) {
+		return hasNext() && !hasLookahead(reject);
 	}
 
 	public char getLookahead() {
@@ -112,7 +131,7 @@ public class CharIterator {
 	}
 
 	public void appendIfLookahead(char c, StringBuilderWrapper builder) {
-		if (isLookahead(c)) {
+		if (hasLookahead(c)) {
 			builder.append(next());
 		}
 	}

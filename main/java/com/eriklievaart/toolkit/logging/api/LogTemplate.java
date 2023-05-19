@@ -206,6 +206,13 @@ public class LogTemplate {
 		log.log(createLogRecord(Level.SEVERE, thrown, format), args);
 	}
 
+	/**
+	 * Log a formatted message with a programmatically assignable level.
+	 */
+	public void log(Level level, String format, Object... args) {
+		log.log(createLogRecord(level, format), args);
+	}
+
 	private LogRecord createLogRecord(Level level, Object message) {
 		return createLogRecord(level, null, message);
 	}

@@ -21,23 +21,26 @@ public class TimestampTool {
 	public static final long YEAR_356 = 356 * ONE_DAY;
 
 	public static String diffHumanReadable(long a, long b) {
-		long diff = Math.abs(a - b);
-		if (diff > 2 * YEAR_355) {
-			return diff / YEAR_355 + "y";
+		return humanReadable(Math.abs(a - b));
+	}
+
+	public static String humanReadable(long millis) {
+		if (millis > 2 * YEAR_355) {
+			return millis / YEAR_355 + "y";
 		}
-		if (diff > 2 * ONE_DAY) {
-			return diff / ONE_DAY + "d";
+		if (millis > 2 * ONE_DAY) {
+			return millis / ONE_DAY + "d";
 		}
-		if (diff > 2 * ONE_HOUR) {
-			return diff / ONE_HOUR + "h";
+		if (millis > 2 * ONE_HOUR) {
+			return millis / ONE_HOUR + "h";
 		}
-		if (diff > 2 * ONE_MINUTE) {
-			return diff / ONE_MINUTE + "m";
+		if (millis > 2 * ONE_MINUTE) {
+			return millis / ONE_MINUTE + "m";
 		}
-		if (diff > 2 * ONE_SECOND) {
-			return diff / ONE_SECOND + "s";
+		if (millis > 2 * ONE_SECOND) {
+			return millis / ONE_SECOND + "s";
 		}
-		return diff + "ms";
+		return millis + "ms";
 	}
 
 	/**

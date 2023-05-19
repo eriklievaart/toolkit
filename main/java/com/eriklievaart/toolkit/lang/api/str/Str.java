@@ -35,6 +35,10 @@ public class Str {
 		return isEmpty(str) ? fallback : str;
 	}
 
+	public static String trim(String value) {
+		return value == null ? "" : value.trim();
+	}
+
 	public static String quote(final Object obj) {
 		return obj == null ? NULL : QUOTE + obj.toString() + QUOTE;
 	}

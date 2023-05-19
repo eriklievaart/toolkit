@@ -68,18 +68,45 @@ public class CharIteratorU {
 	}
 
 	@Test
-	public void isLookahead() {
+	public void hasLookahead() {
 		CharIterator iter = new CharIterator("ab");
-		Check.isTrue(iter.isLookahead('a'));
-		Check.isFalse(iter.isLookahead('b'));
+		Check.isTrue(iter.hasLookahead('a'));
+		Check.isFalse(iter.hasLookahead('b'));
+		Check.isTrue(iter.hasLookahead('a', 'b'));
+		Check.isTrue(iter.hasLookahead('b', 'a'));
 
 		iter.next();
-		Check.isFalse(iter.isLookahead('a'));
-		Check.isTrue(iter.isLookahead('b'));
+		Check.isFalse(iter.hasLookahead('a'));
+		Check.isTrue(iter.hasLookahead('b'));
+		Check.isTrue(iter.hasLookahead('a', 'b'));
+		Check.isTrue(iter.hasLookahead('b', 'a'));
 
 		iter.next();
-		Check.isFalse(iter.isLookahead('a'));
-		Check.isFalse(iter.isLookahead('b'));
+		Check.isFalse(iter.hasLookahead('a'));
+		Check.isFalse(iter.hasLookahead('b'));
+		Check.isFalse(iter.hasLookahead('a', 'b'));
+		Check.isFalse(iter.hasLookahead('b', 'a'));
+	}
+
+	@Test
+	public void hasLookaheadNotIn() {
+		CharIterator iter = new CharIterator("ab");
+		Check.isFalse(iter.hasLookaheadNotIn('a'));
+		Check.isTrue(iter.hasLookaheadNotIn('b'));
+		Check.isFalse(iter.hasLookaheadNotIn('a', 'b'));
+		Check.isFalse(iter.hasLookaheadNotIn('b', 'a'));
+
+		iter.next();
+		Check.isTrue(iter.hasLookaheadNotIn('a'));
+		Check.isFalse(iter.hasLookaheadNotIn('b'));
+		Check.isFalse(iter.hasLookaheadNotIn('a', 'b'));
+		Check.isFalse(iter.hasLookaheadNotIn('b', 'a'));
+
+		iter.next();
+		Check.isFalse(iter.hasLookaheadNotIn('a'));
+		Check.isFalse(iter.hasLookaheadNotIn('b'));
+		Check.isFalse(iter.hasLookaheadNotIn('a', 'b'));
+		Check.isFalse(iter.hasLookaheadNotIn('b', 'a'));
 	}
 
 	@Test(expected = AssertionException.class)

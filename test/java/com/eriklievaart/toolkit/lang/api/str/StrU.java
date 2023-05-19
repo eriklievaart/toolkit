@@ -65,6 +65,15 @@ public class StrU {
 	}
 
 	@Test
+	public void trim() {
+		Check.isEqual(Str.trim(null), "");
+		Check.isEqual(Str.trim(""), "");
+		Check.isEqual(Str.trim("abc"), "abc");
+		Check.isEqual(Str.trim(" abc "), "abc");
+		Check.isEqual(Str.trim("\tabc\t"), "abc");
+	}
+
+	@Test
 	public void joinSingle() {
 		Check.isEqual(Str.join(Arrays.asList("a"), ","), "a");
 	}
