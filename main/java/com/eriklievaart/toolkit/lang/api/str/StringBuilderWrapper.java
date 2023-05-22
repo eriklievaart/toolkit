@@ -147,7 +147,7 @@ public class StringBuilderWrapper {
 				builder.append(' ').append(k).append("=\"").append(v).append("\"");
 			});
 		}
-		builder.append(" />");
+		builder.append("/>");
 		return this;
 	}
 

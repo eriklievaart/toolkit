@@ -93,6 +93,22 @@ public class CharIterator {
 	}
 
 	/**
+	 * Returns true iff there is a lookbehind and it is one of the allowed characters.
+	 */
+	public boolean hasLookbehind(char... allowed) {
+		Check.isTrue(allowed.length > 0, "at least one argument required");
+		if (!hasPrevious()) {
+			return false;
+		}
+		for (char c : allowed) {
+			if (getLookbehind() == c) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Returns true iff there is a lookahead and it is one of the allowed characters.
 	 */
 	public boolean hasLookahead(char... allowed) {
@@ -134,6 +150,21 @@ public class CharIterator {
 		if (hasLookahead(c)) {
 			builder.append(next());
 		}
+	}
+
+	public void appendUntilLookahead(char c, StringBuilderWrapper builder) {
+		while (hasNext()) {
+			if (getLookahead() == c) {
+				return;
+			}
+			builder.append(next());
+		}
+	}
+
+	public void appendUpToRequired(char c, StringBuilderWrapper builder) {
+		appendUntilLookahead(c, builder);
+		Check.isTrue(hasLookahead(c), "expecting: " + c);
+		builder.append(next());
 	}
 
 	/**

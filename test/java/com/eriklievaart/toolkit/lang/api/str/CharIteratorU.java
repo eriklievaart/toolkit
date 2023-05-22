@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
+import com.eriklievaart.toolkit.mock.BombSquad;
 
 public class CharIteratorU {
 
@@ -61,10 +62,31 @@ public class CharIteratorU {
 	}
 
 	@Test
-	public void getLookback() {
+	public void getLookbehind() {
 		CharIterator iter = new CharIterator("a");
 		Check.isEqual(iter.next(), 'a');
 		Check.isEqual(iter.getLookbehind(), 'a');
+	}
+
+	@Test
+	public void hasLookbehind() {
+		CharIterator iter = new CharIterator("ab");
+		Check.isFalse(iter.hasLookbehind('a'));
+		Check.isFalse(iter.hasLookbehind('b'));
+		Check.isFalse(iter.hasLookbehind('a', 'b'));
+		Check.isFalse(iter.hasLookbehind('b', 'a'));
+
+		iter.next();
+		Check.isTrue(iter.hasLookbehind('a'));
+		Check.isFalse(iter.hasLookbehind('b'));
+		Check.isTrue(iter.hasLookbehind('a', 'b'));
+		Check.isTrue(iter.hasLookbehind('b', 'a'));
+
+		iter.next();
+		Check.isFalse(iter.hasLookbehind('a'));
+		Check.isTrue(iter.hasLookbehind('b'));
+		Check.isTrue(iter.hasLookbehind('a', 'b'));
+		Check.isTrue(iter.hasLookbehind('b', 'a'));
 	}
 
 	@Test
@@ -142,6 +164,37 @@ public class CharIteratorU {
 		iter.appendIfLookahead('d', builder);
 
 		Check.isEqual(builder.toString(), "ab");
+		Check.isTrue(iter.hasLookahead('c'));
+	}
+
+	@Test
+	public void appendUntilLookahead() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+
+		CharIterator iter = new CharIterator("ab@cd");
+		iter.appendUntilLookahead('@', builder);
+		Check.isEqual(builder.toString(), "ab");
+		Check.isTrue(iter.hasLookahead('@'));
+	}
+
+	@Test
+	public void appendUpToRequired() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+
+		CharIterator iter = new CharIterator("ab@cd");
+		iter.appendUpToRequired('@', builder);
+		Check.isEqual(builder.toString(), "ab@");
+		Check.isTrue(iter.hasLookahead('c'));
+	}
+
+	@Test
+	public void appendUpToRequiredFail() {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+		CharIterator iter = new CharIterator("abcd");
+
+		BombSquad.diffuse("expecting: @", () -> {
+			iter.appendUpToRequired('@', builder);
+		});
 	}
 
 	@Test
