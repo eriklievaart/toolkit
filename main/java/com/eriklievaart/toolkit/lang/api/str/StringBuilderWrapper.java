@@ -233,6 +233,26 @@ public class StringBuilderWrapper {
 		return builder.length();
 	}
 
+	public StringBuilderWrapper trim() {
+		trimLeft();
+		trimRight();
+		return this;
+	}
+
+	public StringBuilderWrapper trimLeft() {
+		while (!isEmpty() && Character.isWhitespace(builder.charAt(0))) {
+			builder.delete(0, 1);
+		}
+		return this;
+	}
+
+	public StringBuilderWrapper trimRight() {
+		while (!isEmpty() && Character.isWhitespace(builder.charAt(builder.length() - 1))) {
+			deleteLast(1);
+		}
+		return this;
+	}
+
 	public String getTrimmed() {
 		return toString().trim();
 	}

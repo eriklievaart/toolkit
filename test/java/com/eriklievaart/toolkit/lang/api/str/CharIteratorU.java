@@ -180,6 +180,32 @@ public class CharIteratorU {
 	}
 
 	@Test
+	public void skipIfLookahead() {
+		CharIterator iter = new CharIterator("1234");
+
+		iter.skipIfLookahead('1', '2');
+		Check.isEqual(iter.getLookahead(), '2');
+
+		iter.skipIfLookahead('1', '2');
+		Check.isEqual(iter.getLookahead(), '3');
+
+		iter.skipIfLookahead('1', '2');
+		Check.isEqual(iter.getLookahead(), '3');
+	}
+
+	@Test
+	public void skipRequired() {
+		CharIterator iter = new CharIterator("1234");
+
+		iter.skipRequired('1');
+		Check.isEqual(iter.getLookahead(), '2');
+
+		BombSquad.diffuse("required [1]", () -> {
+			iter.skipRequired('1');
+		});
+	}
+
+	@Test
 	public void skipWhitespace() {
 		CharIterator iter = new CharIterator("  \t\n  1234");
 
@@ -216,8 +242,22 @@ public class CharIteratorU {
 		StringBuilderWrapper builder = new StringBuilderWrapper();
 
 		CharIterator iter = new CharIterator("ab@cd");
-		iter.appendUntilLookahead('@', builder);
+		iter.appendUntilLookahead(builder, '@');
 		Check.isEqual(builder.toString(), "ab");
+		Check.isTrue(iter.hasLookahead('@'));
+	}
+
+	@Test
+	public void extractUntilLookahead() {
+		CharIterator iter = new CharIterator("ab@cd");
+		Check.isEqual(iter.extractUntilLookahead('@'), "ab");
+		Check.isTrue(iter.hasLookahead('@'));
+	}
+
+	@Test
+	public void extractUntilLookaheadAny() {
+		CharIterator iter = new CharIterator("ab@cd");
+		Check.isEqual(iter.extractUntilLookahead('c', '@'), "ab");
 		Check.isTrue(iter.hasLookahead('@'));
 	}
 
@@ -226,8 +266,22 @@ public class CharIteratorU {
 		StringBuilderWrapper builder = new StringBuilderWrapper();
 
 		CharIterator iter = new CharIterator("ab@cd");
-		iter.appendUpToRequired('@', builder);
+		iter.appendUpToRequired(builder, '@');
 		Check.isEqual(builder.toString(), "ab@");
+		Check.isTrue(iter.hasLookahead('c'));
+	}
+
+	@Test
+	public void extractUpToRequired() {
+		CharIterator iter = new CharIterator("ab@cd");
+		Check.isEqual(iter.extractUpToRequired('@'), "ab@");
+		Check.isTrue(iter.hasLookahead('c'));
+	}
+
+	@Test
+	public void extractUpToRequiredAny() {
+		CharIterator iter = new CharIterator("ab@cd");
+		Check.isEqual(iter.extractUpToRequired('c', 'd', '@'), "ab@");
 		Check.isTrue(iter.hasLookahead('c'));
 	}
 
@@ -236,8 +290,8 @@ public class CharIteratorU {
 		StringBuilderWrapper builder = new StringBuilderWrapper();
 		CharIterator iter = new CharIterator("abcd");
 
-		BombSquad.diffuse("expecting: @", () -> {
-			iter.appendUpToRequired('@', builder);
+		BombSquad.diffuse("expecting: [@]", () -> {
+			iter.appendUpToRequired(builder, '@');
 		});
 	}
 
@@ -256,9 +310,10 @@ public class CharIteratorU {
 
 	@Test
 	public void nextLine() {
-		CharIterator iter = new CharIterator("abc\ndef");
-		Check.isEqual(iter.nextLine(), "abc\n");
-		Check.isEqual(iter.nextLine(), "def");
+		CharIterator iter = new CharIterator("linux\nwindows\r\nnone");
+		Check.isEqual(iter.nextLine(), "linux");
+		Check.isEqual(iter.nextLine(), "windows");
+		Check.isEqual(iter.nextLine(), "none");
 	}
 
 	@Test

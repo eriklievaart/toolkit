@@ -49,6 +49,24 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void trim() {
+		StringBuilderWrapper testable = new StringBuilderWrapper(" \t\r\nabc \t\r\n");
+		Check.isEqual(testable.trim().toString(), "abc");
+	}
+
+	@Test
+	public void trimLeft() {
+		StringBuilderWrapper testable = new StringBuilderWrapper(" \t\r\nabc \t\r\n");
+		Check.isEqual(testable.trimLeft().toString(), "abc \t\r\n");
+	}
+
+	@Test
+	public void trimRight() {
+		StringBuilderWrapper testable = new StringBuilderWrapper(" \t\r\nabc \t\r\n");
+		Check.isEqual(testable.trimRight().toString(), " \t\r\nabc");
+	}
+
+	@Test
 	public void getTrimmed() {
 		StringBuilderWrapper testable = new StringBuilderWrapper(" \tabc \t");
 		Check.isEqual(testable.getTrimmed(), "abc");

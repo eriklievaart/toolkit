@@ -76,12 +76,10 @@ public class CharIterator {
 	}
 
 	public String nextLine() {
-		StringBuilderWrapper wrapper = new StringBuilderWrapper();
-		find("\n", wrapper);
-		if (hasNext()) {
-			wrapper.append(next());
-		}
-		return wrapper.toString();
+		String line = extractUntilLookahead('\r', '\n');
+		skipIfLookahead('\r');
+		skipIfLookahead('\n');
+		return line;
 	}
 
 	public void skip() {
@@ -90,6 +88,17 @@ public class CharIterator {
 
 	public void skip(int s) {
 		index += s;
+	}
+
+	public void skipRequired(char... c) {
+		Check.isTrue(hasLookahead(c), "required $", c);
+		skip();
+	}
+
+	public void skipIfLookahead(char... c) {
+		if (hasLookahead(c)) {
+			skip();
+		}
 	}
 
 	public void skipWhitespace() {
@@ -170,18 +179,27 @@ public class CharIterator {
 		}
 	}
 
-	public void appendUntilLookahead(char c, StringBuilderWrapper builder) {
-		while (hasNext()) {
-			if (getLookahead() == c) {
-				return;
-			}
+	public String extractUntilLookahead(char... c) {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+		appendUntilLookahead(builder, c);
+		return builder.toString();
+	}
+
+	public void appendUntilLookahead(StringBuilderWrapper builder, char... c) {
+		while (hasLookaheadNotIn(c)) {
 			builder.append(next());
 		}
 	}
 
-	public void appendUpToRequired(char c, StringBuilderWrapper builder) {
-		appendUntilLookahead(c, builder);
-		Check.isTrue(hasLookahead(c), "expecting: " + c);
+	public String extractUpToRequired(char... c) {
+		StringBuilderWrapper builder = new StringBuilderWrapper();
+		appendUpToRequired(builder, c);
+		return builder.toString();
+	}
+
+	public void appendUpToRequired(StringBuilderWrapper builder, char... c) {
+		appendUntilLookahead(builder, c);
+		Check.isTrue(hasLookahead(c), "expecting: $", c);
 		builder.append(next());
 	}
 
