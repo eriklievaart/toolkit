@@ -1,5 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.collection;
 
+import java.util.Map;
+
 import com.eriklievaart.toolkit.lang.api.ToString;
 
 public class Box2<A, B> {
@@ -34,6 +36,10 @@ public class Box2<A, B> {
 
 	public B getObject() {
 		return secondary;
+	}
+
+	public void addToMap(Map<A, B> map) {
+		map.put(getKey(), getValue());
 	}
 
 	@Override
