@@ -4,8 +4,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for working with Sets.
@@ -55,6 +59,20 @@ public class SetTool {
 			result.addAll(set);
 		}
 		return result;
+	}
+
+	public static <E, F> Set<F> map(E[] c, Function<E, F> function) {
+		return map(Arrays.asList(c), function);
+	}
+
+	public static <E, K, V> Set<E> map(Map<K, V> map, BiFunction<K, V, E> function) {
+		Set<E> result = NewCollection.set();
+		map.forEach((k, v) -> result.add(function.apply(k, v)));
+		return result;
+	}
+
+	public static <E, F> Set<F> map(Collection<E> c, Function<E, F> function) {
+		return c.stream().map(function).collect(Collectors.toSet());
 	}
 
 	/**

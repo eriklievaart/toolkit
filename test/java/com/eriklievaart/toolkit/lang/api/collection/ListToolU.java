@@ -121,6 +121,13 @@ public class ListToolU {
 	}
 
 	@Test
+	public void mapMap() {
+		Map<String, Integer> map = MapTool.of("a", 1, "b", 2);
+		List<String> result = ListTool.map(map, (k, v) -> k + ":" + v);
+		Assertions.assertThat(result).containsExactly("a:1", "b:2");
+	}
+
+	@Test
 	public void mapAndSort() {
 		List<String> test = Arrays.asList("3", "1", "2");
 		List<Integer> result = ListTool.mapAndSort(test, s -> Integer.parseInt(s));
@@ -132,13 +139,6 @@ public class ListToolU {
 		List<String> test = Arrays.asList("1:2", "3:4");
 		List<String> result = ListTool.mapAndMerge(test, s -> Arrays.asList(s.split(":")));
 		Assertions.assertThat(result).containsExactly("1", "2", "3", "4");
-	}
-
-	@Test
-	public void mapMap() {
-		Map<String, Integer> map = MapTool.of("a", 1, "b", 2);
-		List<String> result = ListTool.map(map, (k, v) -> k + ":" + v);
-		Assertions.assertThat(result).containsExactly("a:1", "b:2");
 	}
 
 	@Test

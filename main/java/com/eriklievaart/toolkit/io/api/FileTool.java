@@ -27,6 +27,15 @@ public class FileTool {
 		NIO_OPTIONS[1] = LinkOption.NOFOLLOW_LINKS;
 	}
 
+	public static boolean createNewFile(File file) {
+		try {
+			file.getParentFile().mkdirs();
+			return file.createNewFile();
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
 	public static FileInputStream toInputStream(File file) {
 		try {
 			return new FileInputStream(file);
