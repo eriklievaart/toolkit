@@ -131,6 +131,20 @@ public class CharIteratorU {
 		Check.isFalse(iter.hasLookaheadNotIn('b', 'a'));
 	}
 
+	@Test
+	public void lookaheadStartsWith() {
+		CharIterator iterator = new CharIterator("112233");
+		iterator.skip();
+		Check.isTrue(iterator.lookaheadStartsWith("122"));
+		Check.isFalse(iterator.lookaheadStartsWith("12234"));
+	}
+
+	@Test
+	public void lookaheadStartsOutOfBounds() {
+		Check.isTrue(new CharIterator("12").lookaheadStartsWith("12"));
+		Check.isFalse(new CharIterator("12").lookaheadStartsWith("123"));
+	}
+
 	@Test(expected = AssertionException.class)
 	public void getLookbackFailure() {
 		CharIterator iter = new CharIterator("a");
@@ -152,6 +166,36 @@ public class CharIteratorU {
 		CharIterator iter = new CharIterator("a");
 		iter.next();
 		iter.next();
+	}
+
+	@Test
+	public void skip() {
+		CharIterator iter = new CharIterator("12345678");
+
+		iter.skip(4);
+		Check.isEqual(iter.getLookahead(), '5');
+
+		iter.skip();
+		Check.isEqual(iter.getLookahead(), '6');
+	}
+
+	@Test
+	public void skipWhitespace() {
+		CharIterator iter = new CharIterator("  \t\n  1234");
+
+		iter.skipWhitespace();
+		Check.isEqual(iter.getLookahead(), '1');
+
+		iter.skipWhitespace();
+		Check.isEqual(iter.getLookahead(), '1');
+	}
+
+	@Test
+	public void skipWhitespaceEmpty() {
+		CharIterator iter = new CharIterator("1");
+		iter.next();
+		iter.skipWhitespace();
+		Check.isEqual(iter.getLookbehind(), '1');
 	}
 
 	@Test
@@ -218,8 +262,29 @@ public class CharIteratorU {
 	}
 
 	@Test
+	public void hasNext() {
+		CharIterator iter = new CharIterator("a");
+		Check.isTrue(iter.hasNext());
+		iter.next();
+		Check.isFalse(iter.hasNext());
+	}
+
+	@Test
 	public void hasNextEmpty() {
 		Check.isFalse(new CharIterator("").hasNext());
+	}
+
+	@Test
+	public void hasPreviousEmpty() {
+		Check.isFalse(new CharIterator("").hasPrevious());
+	}
+
+	@Test
+	public void hasPrevious() {
+		CharIterator iter = new CharIterator("a");
+		Check.isFalse(iter.hasPrevious());
+		iter.next();
+		Check.isTrue(iter.hasPrevious());
 	}
 
 	@Test
@@ -256,26 +321,5 @@ public class CharIteratorU {
 	public void findNone() {
 		CharIterator iterator = new CharIterator("123456789");
 		Check.isFalse(iterator.find("98", new StringBuilderWrapper()));
-	}
-
-	@Test
-	public void hasNext() {
-		CharIterator iter = new CharIterator("a");
-		Check.isTrue(iter.hasNext());
-		iter.next();
-		Check.isFalse(iter.hasNext());
-	}
-
-	@Test
-	public void hasPreviousEmpty() {
-		Check.isFalse(new CharIterator("").hasPrevious());
-	}
-
-	@Test
-	public void hasPrevious() {
-		CharIterator iter = new CharIterator("a");
-		Check.isFalse(iter.hasPrevious());
-		iter.next();
-		Check.isTrue(iter.hasPrevious());
 	}
 }

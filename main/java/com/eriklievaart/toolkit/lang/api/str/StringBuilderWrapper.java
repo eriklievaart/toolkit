@@ -112,6 +112,13 @@ public class StringBuilderWrapper {
 		return this;
 	}
 
+	public StringBuilderWrapper appendIf(boolean test, Object object) {
+		if (test) {
+			append(object);
+		}
+		return this;
+	}
+
 	public StringBuilderWrapper appendLine() {
 		builder.append("\n");
 		return this;

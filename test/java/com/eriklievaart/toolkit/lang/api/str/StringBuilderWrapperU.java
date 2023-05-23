@@ -133,6 +133,14 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void appendIf() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.appendIf(true, "true");
+		sbw.appendIf(false, "false");
+		Check.isEqual(sbw.toString(), "true");
+	}
+
+	@Test
 	public void appendLineNoArgs() {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.appendLine();

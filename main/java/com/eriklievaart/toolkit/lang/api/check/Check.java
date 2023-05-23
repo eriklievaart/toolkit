@@ -2,9 +2,11 @@ package com.eriklievaart.toolkit.lang.api.check;
 
 import java.lang.reflect.Array;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.Obj;
+import com.eriklievaart.toolkit.lang.api.ToString;
 import com.eriklievaart.toolkit.lang.api.pattern.PatternTool;
 import com.eriklievaart.toolkit.lang.api.str.Str;
 
@@ -165,7 +167,13 @@ public class Check {
 	private static <E> void isArrayEqual(final E actual, final E expected) {
 		int el = Array.getLength(expected);
 		int al = Array.getLength(actual);
-		Check.isEqual(al, el, "Expected array length $, but was $ -> $", el, al);
+
+		Check.isEqual(al, el, "Expected array length $, but was $ -> $", el, al, new Supplier<String>() {
+			@Override
+			public String get() {
+				return ToString.object(actual);
+			}
+		});
 		for (int i = 0; i < el; i++) {
 			Object ai = Array.get(actual, i);
 			Object ei = Array.get(expected, i);

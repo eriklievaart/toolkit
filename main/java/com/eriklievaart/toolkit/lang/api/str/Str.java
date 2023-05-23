@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.eriklievaart.toolkit.lang.api.NullSafeComparator;
+import com.eriklievaart.toolkit.lang.api.ToString;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.collection.FromCollection;
 import com.eriklievaart.toolkit.lang.api.collection.ListTool;
@@ -52,11 +53,11 @@ public class Str {
 
 		for (char c : format.toCharArray()) {
 			if (c == '%') {
-				builder.append(quote(iter.next()));
+				builder.append(quote(ToString.object(iter.next())));
 				continue;
 			}
 			if (c == '$') {
-				builder.append(iter.next());
+				builder.append(ToString.object(iter.next()));
 				continue;
 			}
 			builder.append(c);

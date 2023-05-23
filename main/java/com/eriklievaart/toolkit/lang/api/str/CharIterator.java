@@ -92,6 +92,12 @@ public class CharIterator {
 		index += s;
 	}
 
+	public void skipWhitespace() {
+		while (hasLookahead(' ', '\t', '\r', '\n')) {
+			skip();
+		}
+	}
+
 	/**
 	 * Returns true iff there is a lookbehind and it is one of the allowed characters.
 	 */
@@ -139,6 +145,18 @@ public class CharIterator {
 	public char getLookbehind() {
 		Check.isTrue(index > start, "No lookback available at index %", index);
 		return chars.charAt(index - 1);
+	}
+
+	public boolean lookaheadStartsWith(CharSequence query) {
+		if (query.length() > chars.length() - index) {
+			return false;
+		}
+		for (int i = 0; i < query.length(); i++) {
+			if (chars.charAt(index + i) != query.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public char previous() {

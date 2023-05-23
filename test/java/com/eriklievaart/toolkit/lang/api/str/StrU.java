@@ -1,6 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.str;
 
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -120,6 +121,17 @@ public class StrU {
 		Check.isEqual(Str.sub("replace % with magic", "quoted"), "replace `quoted` with magic");
 		Check.isEqual(Str.sub("Black holes really suck...", new Object[] {}), "Black holes really suck...");
 		Check.isEqual(Str.sub("nothing to do"), "nothing to do");
+	}
+
+	@Test
+	public void subSupplier() {
+		String actual = Str.sub("$", new Supplier<String>() {
+			@Override
+			public String get() {
+				return "abc";
+			}
+		});
+		Check.isEqual(actual, "abc");
 	}
 
 	@Test
