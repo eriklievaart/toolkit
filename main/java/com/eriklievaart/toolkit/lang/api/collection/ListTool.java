@@ -150,6 +150,16 @@ public class ListTool {
 	}
 
 	/**
+	 * Partition a list into two lists using a predicate.
+	 *
+	 * @param predicate
+	 *            elements that pass the predicate end up in the first list.
+	 */
+	public static <E> Map<Boolean, List<E>> partition(List<E> list, Predicate<E> predicate) {
+		return list.stream().collect(Collectors.partitioningBy(predicate));
+	}
+
+	/**
 	 * Add all of the specified elements to the specified List.
 	 */
 	public static <E> void addAll(final List<E> list, final E[] elements) {
@@ -264,5 +274,13 @@ public class ListTool {
 			out.add(copy.remove(random.nextInt(copy.size())));
 		}
 		return out;
+	}
+
+	public static <E> List<E> merge(List<E>... lists) {
+		List<E> result = NewCollection.list();
+		for (List<E> list : lists) {
+			result.addAll(list);
+		}
+		return result;
 	}
 }

@@ -13,6 +13,24 @@ import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 public class ListToolU {
 
 	@Test
+	public void lookupMin() {
+		List<String> test = Arrays.asList("1", "3", "5");
+		Check.isEqual(ListTool.lookup(test, "0"), "1");
+	}
+
+	@Test
+	public void lookupMiddle() {
+		List<String> test = Arrays.asList("1", "3", "5");
+		Check.isEqual(ListTool.lookup(test, "2"), "3");
+	}
+
+	@Test
+	public void lookupMax() {
+		List<String> test = Arrays.asList("1", "3", "5");
+		Check.isNull(ListTool.lookup(test, "6"));
+	}
+
+	@Test
 	public void equalsInAnyOrder() {
 		Check.isTrue(ListTool.equalsInAnyOrder(Arrays.asList(4, 3, 2, 1), Arrays.asList(1, 2, 3, 4)));
 		Check.isTrue(ListTool.equalsInAnyOrder(Arrays.asList(4, 3, 2, 1), Arrays.asList(4, 3, 2, 1)));
@@ -142,6 +160,14 @@ public class ListToolU {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
+	public void merge() {
+		List<Integer> first = ListTool.of(1, 2);
+		List<Integer> second = ListTool.of(3, 4);
+		Assertions.assertThat(ListTool.merge(first, second)).contains(1, 2, 3, 4);
+	}
+
+	@Test
 	public void subList() {
 		List<String> test = Arrays.asList("1", "2", "3");
 		Check.isEqual(ListTool.subList(test, 2), Arrays.asList("3"));
@@ -155,6 +181,14 @@ public class ListToolU {
 		Assertions.assertThat(ListTool.subList(test, 3, -1)).isEqualTo(Arrays.asList());
 		Assertions.assertThat(ListTool.subList(test, 0, 2)).isEqualTo(Arrays.asList("1", "2", "3"));
 		Assertions.assertThat(ListTool.subList(test, 0, 99)).isEqualTo(Arrays.asList("1", "2", "3"));
+	}
+
+	@Test
+	public void partition() {
+		List<Integer> data = Arrays.asList(0, 1, 2, 3, 4, 5);
+		Map<Boolean, List<Integer>> map = ListTool.partition(data, i -> i % 2 == 0);
+		Assertions.assertThat(map.get(true)).containsExactly(0, 2, 4);
+		Assertions.assertThat(map.get(false)).containsExactly(1, 3, 5);
 	}
 
 	@Test
@@ -173,23 +207,5 @@ public class ListToolU {
 	public void limitSizeBorderCaseSmaller() {
 		List<Integer> test = Arrays.asList(1, 2);
 		Assertions.assertThat(ListTool.limitSize(test, 3)).containsExactly(1, 2);
-	}
-
-	@Test
-	public void lookupMin() {
-		List<String> test = Arrays.asList("1", "3", "5");
-		Check.isEqual(ListTool.lookup(test, "0"), "1");
-	}
-
-	@Test
-	public void lookupMiddle() {
-		List<String> test = Arrays.asList("1", "3", "5");
-		Check.isEqual(ListTool.lookup(test, "2"), "3");
-	}
-
-	@Test
-	public void lookupMax() {
-		List<String> test = Arrays.asList("1", "3", "5");
-		Check.isNull(ListTool.lookup(test, "6"));
 	}
 }

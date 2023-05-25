@@ -12,7 +12,7 @@ public class SimpleFormatter implements Formatter {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(SimpleLevelFormat.getLevelString(record.getLevel())).append(" ");
-		builder.append(getLoggerName(record)).append("    ");
+		builder.append(rightPad(getLoggerName(record)));
 		builder.append(record.getMessage());
 
 		if (record.getThrown() != null) {
@@ -21,11 +21,15 @@ public class SimpleFormatter implements Formatter {
 		return builder.toString();
 	}
 
+	private static String rightPad(String arg) {
+		return String.format("%-26s ", arg);
+	}
+
 	private String getLoggerName(LogRecord record) {
 		if (record.getLoggerName() == null) {
 			return "<null>";
 		} else {
-			return record.getLoggerName().replaceFirst("^com[.]eriklievaart[.]", "~");
+			return record.getLoggerName().replaceFirst("^com[.]eriklievaart[.].*[.]", "");
 		}
 	}
 }
