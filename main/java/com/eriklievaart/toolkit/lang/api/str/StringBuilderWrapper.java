@@ -82,6 +82,12 @@ public class StringBuilderWrapper {
 		return this;
 	}
 
+	public StringBuilderWrapper replaceChar(int i, String replacement) {
+		int index = translate(i);
+		builder.replace(index, index + 1, replacement);
+		return this;
+	}
+
 	public String deleteAt(int index, int length) {
 		String delete = builder.substring(index, index + length);
 		builder.delete(index, index + length);

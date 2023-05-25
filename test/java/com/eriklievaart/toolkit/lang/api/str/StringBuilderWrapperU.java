@@ -95,21 +95,16 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
-	public void endsWith() {
+	public void deleteLast() {
 		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
-		Check.isTrue(testable.endsWith("lo"));
-		Check.isFalse(testable.endsWith("ld"));
+		testable.deleteLast(1);
+		Check.isEqual(testable.toString(), "hell");
 
-		testable.append(" world");
-		Check.isFalse(testable.endsWith("lo"));
-		Check.isTrue(testable.endsWith("ld"));
-	}
+		testable.deleteLast(3);
+		Check.isEqual(testable.toString(), "h");
 
-	@Test
-	public void endsWithBorderCases() {
-		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
-		Check.isTrue(testable.endsWith("hello"));
-		Check.isFalse(testable.endsWith("hello world"));
+		testable.deleteLast(1);
+		Check.isEqual(testable.toString(), "");
 	}
 
 	@Test
@@ -124,16 +119,14 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
-	public void deleteLast() {
-		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
-		testable.deleteLast(1);
-		Check.isEqual(testable.toString(), "hell");
+	public void replaceCharWithString() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("01234");
+		testable.replaceChar(-5, "_");
+		testable.replaceChar(-1, "_");
+		Check.isEqual(testable.toString(), "_123_");
 
-		testable.deleteLast(3);
-		Check.isEqual(testable.toString(), "h");
-
-		testable.deleteLast(1);
-		Check.isEqual(testable.toString(), "");
+		testable.replaceChar(2, "abc");
+		Check.isEqual(testable.toString(), "_1abc3_");
 	}
 
 	@Test
@@ -299,5 +292,23 @@ public class StringBuilderWrapperU {
 		Check.isTrue(new StringBuilderWrapper(" \r\n").isBlank());
 		Check.isFalse(new StringBuilderWrapper("n").isBlank());
 		Check.isFalse(new StringBuilderWrapper("data").isBlank());
+	}
+
+	@Test
+	public void endsWith() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
+		Check.isTrue(testable.endsWith("lo"));
+		Check.isFalse(testable.endsWith("ld"));
+
+		testable.append(" world");
+		Check.isFalse(testable.endsWith("lo"));
+		Check.isTrue(testable.endsWith("ld"));
+	}
+
+	@Test
+	public void endsWithBorderCases() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("hello");
+		Check.isTrue(testable.endsWith("hello"));
+		Check.isFalse(testable.endsWith("hello world"));
 	}
 }
