@@ -3,19 +3,21 @@ package com.eriklievaart.toolkit.logging.api.format;
 import java.util.logging.LogRecord;
 
 import com.eriklievaart.toolkit.lang.api.ThrowableTool;
+import com.eriklievaart.toolkit.lang.api.str.StringBuilderWrapper;
 import com.eriklievaart.toolkit.logging.api.Formatter;
 
 public class SimpleFormatter implements Formatter {
 
 	@Override
 	public String format(LogRecord record) {
-		StringBuilder builder = new StringBuilder();
+		StringBuilderWrapper builder = new StringBuilderWrapper();
 
 		builder.append(SimpleLevelFormat.getLevelString(record.getLevel())).append(" ");
 		builder.append(rightPad(formatLoggerName(record.getLoggerName())));
 		builder.append(record.getMessage());
 
 		if (record.getThrown() != null) {
+			builder.appendLine().appendLine();
 			ThrowableTool.append(record.getThrown(), builder);
 		}
 		return builder.toString();

@@ -15,20 +15,20 @@ public class ThrowableTool {
 	}
 
 	public static String toString(Throwable t) {
-		StringBuilder builder = new StringBuilder();
+		StringBuilderWrapper builder = new StringBuilderWrapper();
 		append(t, builder);
 		return builder.toString();
 	}
 
-	public static void append(Throwable t, StringBuilder builder) {
+	public static void append(Throwable t, StringBuilderWrapper builder) {
 		if (t == null) {
 			builder.append("<null>");
 			return;
 		}
-		StringBuilderWrapper sbw = new StringBuilderWrapper(builder);
-		sbw.appendLine("    ", t.getClass().getCanonicalName(), " => ", t.getMessage());
-		appendStackTraceElements(t, sbw);
-		appendCause(t, sbw);
+		builder.appendLine(t.getMessage()).appendLine();
+		builder.appendLine(t.getClass().getCanonicalName());
+		appendStackTraceElements(t, builder);
+		appendCause(t, builder);
 	}
 
 	private static void appendCause(Throwable t, StringBuilderWrapper sbw) {

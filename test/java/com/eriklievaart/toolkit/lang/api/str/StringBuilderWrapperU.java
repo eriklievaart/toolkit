@@ -2,6 +2,7 @@ package com.eriklievaart.toolkit.lang.api.str;
 
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
@@ -70,6 +71,12 @@ public class StringBuilderWrapperU {
 	public void getTrimmed() {
 		StringBuilderWrapper testable = new StringBuilderWrapper(" \tabc \t");
 		Check.isEqual(testable.getTrimmed(), "abc");
+	}
+
+	@Test
+	public void splitLines() {
+		StringBuilderWrapper testable = new StringBuilderWrapper("a\n\nb\r\nc");
+		Assertions.assertThat(testable.splitLines()).containsExactly("a", "", "b", "c");
 	}
 
 	@Test

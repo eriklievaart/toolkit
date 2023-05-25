@@ -263,6 +263,10 @@ public class StringBuilderWrapper {
 		return toString().trim();
 	}
 
+	public String[] splitLines() {
+		return Str.splitLines(builder.toString());
+	}
+
 	@Override
 	public String toString() {
 		return builder.toString();

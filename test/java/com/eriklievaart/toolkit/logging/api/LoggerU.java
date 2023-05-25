@@ -45,7 +45,8 @@ public class LoggerU {
 
 		CheckStr.contains(logged, getClass().getName()); // current file should be in stack trace
 		CheckStr.contains(logged, "ERROR");
-		CheckStr.contains(logged, "java.lang.Exception => #oops#");
+		CheckStr.contains(logged, "java.lang.Exception");
+		CheckStr.contains(logged, "#oops#");
 	}
 
 	@Test
@@ -55,8 +56,10 @@ public class LoggerU {
 		String logged = logRecord(record);
 
 		CheckStr.contains(logged, getClass().getName()); // current file should be in stack trace
-		CheckStr.contains(logged, "java.lang.Exception => #parent#");
-		CheckStr.contains(logged, "java.lang.Error => #child#");
+		CheckStr.contains(logged, "java.lang.Exception");
+		CheckStr.contains(logged, "#parent#");
+		CheckStr.contains(logged, "java.lang.Error");
+		CheckStr.contains(logged, "#child#");
 	}
 
 	@Test
