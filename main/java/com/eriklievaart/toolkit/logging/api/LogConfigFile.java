@@ -29,13 +29,13 @@ public class LogConfigFile {
 				return Optional.of(file);
 			}
 		}
-		Console.println("\nmissing log config file!\n$ $\n", directory, locations);
+		Console.println("\nWARN toolkit-logging.LogConfigFile missing file!\n$ $\n", directory, locations);
 		return Optional.empty();
 	}
 
 	public static void load(File file) {
 		CheckFile.isFile(file);
-		System.out.println("using log config file: " + file);
+		System.out.println("INFO toolkit-logging.LogConfigFile file=" + file);
 		try (InputStream is = new FileInputStream(file)) {
 			load(is);
 

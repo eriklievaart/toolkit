@@ -40,7 +40,7 @@ public class Activator implements BundleActivator {
 
 	// example format: dd-MM-yyyy HH:mm:ss
 	private void installFormat(String format) {
-		System.out.println("INFO toolkit-logging.Activator DatedFormatted:" + format);
+		System.out.println("INFO toolkit-logging.Activator DatedFormatted: " + format);
 		LogConfig.setDefaultFormatter(new DatedFormatter(format, new SimpleFormatter()));
 	}
 
@@ -52,7 +52,6 @@ public class Activator implements BundleActivator {
 	}
 
 	private void loadConfigFile(String path) {
-		System.out.println("INFO toolkit-logging.Activator config file = " + path);
 		File file = new File(path);
 		CheckFile.isFile(file);
 		LogConfigFile.load(file);
