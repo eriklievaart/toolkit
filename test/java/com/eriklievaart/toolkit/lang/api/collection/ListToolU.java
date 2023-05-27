@@ -13,6 +13,23 @@ import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
 public class ListToolU {
 
 	@Test
+	public void push() {
+		List<String> test = NewCollection.list();
+		ListTool.push("1", test);
+		ListTool.push("2", test);
+		ListTool.push("3", test);
+		Assertions.assertThat(test).containsExactly("1", "2", "3");
+	}
+
+	@Test
+	public void pop() {
+		List<String> test = ListTool.of("1", "3", "5");
+		Check.isEqual(ListTool.pop(test), "5");
+		Check.isEqual(ListTool.pop(test), "3");
+		Check.isEqual(ListTool.pop(test), "1");
+	}
+
+	@Test
 	public void lookupMin() {
 		List<String> test = Arrays.asList("1", "3", "5");
 		Check.isEqual(ListTool.lookup(test, "0"), "1");

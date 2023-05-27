@@ -90,6 +90,27 @@ public class CharIteratorU {
 	}
 
 	@Test
+	public void hasLookbehindNotIn() {
+		CharIterator iter = new CharIterator("ab");
+		Check.isFalse(iter.hasLookbehindNotIn('a'));
+		Check.isFalse(iter.hasLookbehindNotIn('b'));
+		Check.isFalse(iter.hasLookbehindNotIn('a', 'b'));
+		Check.isFalse(iter.hasLookbehindNotIn('b', 'a'));
+
+		iter.next();
+		Check.isFalse(iter.hasLookbehindNotIn('a'));
+		Check.isTrue(iter.hasLookbehindNotIn('b'));
+		Check.isFalse(iter.hasLookbehindNotIn('a', 'b'));
+		Check.isFalse(iter.hasLookbehindNotIn('b', 'a'));
+
+		iter.next();
+		Check.isTrue(iter.hasLookbehindNotIn('a'));
+		Check.isFalse(iter.hasLookbehindNotIn('b'));
+		Check.isFalse(iter.hasLookbehindNotIn('a', 'b'));
+		Check.isFalse(iter.hasLookbehindNotIn('b', 'a'));
+	}
+
+	@Test
 	public void hasLookahead() {
 		CharIterator iter = new CharIterator("ab");
 		Check.isTrue(iter.hasLookahead('a'));
@@ -183,13 +204,13 @@ public class CharIteratorU {
 	public void skipIfLookahead() {
 		CharIterator iter = new CharIterator("1234");
 
-		iter.skipIfLookahead('1', '2');
+		Check.isTrue(iter.skipIfLookahead('1', '2'));
 		Check.isEqual(iter.getLookahead(), '2');
 
-		iter.skipIfLookahead('1', '2');
+		Check.isTrue(iter.skipIfLookahead('1', '2'));
 		Check.isEqual(iter.getLookahead(), '3');
 
-		iter.skipIfLookahead('1', '2');
+		Check.isFalse(iter.skipIfLookahead('1', '2'));
 		Check.isEqual(iter.getLookahead(), '3');
 	}
 
@@ -259,6 +280,17 @@ public class CharIteratorU {
 		CharIterator iter = new CharIterator("ab@cd");
 		Check.isEqual(iter.extractUntilLookahead('c', '@'), "ab");
 		Check.isTrue(iter.hasLookahead('@'));
+	}
+
+	@Test
+	public void extractUntilRequired() {
+		CharIterator iter = new CharIterator("ab@cd");
+		Check.isEqual(iter.extractUntilRequired('@'), "ab");
+		Check.isTrue(iter.hasLookahead('@'));
+
+		BombSquad.diffuse("expecting: [/]", () -> {
+			iter.extractUntilRequired('/');
+		});
 	}
 
 	@Test

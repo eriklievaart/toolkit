@@ -29,6 +29,14 @@ public class ListTool {
 	private ListTool() {
 	}
 
+	public static <E> void push(E e, List<E> list) {
+		list.add(e);
+	}
+
+	public static <E> E pop(List<E> list) {
+		return list.remove(list.size() - 1);
+	}
+
 	public static <E> boolean equalsInAnyOrder(List<E> a, List<E> b) {
 		if (a.size() != b.size()) {
 			return false;

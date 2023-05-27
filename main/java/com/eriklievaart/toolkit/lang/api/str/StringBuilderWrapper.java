@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.eriklievaart.toolkit.lang.api.check.Check;
 
-public class StringBuilderWrapper {
+public class StringBuilderWrapper implements CharSequence {
 
 	private final StringBuilder builder;
 
@@ -13,7 +13,7 @@ public class StringBuilderWrapper {
 		builder = new StringBuilder();
 	}
 
-	public StringBuilderWrapper(String value) {
+	public StringBuilderWrapper(CharSequence value) {
 		builder = new StringBuilder(value);
 	}
 
@@ -25,13 +25,10 @@ public class StringBuilderWrapper {
 		builder = new StringBuilder(Str.sub(format, args));
 	}
 
-	public StringBuilder getStringBuilder() {
-		return builder;
-	}
-
 	/**
 	 * Get the char at index i, use negative numbers to get indexes relative to the end of the string.
 	 */
+	@Override
 	public char charAt(int i) {
 		return builder.charAt(translate(i));
 	}
@@ -154,14 +151,15 @@ public class StringBuilderWrapper {
 	}
 
 	public StringBuilderWrapper appendTag(String element, Map<String, ? extends Object> attributes) {
-		builder.append("<").append(element);
-		if (attributes != null) {
-			attributes.forEach((k, v) -> {
-				builder.append(' ').append(k).append("=\"").append(v).append("\"");
-			});
-		}
-		builder.append("/>");
+		appendTagOpen(element, attributes);
+		insert(-1, "/");
 		return this;
+	}
+
+	public void appendTag(String element, Map<String, ?> attributes, String body) {
+		appendTagOpen(element, attributes);
+		append(body);
+		appendTagClose(element);
 	}
 
 	public StringBuilderWrapper appendTagOpen(String element) {
@@ -235,6 +233,7 @@ public class StringBuilderWrapper {
 		return !isBlank();
 	}
 
+	@Override
 	public int length() {
 		return builder.length();
 	}
@@ -265,6 +264,11 @@ public class StringBuilderWrapper {
 
 	public String[] splitLines() {
 		return Str.splitLines(builder.toString());
+	}
+
+	@Override
+	public CharSequence subSequence(int start, int end) {
+		return new StringBuilderWrapper(builder.subSequence(start, end));
 	}
 
 	@Override

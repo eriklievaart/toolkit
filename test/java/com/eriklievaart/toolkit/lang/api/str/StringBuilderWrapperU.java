@@ -210,6 +210,13 @@ public class StringBuilderWrapperU {
 	}
 
 	@Test
+	public void appendTagWithAttributesAndContents() {
+		StringBuilderWrapper sbw = new StringBuilderWrapper();
+		sbw.appendTag("a", MapTool.of("href", "/home"), "go home");
+		CheckStr.isEqual(sbw.toString(), "<a href=\"/home\">go home</a>");
+	}
+
+	@Test
 	public void appendTagOpen() {
 		StringBuilderWrapper sbw = new StringBuilderWrapper();
 		sbw.appendTagOpen("p");

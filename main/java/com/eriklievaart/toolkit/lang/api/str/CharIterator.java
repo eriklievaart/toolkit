@@ -95,10 +95,12 @@ public class CharIterator {
 		skip();
 	}
 
-	public void skipIfLookahead(char... c) {
+	public boolean skipIfLookahead(char... c) {
 		if (hasLookahead(c)) {
 			skip();
+			return true;
 		}
+		return false;
 	}
 
 	public void skipWhitespace() {
@@ -121,6 +123,13 @@ public class CharIterator {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Returns true iff there is a lookbehind and it is NOT one of the allowed characters.
+	 */
+	public boolean hasLookbehindNotIn(char... c) {
+		return hasPrevious() && !hasLookbehind(c);
 	}
 
 	/**
@@ -191,6 +200,12 @@ public class CharIterator {
 		}
 	}
 
+	public String extractUntilRequired(char... c) {
+		String result = extractUntilLookahead(c);
+		requireLookahead(c);
+		return result;
+	}
+
 	public String extractUpToRequired(char... c) {
 		StringBuilderWrapper builder = new StringBuilderWrapper();
 		appendUpToRequired(builder, c);
@@ -199,8 +214,15 @@ public class CharIterator {
 
 	public void appendUpToRequired(StringBuilderWrapper builder, char... c) {
 		appendUntilLookahead(builder, c);
-		Check.isTrue(hasLookahead(c), "expecting: $", c);
+		requireLookahead(c);
 		builder.append(next());
+	}
+
+	/**
+	 * throws AssertionException if the lookahead is not one of the passed characters.
+	 */
+	public void requireLookahead(char... c) {
+		Check.isTrue(hasLookahead(c), "expecting: $", c);
 	}
 
 	/**
