@@ -1,5 +1,7 @@
 package com.eriklievaart.toolkit.lang.api.image;
 
+import com.eriklievaart.toolkit.lang.api.ToString;
+
 public class Bounds {
 
 	private final int x;
@@ -28,5 +30,10 @@ public class Bounds {
 
 	public int getHeight() {
 		return height;
+	}
+
+	@Override
+	public String toString() {
+		return ToString.simple(this, "$[$,$,$,$]", x, y, width, height);
 	}
 }
