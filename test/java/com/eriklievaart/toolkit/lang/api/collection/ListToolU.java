@@ -67,6 +67,14 @@ public class ListToolU {
 	}
 
 	@Test
+	public void sortedCopyWithComparator() {
+		List<Integer> original = Arrays.asList(3, 1, 2);
+
+		List<Integer> reversed = ListTool.sortedCopy(original, (a, b) -> b - a);
+		Assertions.assertThat(reversed).containsExactly(3, 2, 1);
+	}
+
+	@Test
 	public void reverseCopy() {
 		List<Integer> original = Arrays.asList(3, 1, 2);
 		List<Integer> reversed = ListTool.reversedCopy(original);
@@ -153,6 +161,13 @@ public class ListToolU {
 		List<String> test = Arrays.asList("1", "2", "3");
 		List<Integer> result = ListTool.map(test, s -> Integer.parseInt(s));
 		Assertions.assertThat(result).containsExactly(1, 2, 3);
+	}
+
+	@Test
+	public void map2() {
+		List<String> test = Arrays.asList("1", "2", "3");
+		List<Integer> result = ListTool.map2(test, Integer::parseInt, e -> e + 1);
+		Assertions.assertThat(result).containsExactly(2, 3, 4);
 	}
 
 	@Test

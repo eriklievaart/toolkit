@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,14 @@ public class ListTool {
 
 	public static <E, F> List<F> map(Collection<E> c, Function<E, F> function) {
 		return c.stream().map(function).collect(Collectors.toList());
+	}
+
+	public static <E, F, G> List<G> map2(E[] c, Function<E, F> a, Function<F, G> b) {
+		return map2(Arrays.asList(c), a, b);
+	}
+
+	public static <E, F, G> List<G> map2(Collection<E> c, Function<E, F> a, Function<F, G> b) {
+		return c.stream().map(a).map(b).collect(Collectors.toList());
 	}
 
 	public static <E, F extends Comparable<F>> List<F> mapAndSort(E[] c, Function<E, F> function) {
@@ -187,6 +196,15 @@ public class ListTool {
 	public static <E extends Comparable<? super E>> List<E> sortedCopy(final Collection<E> original) {
 		List<E> copy = new ArrayList<>(original);
 		Collections.sort(copy);
+		return copy;
+	}
+
+	/**
+	 * Return a sorted copy of a list. Uses custom comparator.
+	 */
+	public static <E> List<E> sortedCopy(final Collection<E> original, Comparator<? super E> comparator) {
+		List<E> copy = new ArrayList<>(original);
+		Collections.sort(copy, comparator);
 		return copy;
 	}
 

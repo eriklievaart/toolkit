@@ -47,8 +47,11 @@ public class Activator implements BundleActivator {
 	private void loadConfigDir(String path) {
 		System.out.println("INFO toolkit-logging.Activator config dir = " + path);
 		File file = new File(path);
-		CheckFile.isDirectory(file);
-		LogConfigFile.initFromDirectory(file);
+		if (file.isDirectory()) {
+			LogConfigFile.initFromDirectory(file);
+		} else {
+			System.out.println("WARN toolkit-logging.Activator not a directory: " + file);
+		}
 	}
 
 	private void loadConfigFile(String path) {

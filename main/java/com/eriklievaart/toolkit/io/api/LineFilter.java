@@ -28,6 +28,11 @@ public class LineFilter {
 		lines = data.toArray(new String[] {});
 	}
 
+	public LineFilter(String[] data) {
+		Check.notNull(data);
+		lines = data;
+	}
+
 	public LineFilter(File file) throws RuntimeIOException {
 		this(FileTool.toString(file));
 	}
