@@ -148,12 +148,10 @@ public class MemoryFileU {
 
 		check.isDirectory("root/from");
 		check.isDirectory("root/to");
-		check.notExists("root/to/from");
 
 		copy.copyTo(to);
 		check.isDirectory("root/from");
 		check.isDirectory("root/to");
-		check.isDirectory("root/to/from");
 	}
 
 	@Test
@@ -174,8 +172,29 @@ public class MemoryFileU {
 		copy.copyTo(to);
 		check.isDirectory("root/from");
 		check.isDirectory("root/to");
-		check.isDirectory("root/to/from");
-		check.isFile("/root/to/from/nested", "nested");
+		check.isFile("/root/to/nested", "nested");
+	}
+
+	@Test
+	public void copySingleDirectoryWithChildNested() {
+		MemoryFileSystem fs = new MemoryFileSystem();
+		MemoryFileSystemCheck check = new MemoryFileSystemCheck(fs);
+
+		MemoryFile copy = fs.resolve("root/from");
+		MemoryFile nested = fs.resolve("root/from/dir/nested");
+		MemoryFile to = fs.resolve("root/to");
+		nested.writeString("nested");
+		to.mkdir();
+
+		check.isFile("/root/from/dir/nested", "nested");
+		check.isDirectory("root/to");
+		check.notExists("root/to/dir");
+
+		copy.copyTo(to);
+		check.isDirectory("root/from");
+		check.isDirectory("root/to");
+		check.isDirectory("root/to/dir");
+		check.isFile("/root/to/dir/nested", "nested");
 	}
 
 	@Test
@@ -187,7 +206,7 @@ public class MemoryFileU {
 		copy.mkdir();
 		to.createFile();
 
-		BombSquad.diffuse(RuntimeIOException.class, "Not a directory", () -> {
+		BombSquad.diffuse(RuntimeIOException.class, "cannot copy directory to file", () -> {
 			copy.copyTo(to);
 		});
 	}
@@ -295,7 +314,6 @@ public class MemoryFileU {
 		move.moveTo(to);
 		check.notExists("root/from");
 		check.isDirectory("root/to");
-		check.isDirectory("root/to/from");
 	}
 
 	@Test
@@ -316,8 +334,7 @@ public class MemoryFileU {
 		move.moveTo(to);
 		check.notExists("root/from");
 		check.isDirectory("root/to");
-		check.isDirectory("root/to/from");
-		check.isFile("/root/to/from/nested", "nested");
+		check.isFile("/root/to/nested", "nested");
 	}
 
 	@Test
@@ -329,7 +346,7 @@ public class MemoryFileU {
 		move.mkdir();
 		to.createFile();
 
-		BombSquad.diffuse(RuntimeIOException.class, "Not a directory", () -> {
+		BombSquad.diffuse(RuntimeIOException.class, "directory to file", () -> {
 			move.moveTo(to);
 		});
 	}

@@ -71,10 +71,10 @@ public class InstanceToolU {
 		Thread thread = new Thread();
 		thread.setPriority(4);
 		MethodWrapper method = InstanceTool.getMethodWrapper("getPriority", thread);
-		Check.isEqual(method.invoke(new Object[] {}), new Integer(4));
+		Check.isEqual(method.invoke(new Object[] {}), Integer.valueOf(4));
 
 		try {
-			Check.isEqual(method.invoke(new Object[] { 45 }), new Integer(4));
+			Check.isEqual(method.invoke(new Object[] { 45 }), Integer.valueOf(4));
 			throw new AssertionException("Should be impossible");
 		} catch (ReflectException e) {
 		}

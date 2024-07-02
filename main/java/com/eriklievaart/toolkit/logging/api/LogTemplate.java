@@ -214,7 +214,8 @@ public class LogTemplate {
 	}
 
 	private LogRecord createLogRecord(Level level, Object message) {
-		return createLogRecord(level, null, message);
+		Throwable t = message instanceof Throwable ? (Throwable) message : null;
+		return createLogRecord(level, t, message);
 	}
 
 	private LogRecord createLogRecord(Level level, Throwable thrown, Object message) {

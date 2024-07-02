@@ -17,6 +17,8 @@ public class DoubleConstructorU {
 		Check.isEqual(converter.convertToObject("1.0"), 1.0);
 		Check.isEqual(converter.convertToObject(".1"), 0.1);
 		Check.isEqual(converter.convertToObject("-1"), -1.0);
+		Check.isEqual(converter.convertToObject("1e3"), 1000.0);
+		Check.isEqual(converter.convertToObject("1.0e-14"), 1.0 / Math.pow(10, 14));
 	}
 
 	@Test(expected = ConversionException.class)

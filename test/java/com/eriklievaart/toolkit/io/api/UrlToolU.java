@@ -138,6 +138,17 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void getProtocolNull() {
+		Check.isEmpty(UrlTool.getProtocol(null));
+	}
+
+	@Test
+	public void getProtocolWindows() {
+		CheckStr.isEqual(UrlTool.getProtocol("file://c:/bin").get(), "file");
+		Check.isEmpty(UrlTool.getProtocol("c:/bin"));
+	}
+
+	@Test
 	public void getProtocolMissing() {
 		Check.isFalse(UrlTool.getProtocol("www.example.com").isPresent());
 	}
@@ -418,12 +429,28 @@ public class UrlToolU {
 	}
 
 	@Test
+	public void getPathNull() {
+		Check.isNull(UrlTool.getPath(null));
+	}
+
+	@Test
 	public void getPathWindows() {
 		Check.isEqual(UrlTool.getPath("file://c:/tmp"), "c:/tmp");
+		Check.isEqual(UrlTool.getPath("c:/tmp"), "c:/tmp");
 	}
 
 	@Test
 	public void getPathRelative() {
 		Check.isEqual(UrlTool.getPath("path/to/something"), "path/to/something");
+	}
+
+	@Test
+	public void isWindowsPath() {
+		Check.isTrue(UrlTool.isWindowsPath("c:/"));
+		Check.isTrue(UrlTool.isWindowsPath("c:\\"));
+		Check.isTrue(UrlTool.isWindowsPath("c:/tmp"));
+
+		Check.isFalse(UrlTool.isWindowsPath("file:///tmp"));
+		Check.isFalse(UrlTool.isWindowsPath("/tmp"));
 	}
 }

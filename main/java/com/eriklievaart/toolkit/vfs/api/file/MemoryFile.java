@@ -43,7 +43,7 @@ public class MemoryFile extends AbstractVirtualFile {
 
 	@Override
 	public OutputStream getOutputStream() {
-		onlyForFiles();
+		checkCanBeFile();
 		type = FileType.FILE;
 		return new ByteArrayOutputStream() {
 			@Override
@@ -62,15 +62,15 @@ public class MemoryFile extends AbstractVirtualFile {
 
 	@Override
 	public void writeString(String data) {
-		onlyForFiles();
 		createFile();
+		onlyForFiles();
 		super.writeString(data);
 		modified = System.currentTimeMillis();
 	}
 
 	@Override
 	public boolean createFile() {
-		Check.isTrue(type == FileType.UNKNOWN || type == FileType.FILE, "Already a directory $", path);
+		checkCanBeFile();
 		type = FileType.FILE;
 		modified = System.currentTimeMillis();
 		return true;
@@ -95,7 +95,7 @@ public class MemoryFile extends AbstractVirtualFile {
 
 	@Override
 	public boolean isFile() {
-		return type == FileType.UNKNOWN || type == FileType.FILE;
+		return type == FileType.FILE;
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public class MemoryFile extends AbstractVirtualFile {
 
 	@Override
 	public long length() {
-		return contents.length;
+		return contents == null ? 0 : contents.length;
 	}
 
 	private enum FileType {
@@ -182,5 +182,9 @@ public class MemoryFile extends AbstractVirtualFile {
 	@Override
 	public void setLastModified(long stamp) {
 		modified = stamp;
+	}
+
+	private void checkCanBeFile() {
+		Check.isTrue(type == FileType.UNKNOWN || type == FileType.FILE, "Already a directory $", path);
 	}
 }

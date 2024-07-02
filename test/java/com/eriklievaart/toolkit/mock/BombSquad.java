@@ -22,7 +22,7 @@ public class BombSquad {
 		} catch (Exception e) {
 			exploded = true;
 			if (!expected.isInstance(e)) {
-				throw new FormattedException("% not instanceof %; $", e, e.getClass(), expected, e.getMessage());
+				throw new FormattedException("\n% not instanceof\n%;\n $", e, e.getClass(), expected, e.getMessage());
 			}
 			consumer.accept((E) e);
 		}

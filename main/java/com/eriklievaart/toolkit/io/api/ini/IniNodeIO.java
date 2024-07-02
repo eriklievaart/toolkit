@@ -1,11 +1,14 @@
 package com.eriklievaart.toolkit.io.api.ini;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
 import com.eriklievaart.toolkit.io.api.FileTool;
-import com.eriklievaart.toolkit.io.api.StreamTool;
+import com.eriklievaart.toolkit.io.api.LineFilter;
+import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 
 public class IniNodeIO {
 
@@ -18,12 +21,15 @@ public class IniNodeIO {
 	}
 
 	public static List<IniNode> read(File file) {
-		List<String> lines = FileTool.readLines(file);
-		return new IniNodeParser().parse(lines);
+		try {
+			return read(new FileInputStream(file));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeIOException("unable to read file: " + file, e);
+		}
 	}
 
 	public static List<IniNode> read(InputStream is) {
-		List<String> lines = StreamTool.readLines(is);
+		List<String> lines = new LineFilter(is).eof().dropHash().list();
 		return new IniNodeParser().parse(lines);
 	}
 

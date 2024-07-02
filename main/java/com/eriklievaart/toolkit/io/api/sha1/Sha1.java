@@ -6,9 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
 
 import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.io.api.StreamTool;
@@ -42,15 +39,15 @@ public class Sha1 {
 
 	public static String hash(InputStream is) {
 		try (BufferedInputStream bis = new BufferedInputStream(is)) {
-			final MessageDigest messageDigest = getDigest();
+			final Sha1Digest digest = new Sha1Digest();
 			final byte[] buffer = new byte[1024];
 
 			int read = bis.read(buffer);
 			while (read != -1) {
-				messageDigest.update(buffer, 0, read);
+				digest.update(buffer, 0, read);
 				read = bis.read(buffer);
 			}
-			return convertHashToHex(messageDigest);
+			return digest.getHash();
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
 		}
@@ -58,40 +55,22 @@ public class Sha1 {
 
 	public static String sha1CopyAndHash(InputStream is, OutputStream os) {
 		try (BufferedInputStream bis = new BufferedInputStream(is)) {
-			final MessageDigest messageDigest = getDigest();
+			final Sha1Digest digest = new Sha1Digest();
 			final byte[] buffer = new byte[1024];
 
 			int read = bis.read(buffer);
 			while (read != -1) {
-				messageDigest.update(buffer, 0, read);
+				digest.update(buffer, 0, read);
 				os.write(buffer, 0, read);
 				read = bis.read(buffer);
 			}
-			return convertHashToHex(messageDigest);
+			return digest.getHash();
 
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
 
 		} finally {
 			StreamTool.close(os);
-		}
-	}
-
-	private static String convertHashToHex(final MessageDigest messageDigest) {
-		try (Formatter formatter = new Formatter()) {
-			for (final byte b : messageDigest.digest()) {
-				// Convert the byte to hex format
-				formatter.format("%02x", b);
-			}
-			return formatter.toString();
-		}
-	}
-
-	private static MessageDigest getDigest() throws IOException {
-		try {
-			return MessageDigest.getInstance("SHA1");
-		} catch (NoSuchAlgorithmException e) {
-			throw new IOException("Unable to create hash, no such algorithm", e);
 		}
 	}
 }

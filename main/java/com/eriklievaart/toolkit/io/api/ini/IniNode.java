@@ -2,7 +2,7 @@ package com.eriklievaart.toolkit.io.api.ini;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +22,7 @@ public class IniNode {
 	private final String identifier;
 	private int line = -1;
 
-	private Map<String, String> properties = new Hashtable<>();
+	private Map<String, String> properties = new LinkedHashMap<>();
 	private List<IniNode> children = new ArrayList<>();
 
 	public IniNode(String name) {
@@ -154,6 +154,10 @@ public class IniNode {
 		Check.notNull(value, "Value cannot be null for: " + key);
 		Check.isFalse(value.contains("\n"), "Property $.$ may not contain the newline character", name, key);
 		properties.put(key, value);
+	}
+
+	public void putAll(Map<String, String> map) {
+		map.forEach((key, value) -> setProperty(key, value));
 	}
 
 	public String deleteProperty(String key) {

@@ -6,9 +6,11 @@ import com.eriklievaart.toolkit.io.api.UrlTool;
 import com.eriklievaart.toolkit.lang.api.ToString;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
 import com.eriklievaart.toolkit.lang.api.str.Str;
+import com.eriklievaart.toolkit.logging.api.LogTemplate;
 import com.eriklievaart.toolkit.vfs.api.VirtualFileScanner;
 
 public abstract class AbstractVirtualFile implements VirtualFile, VirtualFileContent {
+	protected LogTemplate log = new LogTemplate(getClass());
 
 	@Override
 	public VirtualFileContent getContent() {
@@ -73,10 +75,14 @@ public abstract class AbstractVirtualFile implements VirtualFile, VirtualFileCon
 	}
 
 	private void copyDirectoryTo(VirtualFile to) {
-		VirtualFile dirTo = to.resolve(getName());
-		dirTo.mkdir();
+		RuntimeIOException.on(to.isFile(), "cannot copy directory to file");
+		to.mkdir();
 		for (VirtualFile child : getChildren()) {
-			child.copyTo(dirTo);
+			if (child.isDirectory()) {
+				child.copyTo(to.resolve(child.getName()));
+			} else {
+				child.copyTo(to);
+			}
 		}
 	}
 

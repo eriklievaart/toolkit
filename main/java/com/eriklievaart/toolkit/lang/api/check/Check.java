@@ -186,8 +186,12 @@ public class Check {
 	}
 
 	public static void isEmpty(Optional<?> optional) {
+		isEmpty(optional, "optional has value %", optional);
+	}
+
+	public static void isEmpty(Optional<?> optional, String format, Object... args) {
 		if (optional.isPresent()) {
-			throw new AssertionException("optional has value %", optional.get());
+			throw new AssertionException(format, args);
 		}
 	}
 }

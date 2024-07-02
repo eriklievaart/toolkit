@@ -23,18 +23,24 @@ public class MemoryFileSystem {
 		if (UrlTool.getPath(url).equals(ROOT)) {
 			return new MemoryFile(ROOT, this);
 		}
-		String head = "/" + UrlTool.getHead(path);
-		String tail = UrlTool.getTail(path);
-
-		MemoryFile current = roots.containsKey(head) ? roots.get(head) : new MemoryFile(head, this);
+		if (UrlTool.isWindowsPath(url) && !UrlTool.isWindowsPath(path)) {
+			path = url.substring(0, 2) + path;
+		}
+		String head = UrlTool.getHead(path);
+		String prefixSlash = head.matches("[a-zA-Z]:") ? head : "/" + head;
+		MemoryFile current = roots.containsKey(head) ? roots.get(head) : new MemoryFile(prefixSlash, this);
 		roots.put(head, current);
 
-		while (!Str.isBlank(tail)) {
-			head = UrlTool.getHead(tail);
-			tail = UrlTool.getTail(tail);
-			current = current.getOrCreateChild(head);
+		return appendPath(current, UrlTool.getTail(path));
+	}
+
+	private MemoryFile appendPath(MemoryFile root, String path) {
+		if (Str.isBlank(path)) {
+			return root;
 		}
-		return current;
+		String head = UrlTool.getHead(path);
+		String tail = UrlTool.getTail(path);
+		return appendPath(root.getOrCreateChild(head), tail);
 	}
 
 	List<MemoryFile> getRoots() {

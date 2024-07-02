@@ -85,11 +85,18 @@ public class UrlTool {
 	 * Get the path part of a URL. Example file:///tmp/file.ext => /tmp/file.ext
 	 */
 	public static String getPath(final String url) {
+		if (url == null || isWindowsPath(url)) {
+			return url; // windows path; e.g. c:/temp
+		}
 		String startsWithSlash = PatternTool.getGroup1("^[a-zA-Z]++:(?://)?(.*+)$", url);
 		if (startsWithSlash == null) {
 			return url;
 		}
 		return PatternTool.matches("/[a-zA-Z]:/.*+", startsWithSlash) ? startsWithSlash.substring(1) : startsWithSlash;
+	}
+
+	public static boolean isWindowsPath(String path) {
+		return path != null && path.matches("[a-zA-Z]:[/\\\\].*+");
 	}
 
 	/**
@@ -162,7 +169,7 @@ public class UrlTool {
 	}
 
 	/**
-	 * Append a child path to an URL. Ensures their is exactly one slash between the url and the child.
+	 * Append a child path to an URL. Ensures there is exactly one slash between the url and the child.
 	 */
 	public static String append(final String url, final String child) {
 		Check.notNull(url);
@@ -176,7 +183,7 @@ public class UrlTool {
 	 * the next one.
 	 */
 	public static String append(final String... paths) {
-		Check.notNull((Object) paths);
+		Check.notNull(paths);
 
 		String appended = Str.emptyOnNull(paths[0]);
 		for (int i = 1; i < paths.length; i++) {
@@ -206,7 +213,7 @@ public class UrlTool {
 	}
 
 	public static Optional<String> getProtocol(String url) {
-		if (!url.contains(":")) {
+		if (url == null || !url.contains(":") || url.indexOf(':') == 1) {
 			return Optional.empty();
 		}
 		String protocol = url.replaceFirst(":.*+", "").trim();
