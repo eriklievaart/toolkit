@@ -18,7 +18,7 @@ public class Sha1Digest {
 		digest.update(input, offset, len);
 	}
 
-	public String getHash() {
+	public String calculateHash() {
 		return convertHashToHex(digest);
 	}
 

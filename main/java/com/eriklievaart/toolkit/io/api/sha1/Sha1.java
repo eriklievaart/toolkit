@@ -47,7 +47,7 @@ public class Sha1 {
 				digest.update(buffer, 0, read);
 				read = bis.read(buffer);
 			}
-			return digest.getHash();
+			return digest.calculateHash();
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);
 		}
@@ -64,7 +64,7 @@ public class Sha1 {
 				os.write(buffer, 0, read);
 				read = bis.read(buffer);
 			}
-			return digest.getHash();
+			return digest.calculateHash();
 
 		} catch (IOException e) {
 			throw new RuntimeIOException(e);

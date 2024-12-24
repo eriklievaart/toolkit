@@ -12,6 +12,6 @@ public class Sha1DigestU {
 
 		byte[] bytes = new String("hello world!").getBytes();
 		digest.update(bytes, 0, bytes.length);
-		Check.isEqual(digest.getHash(), "430ce34d020724ed75a196dfc2ad67c77772d169");
+		Check.isEqual(digest.calculateHash(), "430ce34d020724ed75a196dfc2ad67c77772d169");
 	}
 }
