@@ -48,8 +48,13 @@ public class CheckU {
 	}
 
 	@Test
-	public void checkIsEqualLongWithLong() {
+	public void checkIsEqualLongWithLongPass() {
 		Check.isEqual(1l, 1l);
+	}
+
+	@Test
+	public void checkIsEqualLongWithLongFail() {
+		BombSquad.diffuse(AssertionException.class, "!=", () -> Check.isEqual(1l, 2l));
 	}
 
 	@Test

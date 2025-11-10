@@ -80,11 +80,11 @@ public class IniNode {
 	 * Get the child with the specified name. Can retrieve child from nested nodes using slashes '/'.
 	 *
 	 * @param key
-	 *                'tim' to retrieve the child named tim from this node, tom/tim to retrieve the child tim nested in
-	 *                child tom.
+	 *            'tim' to retrieve the child named tim from this node, tom/tim to retrieve the child tim nested in
+	 *            child tom.
 	 * @return the node found.
 	 * @throws AssertionException
-	 *                                if the node does not exist
+	 *             if the node does not exist
 	 */
 	public IniNode getChild(String childName) {
 		IniNodePath path = new IniNodePath(childName);
@@ -109,10 +109,10 @@ public class IniNode {
 	 * Get the property with the specified key. Can retrieve properties from nested nodes using slashes '/'.
 	 *
 	 * @param key
-	 *                property identified 'type' to retrieve the type property from this node, mainboard/type to
-	 *                retrieve the type property from the mainboard child node.
+	 *            property identified 'type' to retrieve the type property from this node, mainboard/type to retrieve
+	 *            the type property from the mainboard child node.
 	 * @throws AssertionException
-	 *                                when property was not found
+	 *             when property was not found
 	 */
 	public String getProperty(String key) {
 		IniNodePath path = new IniNodePath(key);
