@@ -1,7 +1,9 @@
 package com.eriklievaart.toolkit.ant.api;
 
 import java.io.File;
+import java.io.IOException;
 
+import com.eriklievaart.toolkit.io.api.RuntimeIOException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckStr;
 import com.eriklievaart.toolkit.lang.api.str.Str;
@@ -30,12 +32,17 @@ public class AntProperty {
 	public File getDirectoryOrFallbackOn(String fallback) {
 		CheckStr.notBlank(fallback);
 
-		if (Str.isBlank(property)) {
-			File local = new File(fallback);
-			Check.isTrue(local.isDirectory(), "% is not a directory", fallback);
-			return local;
+		try {
+			if (Str.isBlank(property)) {
+				File local = new File(fallback);
+				String root = new File("").getCanonicalPath();
+				Check.isTrue(local.isDirectory(), "% is not a directory in $", fallback, root);
+				return local;
+			}
+			return getDirectory();
+		} catch (IOException e) {
+			throw new RuntimeIOException(e);
 		}
-		return getDirectory();
 	}
 
 	private void check() {

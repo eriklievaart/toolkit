@@ -8,31 +8,31 @@ import org.junit.Test;
 import com.eriklievaart.toolkit.lang.api.AssertionException;
 import com.eriklievaart.toolkit.lang.api.check.Check;
 import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
-import com.eriklievaart.toolkit.lang.api.collection.FilteredNotNullList;
-import com.eriklievaart.toolkit.lang.api.collection.NullPolicy;
 
 public class FilteredNotNullListU {
 
 	@Test
-	public void pushPop() {
+	public void pushPopPeek() {
 		FilteredNotNullList<String> list = new FilteredNotNullList<>();
 
 		list.push("first");
 		list.push("second");
 
+		Check.isEqual(list.peek(), "second");
 		Check.isEqual(list.pop(), "second");
+		Check.isEqual(list.peek(), "first");
 		Check.isEqual(list.pop(), "first");
 	}
 
 	@Test(expected = AssertionException.class)
 	public void policyReject() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.REJECT);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.REJECT);
 		list.add(null);
 	}
 
 	@Test
 	public void policyAccept() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.ACCEPT);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.ACCEPT);
 
 		CheckCollection.isEmpty(list);
 		list.add(null);
@@ -41,7 +41,7 @@ public class FilteredNotNullListU {
 
 	@Test
 	public void policyFilter() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.FILTER);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.FILTER);
 
 		CheckCollection.isEmpty(list);
 		list.add(null);
@@ -50,7 +50,7 @@ public class FilteredNotNullListU {
 
 	@Test
 	public void addIndexedFilter() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.FILTER);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.FILTER);
 
 		CheckCollection.isEmpty(list);
 		list.add(0, null);
@@ -61,7 +61,7 @@ public class FilteredNotNullListU {
 
 	@Test
 	public void addAll() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.FILTER);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.FILTER);
 		List<String> nulls = Arrays.asList("value", null, null);
 
 		CheckCollection.isEmpty(list);
@@ -71,13 +71,13 @@ public class FilteredNotNullListU {
 
 	@Test(expected = AssertionException.class)
 	public void removeReject() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.REJECT);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.REJECT);
 		list.remove(null);
 	}
 
 	@Test
 	public void removeAccept() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.ACCEPT);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.ACCEPT);
 
 		list.add("value");
 		list.add(null);
@@ -91,7 +91,7 @@ public class FilteredNotNullListU {
 
 	@Test
 	public void removeFilter() {
-		FilteredNotNullList<String> list = new FilteredNotNullList<String>(NullPolicy.FILTER);
+		FilteredNotNullList<String> list = new FilteredNotNullList<>(NullPolicy.FILTER);
 
 		list.add("value");
 		CheckCollection.isSize(list, 1);

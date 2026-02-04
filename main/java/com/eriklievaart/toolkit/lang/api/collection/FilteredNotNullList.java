@@ -3,6 +3,8 @@ package com.eriklievaart.toolkit.lang.api.collection;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.eriklievaart.toolkit.lang.api.check.CheckCollection;
+
 /**
  * @author Erik Lievaart
  *
@@ -69,12 +71,19 @@ public class FilteredNotNullList<E> extends ArrayList<E> implements Heap<E> {
 	}
 
 	@Override
-	public E pop() {
-		return super.remove(super.size() - 1);
+	public void push(E element) {
+		add(element);
 	}
 
 	@Override
-	public void push(E element) {
-		add(element);
+	public E peek() {
+		CheckCollection.notEmpty(this);
+		return super.get(super.size() - 1);
+	}
+
+	@Override
+	public E pop() {
+		CheckCollection.notEmpty(this);
+		return super.remove(super.size() - 1);
 	}
 }

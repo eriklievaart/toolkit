@@ -27,6 +27,14 @@ public class FileTool {
 		NIO_OPTIONS[1] = LinkOption.NOFOLLOW_LINKS;
 	}
 
+	public static File homeDir() {
+		return new File(System.getProperty("user.home"));
+	}
+
+	public static File homeDir(String path) {
+		return new File(homeDir(), path);
+	}
+
 	public static boolean createNewFile(File file) {
 		try {
 			file.getParentFile().mkdirs();
@@ -98,7 +106,7 @@ public class FileTool {
 			copyRecursive(from, destination);
 
 		} catch (IOException e) {
-			throw new RuntimeIOException(e);
+			throw new RuntimeIOException("Unable to copy file: " + from, e);
 		}
 	}
 

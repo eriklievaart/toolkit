@@ -36,6 +36,7 @@ public class BeanInjector {
 	}
 
 	public BeanInjector(Map<String, String> values) {
+		Check.notNull(values);
 		this.values.putAll(values);
 		registerDefaultValidators();
 	}

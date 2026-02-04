@@ -32,6 +32,7 @@ public class MultiMap<K, V> {
 	 * Create a MultiMap with the supplied delegate Map.
 	 */
 	public MultiMap(Map<K, List<V>> delegate) {
+		Check.notNull(delegate);
 		this.delegate = delegate;
 	}
 
@@ -79,6 +80,7 @@ public class MultiMap<K, V> {
 	 * Returns all the values for a specified key, or an empty List if the key is not present.
 	 */
 	public List<V> get(final K key) {
+		Check.notNull(key, "cannot fetch null!");
 		return delegate.get(key) == null ? new ArrayList<>() : delegate.get(key);
 	}
 

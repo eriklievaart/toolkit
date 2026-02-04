@@ -22,6 +22,17 @@ public class SetToolU {
 	}
 
 	@Test
+	public void addAll() {
+		Set<String> set = SetTool.of("one", "two");
+		SetTool.addAll(set, "two", "three");
+
+		CheckCollection.isPresent(set, "one");
+		CheckCollection.isPresent(set, "two");
+		CheckCollection.isPresent(set, "three");
+		CheckCollection.isSize(set, 3);
+	}
+
+	@Test
 	public void map() {
 		List<String> test = Arrays.asList("1", "2", "3");
 		Set<Integer> result = SetTool.map(test, s -> Integer.parseInt(s));

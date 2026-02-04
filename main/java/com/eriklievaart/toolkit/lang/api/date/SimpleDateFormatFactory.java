@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 public class SimpleDateFormatFactory {
 
+	private static final String SORTABLE_DATE_FORMAT = "yyyyMMdd";
 	private static final String NL_DATE_FORMAT = "dd-MM-yyyy";
 	private static final String NL_DATE_TIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
@@ -21,6 +22,10 @@ public class SimpleDateFormatFactory {
 
 	public static SimpleDateFormat getDateFormatNL() {
 		return getFormat(NL_DATE_FORMAT);
+	}
+
+	public static SimpleDateFormat getSortableDateFormat() {
+		return getFormat(SORTABLE_DATE_FORMAT);
 	}
 
 	public static SimpleDateFormatWrapper getDateWrapperNL() {

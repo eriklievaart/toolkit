@@ -19,6 +19,6 @@ public class IntegerConstructor extends AbstractConstructor<Integer> {
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Converter<Integer> createConverter() {
-		return new Converter(this, new RegexValidator("\\d++"), new ToStringSerializer());
+		return new Converter(this, new RegexValidator("-?\\d++"), new ToStringSerializer());
 	}
 }

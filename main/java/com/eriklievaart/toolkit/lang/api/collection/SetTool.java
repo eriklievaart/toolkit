@@ -50,6 +50,16 @@ public class SetTool {
 	}
 
 	/**
+	 * add the elements in an array to a set
+	 */
+	@SafeVarargs
+	public static <E> void addAll(Set<E> set, E... values) {
+		for (E value : values) {
+			set.add(value);
+		}
+	}
+
+	/**
 	 * Merge the supplied Set's into a single Set containing all unique entries.
 	 */
 	@SafeVarargs

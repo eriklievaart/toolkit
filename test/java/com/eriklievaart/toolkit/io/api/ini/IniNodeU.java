@@ -60,6 +60,30 @@ public class IniNodeU {
 	}
 
 	@Test
+	public void ifHasChildTests() {
+		AtomicReference<String> reference = new AtomicReference<>();
+
+		IniNode rootNode = new IniNode("parent");
+		IniNode childNode = new IniNode("child");
+		IniNode nestedNode = new IniNode("nested");
+		rootNode.addChild(childNode);
+		childNode.addChild(nestedNode);
+
+		rootNode.ifHasChild("child", c -> reference.set(c.getName()));
+		Check.isEqual(reference.get(), "child");
+
+		rootNode.ifHasChild("child/nested", c -> reference.set(c.getName()));
+		Check.isEqual(reference.get(), "nested");
+
+		rootNode.ifHasChild("other", c -> {
+			throw new AssertionException("child should not have been found: " + c);
+		});
+		rootNode.ifHasChild("child/other", c -> {
+			throw new AssertionException("child should not have been found: " + c);
+		});
+	}
+
+	@Test
 	public void hasPropertyPathRoot() {
 		IniNode rootNode = new IniNode("thread");
 		rootNode.setProperty("type", "java.lang.Thread");
@@ -119,6 +143,17 @@ public class IniNodeU {
 
 		Check.isEqual(rootNode.getPropertyOrDefault("type", "ignore").toString(), "java.lang.Thread");
 		Check.isEqual(rootNode.getPropertyOrDefault("fallback", "java.util.Vector").toString(), "java.util.Vector");
+	}
+
+	@Test
+	public void getRequiredProperty() {
+		IniNode node = new IniNode("thread");
+		node.setProperty("type", "java.lang.Thread");
+
+		Check.isEqual(node.getRequiredProperty("type"), "java.lang.Thread");
+		BombSquad.diffuse(AssertionException.class, "missing", () -> {
+			node.getRequiredProperty("missing");
+		});
 	}
 
 	@Test

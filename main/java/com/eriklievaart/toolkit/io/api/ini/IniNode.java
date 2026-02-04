@@ -26,7 +26,7 @@ public class IniNode {
 	private List<IniNode> children = new ArrayList<>();
 
 	public IniNode(String name) {
-		this(name, null);
+		this(name, (String) null);
 	}
 
 	public IniNode(String name, String identifier) {
@@ -36,6 +36,11 @@ public class IniNode {
 		}
 		this.name = name;
 		this.identifier = identifier;
+	}
+
+	public IniNode(String name, List<IniNode> children) {
+		this(name);
+		this.children.addAll(children);
 	}
 
 	public String getName() {
@@ -60,6 +65,15 @@ public class IniNode {
 			return hasChild(path.getHead()) && getChild(path.getHead()).hasChild(path.getTail());
 		}
 		return getChildren(named).size() > 0;
+	}
+
+	/**
+	 * Invoke consumer with child only if supplied name exists. Use slashes to search for a nested path of children.
+	 */
+	public void ifHasChild(String named, Consumer<IniNode> consumer) {
+		if (hasChild(named)) {
+			consumer.accept(getOrCreateChild(named));
+		}
 	}
 
 	public List<IniNode> getChildren() {
@@ -122,14 +136,20 @@ public class IniNode {
 			} else {
 				throw new AssertionException("missing property %", key);
 			}
-		} else {
-			return properties.get(key);
 		}
+		return properties.get(key);
 	}
 
 	public String getPropertyOrDefault(String key, String fallback) {
 		String result = getProperty(key);
 		return result == null ? fallback : result;
+	}
+
+	public String getRequiredProperty(String key) {
+		Check.notNull(key);
+		String value = getProperty(key);
+		Check.notNull(value, "missing property %", key);
+		return value;
 	}
 
 	public void ifProperty(String key, Consumer<String> consumer) {
